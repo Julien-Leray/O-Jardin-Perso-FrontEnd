@@ -2,22 +2,22 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.scss';
 
-import Home from '../Home';
-import Fruits from '../Fruits';
-import Legumes from '../Legumes';
-import FruitDetail from '../FruitDetail';
-import LegumeDetail from '../LegumeDetail';
-import Tutoriels from '../Tutoriels';
-import TutorielDetail from '../TutorielDetail';
-import Connexion from '../Connexion';
-import Inscription from '../Inscription';
-import MonJardin from '../MonJardin';
-import PotagerVirtuel from '../PotagerVirtuel';
-import GestionProfil from '../GestionProfil';
-import GestionAlertes from '../GestionAlertes';
-import MentionsLegales from '../MentionsLegales';
-import PolitiqueConfidentialite from '../PolitiqueConfidentialite';
-import Contact from '../Contact';
+import Home from '../Home/Home';
+import Fruits from '../Fruits/Fruits';
+import FruitDetail from '../FruitsDetail/FruitDetail';
+import Legumes from '../Legumes/Legumes';
+import LegumeDetail from '../LegumeDetail/LegumeDetail';
+import Tutoriels from '../Tutoriels/Tutoriels';
+import TutorielDetail from '../TutorielDetail/TutorielDetail';
+import Connexion from '../Connexion/Connexion';
+import Inscription from '../Inscription/Inscription';
+import MonJardin from '../MonJardin/MonJardin';
+import PotagerVirtuel from '../PotagerVirtuel/PotagerVirtuel';
+import GestionProfil from '../GestionProfil/GestionProfil';
+import GestionAlertes from '../GestionAlertes/GestionAlertes';
+import MentionsLegales from '../MentionsLegales/MentionLegales';
+import PolitiqueConfidentialite from '../PolitiqueConfidentialite/PolitiqueConfidentialite';
+import Contact from '../Contact/Contact';
 
 function App() {
   return (
