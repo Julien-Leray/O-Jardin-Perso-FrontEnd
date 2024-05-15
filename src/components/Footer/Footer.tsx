@@ -14,13 +14,16 @@ function Footer() {
                     Contactez-nous
                 </button>
 
-                <p>Facebook</p>
-                <p>Instagram</p>
+                <div className='footer-social-network'>
+                <p className='footer-logo-facebook'>Facebook</p>
+                <p className='footer-logo-instagram'>Instagram</p>
+                </div>
             </div>
 
             <div className='footer-mandatory-information'>
-                <a className='footer-legal-notice'>Mentions légales   |  </a>   ©2024
-                <a className='footer-confidentiality'>Confidentialité </a>
+                <a className='footer-legal-notice'>Mentions légales   |</a>   
+                <a className='footer-confidentiality'>Confidentialité</a>
+                <p className='footer-copyright'>©2024</p>
             </div>
 
         </footer>
