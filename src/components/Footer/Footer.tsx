@@ -1,4 +1,4 @@
-import logo from '../../assets/logo_o_jardin.png';
+import logo from '../../assets/logo.png';
 import './Footer.scss';
 
 function Footer() {

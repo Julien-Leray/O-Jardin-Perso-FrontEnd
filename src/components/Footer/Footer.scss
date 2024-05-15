@@ -10,13 +10,30 @@
         color: black;
         background-color: #FFF;
         border-radius: 10%;
+        padding: 0.5rem;
 
+    }
+
+    &-social-network{
+
+        display: flex;
+        justify-content: center;
     }
 
     &-mandatory-information{
         background-color: black;
         color: #FFF;
+        display: flex;
+        font-weight: 800;
+        justify-content: center;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
 
+    }
+
+    &-confidentiality{
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
     }
 
 

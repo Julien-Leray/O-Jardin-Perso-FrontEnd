@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import logo from '../../assets/logo.png';
+import Footer from '../Footer/Footer';
 
 import './App.scss';
 
@@ -67,6 +68,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <Footer/>
     </div>
   );
 }
