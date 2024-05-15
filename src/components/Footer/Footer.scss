@@ -1,0 +1,23 @@
+.footer{
+
+    text-align: center;
+
+    &-content{
+        background-color: #F6D50E;
+    }
+
+    &-button{
+        color: black;
+        background-color: #FFF;
+        border-radius: 10%;
+
+    }
+
+    &-mandatory-information{
+        background-color: black;
+        color: #FFF;
+
+    }
+
+
+}
