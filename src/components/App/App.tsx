@@ -1,5 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import logo from '../../assets/logo.png';
+
 import './App.scss';
 
 import Home from '../Home';
@@ -21,7 +23,7 @@ import Contact from '../Contact';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App w-full md:w-3/4 md:mx-auto">
       <header className="App-header">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -47,6 +49,23 @@ function App() {
           />
           <Route path="/contact" element={<Contact />} />
         </Routes>
+        <h1 className="text-3xl font-bold underline text-pink-500">
+          Hello world!
+        </h1>
+        <img src={logo} className="" alt="logo" />
+
+        <p>
+          Edit <code>src/components/App/App.tsx</code> and save to reload.
+        </p>
+
+        <a
+          className="App-link"
+          href="https://react.dev/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
       </header>
     </div>
   );
