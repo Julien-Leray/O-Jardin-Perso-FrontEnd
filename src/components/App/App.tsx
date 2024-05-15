@@ -6,6 +6,7 @@ import Footer from '../Footer/Footer';
 import './App.scss';
 
 import Home from '../Home/Home';
+import Menu from '../Menu/Menu';
 import Fruits from '../Fruits/Fruits';
 import FruitDetail from '../FruitsDetail/FruitDetail';
 import Legumes from '../Legumes/Legumes';
@@ -25,6 +26,10 @@ import Contact from '../Contact/Contact';
 function App() {
   return (
     <div className="App w-full md:w-3/4 md:mx-auto">
+      <img src={logo} className="mx-auto w-1/4" alt="logo" />
+      <hr className="border-[#052018] my-4" />
+      <Menu />
+
       <header className="App-header">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -68,7 +73,7 @@ function App() {
           Learn React
         </a>
       </header>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
