@@ -1,20 +1,19 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import logo from '../../assets/logo.png';
 import Footer from '../Footer/Footer';
 
 import './App.scss';
 
 import Home from '../Home/Home';
-import Menu from '../Menu/Menu';
+import Header from '../Header/Header';
 import Fruits from '../Fruits/Fruits';
 import FruitDetail from '../FruitsDetail/FruitDetail';
 import Legumes from '../Legumes/Legumes';
 import LegumeDetail from '../LegumeDetail/LegumeDetail';
 import Tutoriels from '../Tutoriels/Tutoriels';
 import TutorielDetail from '../TutorielDetail/TutorielDetail';
-import Connexion from '../Connexion/Connexion';
 import Inscription from '../Inscription/Inscription';
+import Connexion from '../Connexion/Connexion';
 import MonJardin from '../MonJardin/MonJardin';
 import PotagerVirtuel from '../PotagerVirtuel/PotagerVirtuel';
 import GestionProfil from '../GestionProfil/GestionProfil';
@@ -26,11 +25,9 @@ import Contact from '../Contact/Contact';
 function App() {
   return (
     <div className="App w-full md:w-3/4 md:mx-auto">
-      <img src={logo} className="mx-auto w-1/4" alt="logo" />
-      <hr className="border-[#052018] my-4" />
-      <Menu />
+      <Header />
 
-      <header className="App-header">
+      <div className="App-header">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/fruits" element={<Fruits />} />
@@ -58,11 +55,6 @@ function App() {
         <h1 className="text-3xl font-bold underline text-pink-500">
           Hello world!
         </h1>
-        <img src={logo} className="" alt="logo" />
-
-        <p>
-          Edit <code>src/components/App/App.tsx</code> and save to reload.
-        </p>
 
         <a
           className="App-link"
@@ -72,7 +64,7 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </div>
       <Footer />
     </div>
   );
