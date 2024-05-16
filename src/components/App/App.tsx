@@ -12,8 +12,8 @@ import Legumes from '../Legumes/Legumes';
 import LegumeDetail from '../LegumeDetail/LegumeDetail';
 import Tutoriels from '../Tutoriels/Tutoriels';
 import TutorielDetail from '../TutorielDetail/TutorielDetail';
-import Inscription from '../Inscription/Inscription';
-import Connexion from '../Connexion/Connexion';
+import Inscription from '../Header/Inscription/Inscription';
+import Connexion from '../Header/Connexion/Connexion';
 import MonJardin from '../MonJardin/MonJardin';
 import PotagerVirtuel from '../PotagerVirtuel/PotagerVirtuel';
 import GestionProfil from '../GestionProfil/GestionProfil';
@@ -52,7 +52,7 @@ function App() {
           />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-        <h1 className="text-3xl font-bold underline text-pink-500">
+        <h1 className="text-3xl font-bold underline text-green-500">
           Hello world!
         </h1>
 
