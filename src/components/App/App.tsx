@@ -7,6 +7,7 @@ import './App.scss';
 import Home from '../Home/Home';
 import Header from '../Header/Header';
 import Fruits from '../Fruits/Fruits';
+import SearchBar from '../SearchBar/SearchBar';
 import FruitDetail from '../FruitsDetail/FruitDetail';
 import Legumes from '../Legumes/Legumes';
 import LegumeDetail from '../LegumeDetail/LegumeDetail';
@@ -26,7 +27,7 @@ function App() {
   return (
     <div className="App w-full md:w-3/4 md:mx-auto">
       <Header />
-
+      <SearchBar />
       <div className="App-header">
         <Routes>
           <Route path="/" element={<Home />} />
