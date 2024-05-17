@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 COPY package.json ./package.json
 
-RUN pnpm dev
+RUN pnpm dev --open
 
 COPY . .
 
