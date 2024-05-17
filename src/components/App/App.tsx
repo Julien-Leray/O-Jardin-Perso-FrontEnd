@@ -14,7 +14,7 @@ import LegumeDetail from '../Page/Products/Legumes/LegumeDetail';
 import Tutoriels from '../Page/Tutoriels/Tutoriels';
 import TutorielDetail from '../Page/Tutoriels/TutorielDetail';
 import Inscription from '../Header/Inscription/Inscription';
-import Connexion from '../Header/Connexion/Connexion';
+import Connexion from '../Header/ConnexionBtn/ConnexionBtn';
 import MonJardin from '../Page/MonJardin/MonJardin';
 import PotagerVirtuel from '../Page/MonJardin/PotagerVirtuel/PotagerVirtuel';
 import GestionProfil from '../Page/MonJardin/GestionProfil/GestionProfil';

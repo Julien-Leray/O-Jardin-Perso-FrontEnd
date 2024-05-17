@@ -1,6 +1,6 @@
 import React from 'react';
 import Menu from './Menu';
-import ConnexionBurger from '../Connexion/ConnexionBurger';
+import ConnexionBurger from '../ConnexionBtn/ConnexionBtnBurger';
 
 function MenuBurger() {
   return (
