@@ -5,18 +5,27 @@ function Menu() {
   return (
     <>
       <NavLink
-        className="mb-4 hover:font-[800] after:border-b-1 after:border-black"
+        className="w-full md:w-auto text-center py-4 md:py-0 hover:font-[800] border-b border-black md:border-none "
         to="/"
       >
         Accueil
       </NavLink>
-      <NavLink className="mb-4 hover:font-[800]" to="/">
+      <NavLink
+        className="w-full md:w-auto text-center py-4 md:py-0 hover:font-[800] border-b border-black md:border-none "
+        to="/"
+      >
         Fruits & légumes
       </NavLink>
-      <NavLink className="mb-4 hover:font-[800]" to="/tutos">
+      <NavLink
+        className="w-full md:w-auto text-center py-4 md:py-0 hover:font-[800] border-b border-black md:border-none "
+        to="/tutos"
+      >
         Tutos
       </NavLink>
-      <NavLink className="mb-4 hover:font-[800]" to="/contact">
+      <NavLink
+        className="w-full md:w-auto  text-center  py-4 md:py-0 hover:font-[800]"
+        to="/contact"
+      >
         Contact
       </NavLink>
     </>

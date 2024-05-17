@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom';
 function Connexion() {
   return (
     <div className="flex justify-center rounded-lg ">
-      <div className="w-5/6 md:w-2/3 shadow-3xl ">
-        <form className="p-12 md:p-24">
+      <div className="w-5/6 md:w-3/5 shadow-3xl ">
+        <form className="p-12 md:p-12">
           <div className="flex items-center mb-6 md:mb-8 b">
             <User className="absolute ml-3 " />
             <input

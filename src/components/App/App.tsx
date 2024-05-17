@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 
 import Home from '../Page/Home/Home';
@@ -23,13 +23,16 @@ import PolitiqueConfidentialite from '../Page/PolitiqueConfidentialite/Politique
 import Contact from '../Page/Contact/Contact';
 
 function App() {
+  const location = useLocation();
+
   return (
     <div className="w-full md:w-3/4 md:mx-auto">
-      <header>
-        <Header />
-        <SearchBar />
-      </header>
-      <main className="">
+      <Header />
+
+      {location.pathname !== '/connexion' &&
+        location.pathname !== '/inscription' && <SearchBar />}
+
+      <div className="">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/fruits" element={<Fruits />} />
@@ -54,10 +57,8 @@ function App() {
           />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-      </main>
-      <footer>
-        <Footer />
-      </footer>
+      </div>
+      <Footer />
     </div>
   );
 }
