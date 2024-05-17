@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu as Burger } from 'react-feather';
-import ConnexionDesktop from './Connexion/ConnexionDesktop';
+import ConnexionDesktop from './ConnexionBtn/ConnexionBtnDesktop';
 import MenuNav from './Menu/MenuNav';
 import MenuBurger from './Menu/MenuBurger';
 
