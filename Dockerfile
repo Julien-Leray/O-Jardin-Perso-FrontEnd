@@ -5,8 +5,12 @@ WORKDIR /usr/src/app
 
 COPY package.json ./package.json
 
-RUN pnpm dev --open
+RUN pnpm install
 
 COPY . .
 
 EXPOSE 3000
+
+
+
+CMD ["pnpm", "dev"]
