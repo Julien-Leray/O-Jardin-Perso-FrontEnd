@@ -4,24 +4,24 @@ import Footer from '../Footer/Footer';
 
 import './App.scss';
 
-import Home from '../Home/Home';
+import Home from '../Page/Home/Home';
 import Header from '../Header/Header';
-import Fruits from '../Fruits/Fruits';
+import Fruits from '../Page/Products/Fruits/Fruits';
 import SearchBar from '../SearchBar/SearchBar';
-import FruitDetail from '../FruitsDetail/FruitDetail';
-import Legumes from '../Legumes/Legumes';
-import LegumeDetail from '../LegumeDetail/LegumeDetail';
-import Tutoriels from '../Tutoriels/Tutoriels';
-import TutorielDetail from '../TutorielDetail/TutorielDetail';
+import FruitDetail from '../Page/Products/Fruits/FruitDetail';
+import Legumes from '../Page/Products/Legumes/Legumes';
+import LegumeDetail from '../Page/Products/Legumes/LegumeDetail';
+import Tutoriels from '../Page/Tutoriels/Tutoriels';
+import TutorielDetail from '../Page/Tutoriels/TutorielDetail';
 import Inscription from '../Header/Inscription/Inscription';
 import Connexion from '../Header/Connexion/Connexion';
-import MonJardin from '../MonJardin/MonJardin';
-import PotagerVirtuel from '../PotagerVirtuel/PotagerVirtuel';
-import GestionProfil from '../GestionProfil/GestionProfil';
-import GestionAlertes from '../GestionAlertes/GestionAlertes';
-import MentionsLegales from '../MentionsLegales/MentionLegales';
-import PolitiqueConfidentialite from '../PolitiqueConfidentialite/PolitiqueConfidentialite';
-import Contact from '../Contact/Contact';
+import MonJardin from '../Page/MonJardin/MonJardin';
+import PotagerVirtuel from '../Page/MonJardin/PotagerVirtuel/PotagerVirtuel';
+import GestionProfil from '../Page/MonJardin/GestionProfil/GestionProfil';
+import GestionAlertes from '../Page/MonJardin/GestionAlertes/GestionAlertes';
+import MentionsLegales from '../Page/MentionsLegales/MentionLegales';
+import PolitiqueConfidentialite from '../Page/PolitiqueConfidentialite/PolitiqueConfidentialite';
+import Contact from '../Page/Contact/Contact';
 
 function App() {
   return (
