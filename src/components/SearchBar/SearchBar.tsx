@@ -15,14 +15,14 @@ function SearchBar() {
           <input
             type="text"
             id="simple-search"
-            className="bg-white text-gray-900 text-sm rounded-full focus:ring-[#F6D50E] block w-full ps-10 p-2.5"
+            className="bg-white text-gray-900 text-sm rounded-full focus:ring-[#F6D50E] block w-full ps-10 py-4"
             placeholder="Rechercher un fruit ou un légume..."
             required
           />
         </div>
         <button
           type="submit"
-          className="py-2.5 px-4 -translate-x-8 text-sm font-medium text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
+          className="py-4 px-6 -translate-x-10 text-sm font-medium text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
         >
           Rechercher
           {/* <span className="sr-only">Rechercher</span> */}
