@@ -1,7 +1,7 @@
 import React from 'react';
 import ConnexionBtn from './ConnexionBtn';
 
-function ConnexionBurger() {
+function ConnexionBtnBurger() {
   return (
     <div className="md:hidden">
       <ConnexionBtn />
@@ -9,4 +9,4 @@ function ConnexionBurger() {
   );
 }
 
-export default ConnexionBurger;
+export default ConnexionBtnBurger;

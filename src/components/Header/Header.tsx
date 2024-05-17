@@ -12,7 +12,7 @@ function Header() {
   // const [isMobile, setIsMobile] = useState(false);
 
   return (
-    <div className="relative">
+    <header className="relative">
       <ConnexionDesktop />
       <div className="md:hidden absolute w-full">
         <button
@@ -36,10 +36,10 @@ function Header() {
       <NavLink className="" to="/">
         <img src={logo} className="w-1/2 mx-auto md:w-64" alt="logo O'Jardin" />
       </NavLink>
-      <hr className="border-[#052018] my-4" />
+
       {isOpen ? <MenuBurger /> : ''}
       <MenuNav />
-    </div>
+    </header>
   );
 }
 
