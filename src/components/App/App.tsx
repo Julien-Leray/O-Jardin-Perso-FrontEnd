@@ -1,65 +1,36 @@
-import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useAppDispatch } from '../../hooks/redux';
+
 import Footer from '../Footer/Footer';
-
-import Home from '../Page/Home/Home';
 import Header from '../Header/Header';
-import Fruits from '../Page/Products/Fruits/Fruits';
-import Connexion from '../Page/Connexion/Connexion';
+import Page from '../Page/Page';
 
-import SearchBar from '../SearchBar/SearchBar';
-import FruitDetail from '../Page/Products/Fruits/FruitDetail';
-import Legumes from '../Page/Products/Legumes/Legumes';
-import LegumeDetail from '../Page/Products/Legumes/LegumeDetail';
-import Tutoriels from '../Page/Tutoriels/Tutoriels';
-import TutorielDetail from '../Page/Tutoriels/TutorielDetail';
-import Inscription from '../Header/Inscription/Inscription';
-import MonJardin from '../Page/MonJardin/MonJardin';
-import PotagerVirtuel from '../Page/MonJardin/PotagerVirtuel/PotagerVirtuel';
-import GestionProfil from '../Page/MonJardin/GestionProfil/GestionProfil';
-import GestionAlertes from '../Page/MonJardin/GestionAlertes/GestionAlertes';
-import MentionsLegales from '../Page/MentionsLegales/MentionLegales';
-import PolitiqueConfidentialite from '../Page/PolitiqueConfidentialite/PolitiqueConfidentialite';
-import Contact from '../Page/Contact/Contact';
+import { getTokenAndPseudoFromLocalStorage } from '../../localStorage/localstorage';
+import { actionLogIn } from '../../store/reducers/user';
+import { addTokenJwtToAxiosInstance } from '../../axios/axios';
 
 function App() {
-  const location = useLocation();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const { jwt, firstname } = getTokenAndPseudoFromLocalStorage();
+
+    if (jwt) {
+      dispatch(actionLogIn({ jwt, firstname }));
+      addTokenJwtToAxiosInstance(jwt);
+    } else {
+      console.log('rien dans le localstorage');
+    }
+  }, []);
 
   return (
-    <div className="w-full md:w-3/4 md:mx-auto">
-      <Header />
-
-      {location.pathname !== '/connexion' &&
-        location.pathname !== '/inscription' && <SearchBar />}
-
-      <div className="">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/fruits" element={<Fruits />} />
-          <Route path="/fruits/:nom_fruit" element={<FruitDetail />} />
-          <Route path="/legumes" element={<Legumes />} />
-          <Route path="/legumes/:nom_legume" element={<LegumeDetail />} />
-          <Route path="/tutos" element={<Tutoriels />} />
-          <Route path="/tutos/:titre" element={<TutorielDetail />} />
-          <Route path="/connexion" element={<Connexion />} />
-          <Route path="/inscription" element={<Inscription />} />
-          <Route path="/mon_jardin" element={<MonJardin />} />
-          <Route
-            path="/mon_jardin/potager-virtuel"
-            element={<PotagerVirtuel />}
-          />
-          <Route path="/gestion_profil" element={<GestionProfil />} />
-          <Route path="/gestion_profil/alertes" element={<GestionAlertes />} />
-          <Route path="/mentions_legales" element={<MentionsLegales />} />
-          <Route
-            path="/confidentialite"
-            element={<PolitiqueConfidentialite />}
-          />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+    <>
+      <div className="w-full md:w-5/6 md:mx-auto">
+        <Header />
+        <Page />
       </div>
       <Footer />
-    </div>
+    </>
   );
 }
 

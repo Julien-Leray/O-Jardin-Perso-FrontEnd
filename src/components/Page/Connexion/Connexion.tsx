@@ -1,40 +1,67 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { User, Lock } from 'react-feather';
 import { NavLink } from 'react-router-dom';
+import Input from './ConnexionInput';
+import { useAppSelector } from '../../../hooks/redux';
 
-function Connexion() {
+interface LoginFormProps {
+  email: string;
+  password: string;
+  changeField: (value: string, name: 'email' | 'password') => void;
+  handleLogin: () => void;
+}
+
+function Connexion({
+  email,
+  password,
+  changeField,
+  handleLogin,
+}: LoginFormProps) {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleLogin();
+  };
+
+  const handleChangeField = (name: 'email' | 'password') => (value: string) => {
+    changeField(value, name);
+  };
+
+  const loginError = useAppSelector((state) => state.user.error);
+
   return (
     <div className="flex justify-center rounded-lg ">
       <div className="w-5/6 md:w-3/5 shadow-3xl ">
-        <form className="p-12 md:p-12">
+        <form className="p-8 md:p-8" autoComplete="off" onSubmit={handleSubmit}>
           <div className="flex items-center mb-6 md:mb-8 b">
             <User className="absolute ml-3 " />
-            <input
+            <Input
               type="text"
-              id="username"
-              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border border-black"
-              placeholder="Identifiant"
+              placeholder="Email"
+              onChange={handleChangeField('email')}
+              value={email}
             />
           </div>
-          <div className="flex items-center mb-6 md:mb-8">
+          <div className="flex items-center mb-4 md:mb-8">
             <Lock className="absolute ml-3" />
-            <input
-              type="password"
-              id="password"
-              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border border-black"
+            <Input
               placeholder="Mot de passe"
+              value={password}
+              type="password"
+              onChange={handleChangeField('password')}
             />
           </div>
+          <div className="text-red-600 text-center mb-4"> {loginError}</div>
+
           <button
             type="submit"
-            className="w-full px-6 py-3 rounded-full text-800 bg-[#F6D50E] hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2 mb-6 md:mb-8 b"
+            className="w-full px-6 py-3 rounded-full text-white bg-[#16A1AF] hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2 mb-6 md:mb-8 b"
           >
             Continuer
           </button>
           <NavLink to="/inscription">
             <button
-              type="submit"
-              className="w-full px-6 py-3 rounded-full text-800 bg-[#F6D50E] hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2"
+              type="button"
+              className="w-full px-6 py-3 rounded-full bg-[#F6D50E] hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2"
             >
               S&apos;inscrire
             </button>
