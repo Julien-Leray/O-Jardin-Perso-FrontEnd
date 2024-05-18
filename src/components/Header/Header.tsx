@@ -12,7 +12,7 @@ function Header() {
   // const [isMobile, setIsMobile] = useState(false);
 
   return (
-    <header className="relative mb-6	">
+    <header className="relative mb-6 md:mb-2">
       <ConnexionDesktop />
       <div className="md:hidden absolute w-full">
         <button
