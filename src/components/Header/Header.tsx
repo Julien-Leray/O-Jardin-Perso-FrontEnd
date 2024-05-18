@@ -12,7 +12,7 @@ function Header() {
   // const [isMobile, setIsMobile] = useState(false);
 
   return (
-    <header className="relative">
+    <header className="relative mb-6	">
       <ConnexionDesktop />
       <div className="md:hidden absolute w-full">
         <button
@@ -23,18 +23,22 @@ function Header() {
           }}
         >
           {isOpen ? (
-            <span className="absolute px-4 py-3 top-4 right-4 rounded-lg text-white bg-[#F6D50E]">
-              <Burger size="40" />
+            <span className="absolute py-2 px-4 top-4 right-4 rounded-lg text-white bg-[#F6D50E]">
+              <Burger size="60" />
             </span>
           ) : (
-            <span className="absolute px-6 py-3 top-4 right-4  ">
-              <Burger size="40" />
+            <span className="absolute py-2 px-4 top-4 right-4">
+              <Burger size="60" />
             </span>
           )}
         </button>
       </div>
       <NavLink className="" to="/">
-        <img src={logo} className="w-1/2 mx-auto md:w-64" alt="logo O'Jardin" />
+        <img
+          src={logo}
+          className="w-1/2 mx-auto md:w-64 pt-6"
+          alt="logo O'Jardin"
+        />
       </NavLink>
 
       {isOpen ? <MenuBurger isOpen={isOpen} setIsOpen={setIsOpen} /> : ''}
