@@ -37,7 +37,7 @@ function Header() {
         <img src={logo} className="w-1/2 mx-auto md:w-64" alt="logo O'Jardin" />
       </NavLink>
 
-      {isOpen ? <MenuBurger /> : ''}
+      {isOpen ? <MenuBurger isOpen={isOpen} setIsOpen={setIsOpen} /> : ''}
       <MenuNav />
     </header>
   );
