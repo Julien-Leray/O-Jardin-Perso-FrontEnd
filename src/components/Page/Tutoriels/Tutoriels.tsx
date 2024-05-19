@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import tutoriels from '../../../data/data'; // Assurez-vous que le chemin d'importation est correct
+import tutoriels from '../../../data/data';
 
 function Tutoriels() {
   return (
