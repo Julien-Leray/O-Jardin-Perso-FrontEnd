@@ -1,4 +1,4 @@
-[
+const tutoriels = [
   {
     id: 1,
     latin_name: 'Cucurbita Pepo',
@@ -67,3 +67,5 @@
     updated_at: null,
   },
 ];
+
+export default tutoriels;
