@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
+// src/components/PotagerVirtuel.tsx
+import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
+import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
 
-// Component SquareMaker qui génère une grille de carrés
-function SquareMaker({ horizontal, vertical }) {
-  // Création d'un tableau de divs pour les carrés en utilisant map sur un tableau de taille horizontal * vertical
+interface SquareMakerProps {
+  horizontal: number;
+  vertical: number;
+}
+
+function SquareMaker({ horizontal, vertical }: SquareMakerProps) {
   const squares = Array.from({ length: horizontal * vertical }).map(
-    (_, index) => (
-      // Chaque carré est un div avec une bordure noire et une taille définie de 10x10 pixels
-      <div key={index} className="border border-black w-10 h-10" />
-    )
+    (_, index) => <div key={index} className="border border-black w-10 h-10" />
   );
 
-  // Le retour de ce composant inclut un div configuré comme une grille CSS
   return (
     <div
       className="grid"
       style={{
-        // La propriété gridTemplateColumns crée un nombre de colonnes égal à 'horizontal', chaque colonne de 40px de large
         gridTemplateColumns: `repeat(${horizontal}, 40px)`,
-        // Centre horizontalement les carrés dans le conteneur si le nombre total ne remplit pas l'espace disponible
         justifyContent: 'center',
       }}
     >
@@ -26,13 +26,10 @@ function SquareMaker({ horizontal, vertical }) {
   );
 }
 
-// Composant principal PotagerVirtuel
 function PotagerVirtuel() {
-  // Utilisation du hook useState pour gérer les états de dimensions horizontales et verticales
-  const [horizontal, setHorizontal] = useState(5); // Initialisation à 5 colonnes
-  const [vertical, setVertical] = useState(5); // Initialisation à 5 rangées
+  const dispatch = useAppDispatch();
+  const { horizontal, vertical } = useAppSelector((state) => state.potager);
 
-  // Rendu du composant avec une disposition centrée et du style
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="p-4 bg-white shadow-xl rounded-lg text-center">
@@ -44,7 +41,7 @@ function PotagerVirtuel() {
             <input
               type="number"
               value={horizontal}
-              onChange={(e) => setHorizontal(Number(e.target.value))}
+              onChange={(e) => dispatch(setHorizontal(Number(e.target.value)))}
               className="ml-2 border rounded px-2 py-1 w-16 text-center"
             />
           </label>
@@ -53,12 +50,11 @@ function PotagerVirtuel() {
             <input
               type="number"
               value={vertical}
-              onChange={(e) => setVertical(Number(e.target.value))}
+              onChange={(e) => dispatch(setVertical(Number(e.target.value)))}
               className="ml-2 border rounded px-2 py-1 w-16 text-center"
             />
           </label>
         </div>
-
         <SquareMaker horizontal={horizontal} vertical={vertical} />
       </div>
     </div>
