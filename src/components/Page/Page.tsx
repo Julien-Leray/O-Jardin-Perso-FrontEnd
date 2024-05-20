@@ -12,7 +12,7 @@ import Legumes from './Products/Legumes/Legumes';
 import LegumeDetail from './Products/Legumes/LegumeDetail';
 import Tutoriels from './Tutoriels/Tutoriels';
 import TutorielDetail from './Tutoriels/TutorielDetail';
-import Inscription from '../Header/Inscription/Inscription';
+import Inscription from './Inscription/Inscription';
 import MonJardin from './MonJardin/MonJardin';
 import PotagerVirtuel from './MonJardin/PotagerVirtuel/PotagerVirtuel';
 import GestionProfil from './MonJardin/GestionProfil/GestionProfil';
