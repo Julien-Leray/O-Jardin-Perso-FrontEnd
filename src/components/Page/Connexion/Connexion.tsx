@@ -1,5 +1,5 @@
 import React, { FormEvent } from 'react';
-import { User, Lock, XCircle } from 'react-feather';
+import { User, Lock, XCircle, Info } from 'react-feather';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Input from './ConnexionInput';
 import { useAppSelector } from '../../../hooks/redux';
@@ -34,12 +34,13 @@ function Connexion({
 
   return (
     <div className="flex flex-col justify-center rounded-lg items-center">
-      <button type="button" className="self-end" onClick={goBack}>
+      <button type="button" className="self-end pr-10" onClick={goBack}>
         <XCircle size="40" />
       </button>
       <div className="w-5/6 md:w-3/5 shadow-3xl ">
         <form className="p-8 md:p-8" autoComplete="off" onSubmit={handleSubmit}>
-          <div className="flex items-center mb-6 md:mb-8 b">
+          <div className="text-center font-bold text-3xl mb-6">Connexion</div>
+          <div className="flex items-center mb-2 md:mb-4 b ">
             <User className="absolute ml-3 " />
             <Input
               type="text"
@@ -57,11 +58,22 @@ function Connexion({
               onChange={handleChangeField('password')}
             />
           </div>
-          <div className="text-red-600 text-center mb-4"> {loginError}</div>
+          {loginError && (
+            <div
+              className="bg-red-100 border-t-4 border-red-600 rounded-b text-red-600 px-3 py-3 mb-6"
+              role="alert"
+            >
+              <div className="rounded-lg" />
+              <div>
+                <Info className="absolute ml-2" />
+                <p className="ml-10">{loginError}</p>
+              </div>
+            </div>
+          )}
 
           <button
             type="submit"
-            className="w-full px-6 py-3 rounded-full text-white bg-[#16A1AF] hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2 mb-6 md:mb-8 b"
+            className="w-full px-6 py-3 rounded-full text-white bg-[#16A1AF] hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2 mb-2 md:mb-4 b"
           >
             Continuer
           </button>
@@ -70,7 +82,7 @@ function Connexion({
               type="button"
               className="w-full px-6 py-3 rounded-full bg-[#F6D50E] hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2"
             >
-              S&apos;inscrire
+              Créer un compte
             </button>
           </NavLink>
         </form>
