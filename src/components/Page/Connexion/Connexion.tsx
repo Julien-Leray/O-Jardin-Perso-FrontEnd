@@ -40,6 +40,7 @@ function Connexion({
       <div className="w-5/6 md:w-3/5 shadow-3xl ">
         <form className="p-8 md:p-8" autoComplete="off" onSubmit={handleSubmit}>
           <div className="text-center font-bold text-3xl mb-6">Connexion</div>
+
           <div className="flex items-center mb-2 md:mb-4 b ">
             <User className="absolute ml-3 " />
             <Input
