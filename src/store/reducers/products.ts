@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Product, ProductsState } from '../../types/types';
-import { fetchFruits, fetchLegumes } from '../thunks/productThunks';
+import {
+  fetchFruits,
+  fetchLegumes,
+  fetchFruitDetails,
+} from '../thunks/productThunks';
 
 const initialState: ProductsState = {
   fruits: [],
@@ -40,6 +44,20 @@ const productsSlice = createSlice({
         }
       )
       .addCase(fetchLegumes.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.loading = false;
+      })
+      .addCase(fetchFruitDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchFruitDetails.fulfilled, (state, action) => {
+        // eslint-disable-next-line no-console
+        console.log('Fulfilled action payload:', action.payload);
+        state.selectedFruit = action.payload;
+        state.loading = false;
+      })
+
+      .addCase(fetchFruitDetails.rejected, (state, action) => {
         state.error = action.error.message;
         state.loading = false;
       });

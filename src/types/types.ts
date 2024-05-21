@@ -2,15 +2,16 @@ export interface Product {
   id: number;
   name: string;
   description: string;
+  picture?: string;
 }
 
 export interface ProductsState {
   fruits: Product[];
   legumes: Product[];
+  selectedFruit?: Product; // Optionnel pour gérer l'état non chargé
   loading: boolean;
   error: string | null | undefined;
 }
-
 // interface du potagervirtuel
 
 export interface SquareMakerProps {

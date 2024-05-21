@@ -19,3 +19,13 @@ export const fetchLegumes = createAsyncThunk(
     return response.data;
   }
 );
+
+export const fetchFruitDetails = createAsyncThunk(
+  'products/fetchFruitDetails',
+  async (fruitId) => {
+    const response = await axios.get(
+      `http://ns381313.ip-94-23-250.eu:4000/products/${fruitId}`
+    );
+    return response.data;
+  }
+);
