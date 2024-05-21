@@ -52,7 +52,7 @@ function Page() {
           path="/connexion"
           element={
             <Connexion
-              // logged={logged}
+              logged={logged}
               email={emailFormState}
               password={passFromState}
               changeField={(value, name) => {

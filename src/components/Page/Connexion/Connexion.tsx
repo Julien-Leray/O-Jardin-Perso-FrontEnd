@@ -5,6 +5,7 @@ import Input from './ConnexionInput';
 import { useAppSelector } from '../../../hooks/redux';
 
 interface LoginFormProps {
+  logged: boolean;
   email: string;
   password: string;
   changeField: (value: string, name: 'email' | 'password') => void;
@@ -12,16 +13,12 @@ interface LoginFormProps {
 }
 
 function Connexion({
+  logged,
   email,
   password,
   changeField,
   handleLogin,
 }: LoginFormProps) {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    handleLogin();
-  };
-
   const handleChangeField = (name: 'email' | 'password') => (value: string) => {
     changeField(value, name);
   };
@@ -31,7 +28,10 @@ function Connexion({
   const goBack = () => {
     navigate(-1); // Navigue à l'emplacement précédent
   };
-
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleLogin();
+  };
   return (
     <div className="flex flex-col justify-center rounded-lg items-center">
       <button type="button" className="self-end pr-10" onClick={goBack}>
