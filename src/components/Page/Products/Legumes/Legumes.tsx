@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { fetchLegumes } from '../../../../store/reducers/products';
+import { fetchLegumes } from '../../../../store/thunks/productThunks'; // Mise à jour du chemin d'importation
 
 function Legumes() {
   const dispatch = useAppDispatch();

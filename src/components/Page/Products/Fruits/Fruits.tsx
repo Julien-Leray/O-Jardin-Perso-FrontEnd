@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { fetchFruits } from '../../../../store/reducers/products';
+import { fetchFruits } from '../../../../store/thunks/productThunks';
 
 function Fruits() {
   const dispatch = useAppDispatch();
-  const { fruits, loading, error } = useAppSelector((state) => state.products);
+  const { fruits, loading, error } = useAppSelector(state => state.products);
 
   useEffect(() => {
     dispatch(fetchFruits());

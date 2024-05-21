@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Product, ProductsState } from '../../types/types';
+import { fetchFruits, fetchLegumes } from '../thunks/productThunks';
 
 const initialState: ProductsState = {
   fruits: [],
@@ -7,26 +8,6 @@ const initialState: ProductsState = {
   loading: false,
   error: null,
 };
-
-export const fetchFruits = createAsyncThunk<Product[]>(
-  'products/fetchFruits',
-  async () => {
-    return [
-      { id: 1, name: 'Pomme', description: 'Délicieuse et croquante' },
-      { id: 2, name: 'Banane', description: 'Riche en potassium' },
-    ];
-  }
-);
-
-export const fetchLegumes = createAsyncThunk<Product[]>(
-  'products/fetchLegumes',
-  async () => {
-    return [
-      { id: 1, name: 'Carotte', description: 'Bonne pour la vision' },
-      { id: 2, name: 'Tomate', description: 'Parfaite dans les salades' },
-    ];
-  }
-);
 
 const productsSlice = createSlice({
   name: 'products',
