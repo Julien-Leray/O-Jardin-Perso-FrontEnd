@@ -2,7 +2,7 @@ export function addTokenAndPseudoToLocalStorage(
   token: string,
   firstname: string
 ) {
-  localStorage.setItem('jwt', token);
+  localStorage.setItem('token', token);
   localStorage.setItem('firstname', firstname);
 }
 
