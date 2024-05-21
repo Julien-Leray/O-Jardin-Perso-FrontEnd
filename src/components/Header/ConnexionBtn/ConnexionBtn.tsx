@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { actionLogOut } from '../../../store/reducers/user';
 import { removeTokenJwtFromAxiosInstance } from '../../../axios/axios';
@@ -7,6 +7,7 @@ import { removeTokenJwtFromAxiosInstance } from '../../../axios/axios';
 function ConnexionBtn() {
   const isLogged = useAppSelector((state) => state.user.logged);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -27,6 +28,7 @@ function ConnexionBtn() {
           onClick={() => {
             dispatch(actionLogOut());
             removeTokenJwtFromAxiosInstance();
+            navigate('/');
           }}
         >
           Déconnexion
