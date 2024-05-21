@@ -22,7 +22,7 @@ function ConnexionBtn() {
       )}
       {isLogged && (
         <button
-          className="px-6 py-3 rounded-full bg-[#16A1AF] text-white focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2"
+          className="px-6 py-3 rounded-full bg-black text-white focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2"
           type="button"
           onClick={() => {
             dispatch(actionLogOut());
