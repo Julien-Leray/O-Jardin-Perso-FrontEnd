@@ -2,11 +2,7 @@
 import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
-
-interface SquareMakerProps {
-  horizontal: number;
-  vertical: number;
-}
+import { SquareMakerProps } from '../../../../types/types';
 
 function SquareMaker({ horizontal, vertical }: SquareMakerProps) {
   const squares = Array.from({ length: horizontal * vertical }).map(
