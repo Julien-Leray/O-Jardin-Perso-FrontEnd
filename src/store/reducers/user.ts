@@ -58,6 +58,7 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(actionCheckLogin.fulfilled, (state, action) => {
       state.logged = true;
       state.token = action.payload.token;
+
       // state.error = null;
       state.error = 'User reconnu !';
     })
