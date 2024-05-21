@@ -8,10 +8,13 @@ const actionCheckLogin = createAsyncThunk(
   'user/CHECK_LOGIN',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const response = await axiosInstance.post('/login', {
-      email: state.user.credentials.email,
-      password: state.user.credentials.password,
-    });
+    const response = await axiosInstance.post(
+      'http://localhost:4000/routes/login',
+      {
+        email: state.user.credentials.email,
+        password: state.user.credentials.password,
+      }
+    );
     const { firstname, token } = response.data;
 
     addTokenJwtToAxiosInstance(token);
