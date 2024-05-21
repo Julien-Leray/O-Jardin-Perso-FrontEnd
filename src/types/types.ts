@@ -8,7 +8,8 @@ export interface Product {
 export interface ProductsState {
   fruits: Product[];
   legumes: Product[];
-  selectedFruit?: Product; // Optionnel pour gérer l'état non chargé
+  selectedFruit?: Product | null;
+  selectedLegume?: Product | null; // Ajout de null comme type acceptable
   loading: boolean;
   error: string | null | undefined;
 }

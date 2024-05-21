@@ -1,4 +1,3 @@
-// Fruits.js
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
