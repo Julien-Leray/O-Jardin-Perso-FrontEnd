@@ -58,7 +58,8 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(actionCheckLogin.fulfilled, (state, action) => {
       state.logged = true;
       state.token = action.payload.token;
-      state.error = null;
+      // state.error = null;
+      state.error = 'User reconnu !';
     })
     .addCase(actionCheckLogin.rejected, (state) => {
       state.error = 'Erreur de connexion';
@@ -70,6 +71,7 @@ const userReducer = createReducer(initialState, (builder) => {
       state.logged = true;
       state.token = action.payload.jwt;
       state.firstname = action.payload.firstname;
+      state.error = 'Connexion OK !';
     });
 });
 

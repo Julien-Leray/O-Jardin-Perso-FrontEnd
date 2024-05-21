@@ -9,7 +9,7 @@ const actionCheckLogin = createAsyncThunk(
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const response = await axiosInstance.post(
-      'http://localhost:4000/routes/login',
+      'http://ns381313.ip-94-23-250.eu:4000/login',
       {
         email: state.user.credentials.email,
         password: state.user.credentials.password,
