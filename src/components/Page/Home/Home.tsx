@@ -2,6 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 import data from '../../../data/data';
 import tutoData from '../../../data/tuto';
+import { useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
+import product from './../../../store/reducers/products';
+
 
 
 function Home() {
@@ -12,7 +16,7 @@ function Home() {
   return (
 
     
-    <div className="bg-white">
+    <div className="bg-white text-center">
 
       <div className="bg-white text-black py-2 text-sm italic">
       <p>Bienvenue sur notre site web dédié au jardinage!</p>
@@ -33,7 +37,7 @@ function Home() {
 
             </ul> 
 
-            <p className="bg-[#F5780A] rounded-full px-2 w-36 text-sm md:text-base m-auto my-1" >Voir plus</p>
+            <p className="bg-[#F5780A] text-white rounded-full px-2 w-36 text-sm md:text-base m-auto my-1" >Voir plus</p>
 
       </div>
 
@@ -50,7 +54,7 @@ function Home() {
 
             </ul> 
 
-            <p className="bg-[#F5780A] rounded-full px-2 w-36 text-sm md:text-base m-auto my-1" >Voir plus</p>
+            <p className="bg-[#F5780A] text-white rounded-full px-2 w-36 text-sm md:text-base m-auto my-1" >Voir plus</p>
           
           </div>
       </div>

@@ -1,4 +1,5 @@
 export default [
+
   {
     id: 1,
     latin_name: 'Cucurbita Pepo',
