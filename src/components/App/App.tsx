@@ -10,6 +10,7 @@ import { actionLogIn } from '../../store/reducers/user';
 import { addTokenJwtToAxiosInstance } from '../../axios/axios';
 
 function App() {
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -32,6 +33,7 @@ function App() {
       </div>
       <div>
         <Footer />
+
       </div>
     </div>
   );

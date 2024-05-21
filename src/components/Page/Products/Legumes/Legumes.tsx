@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { fetchLegumes } from '../../../../store/reducers/products';
 
 function Legumes() {
+  const dispatch = useAppDispatch();
+  const { legumes, loading, error } = useAppSelector((state) => state.products);
+
+  useEffect(() => {
+    dispatch(fetchLegumes());
+  }, [dispatch]);
+
   return (
     <div>
       <h1>Légumes</h1>
-      <p>Découvrez notre sélection de légumes.</p>
+      {loading && <p>Chargement...</p>}
+      {error && <p>Erreur: {error}</p>}
+      <ul>
+        {legumes.map((legume) => (
+          <li key={legume.id}>
+            {legume.name} - {legume.description}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
