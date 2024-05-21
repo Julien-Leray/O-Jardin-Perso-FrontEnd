@@ -53,18 +53,6 @@ function App() {
           />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-        <h1 className="text-3xl font-bold underline text-green-500">
-          Hello world!
-        </h1>
-
-        <a
-          className="App-link"
-          href="https://react.dev/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </div>
       <Footer />
     </div>
