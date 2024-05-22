@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Tutorials, TutorialsState } from '../../types/types';
+import { fetchTutorials } from '../thunks/tutorielsThunk';
 
 const initialState: TutorialsState = {
   tuto: [],
@@ -7,45 +8,6 @@ const initialState: TutorialsState = {
   error: null,
 };
 
-export const fetchTutorials = createAsyncThunk<Tutorials[]>(
-  'tutos/fetchTutorials',
-  async () => {
-    return [
-      {
-        id: 1,
-        picture: 'Plantation de courgettes',
-        name: 'Planter des courgettes',
-        description: 'Étape 1',
-      },
-
-      {
-        id: 2,
-        picture: 'Plantation de tomates',
-        name: 'Planter des tomates',
-        description: 'Étape 1',
-      },
-      {
-        id: 3,
-        picture: 'Plantation de concombre',
-        name: 'Planter des concombre',
-        description: 'Étape 1',
-      },
-
-      {
-        id: 4,
-        picture: 'Plantation de radis',
-        name: 'Planter des radis',
-        description: 'Étape 1',
-      },
-      {
-        id: 5,
-        picture: 'Plantation de Champignon',
-        name: 'Champignon',
-        description: 'Étape 1',
-      },
-    ];
-  }
-);
 
 const tutorialsSlice = createSlice({
   name: 'tutorials',

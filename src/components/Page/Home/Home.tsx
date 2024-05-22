@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
-import { fetchTutorials } from '../../../store/reducers/tutoriels';
-import products from '../../../store/reducers/products';
+import { fetchTutorials } from '../../../store/thunks/tutorielsThunk';
 import { fetchFruits, fetchLegumes } from '../../../store/thunks/productThunks';
 
 interface Tutorials {
@@ -18,25 +17,28 @@ interface Product {
   description: string;
 }
 
-const getRandomTutos = (tuto: Tutorials[]): Tutorials[] => {
-  if (tuto.length <= 2) return tuto;
-  const twoTutoOnHome = [...tuto].sort(() => 0.5 - Math.random());
-  return twoTutoOnHome.slice(0, 3);
-};
 
-const getRandomFruits = (fruits: Product[]): Product[] => {
-  if (fruits.length <= 2) return fruits;
-  const fruitsOnHome = [...fruits].sort(() => 0.5 - Math.random());
-  return fruitsOnHome.slice(0, 4);
-};
-
-const getRandomLegumes = (legumes: Product[]): Product[] => {
-  if (legumes.length <= 2) return legumes;
-  const legumeOnHome = [...legumes].sort(() => 0.5 - Math.random());
-  return legumeOnHome.slice(0, 4);
-};
 
 function Home() {
+
+  const getRandomTutos = (tuto: Tutorials[]): Tutorials[] => {
+    if (tuto.length <= 2) return tuto;
+    const twoTutoOnHome = [...tuto].sort(() => 0.5 - Math.random());
+    return twoTutoOnHome.slice(0, 3);
+  };
+  
+  const getRandomFruits = (fruits: Product[]): Product[] => {
+    if (fruits.length <= 2) return fruits;
+    const fruitsOnHome = [...fruits].sort(() => 0.5 - Math.random());
+    return fruitsOnHome.slice(0, 4);
+  };
+  
+  const getRandomLegumes = (legumes: Product[]): Product[] => {
+    if (legumes.length <= 2) return legumes;
+    const legumeOnHome = [...legumes].sort(() => 0.5 - Math.random());
+    return legumeOnHome.slice(0, 4);
+  };
+  
   const dispatch = useAppDispatch();
 
   const { tuto } = useAppSelector((state) => state.tutoriels);
@@ -118,10 +120,10 @@ function Home() {
               <img
                 className="p-1"
                 src={tutoriels.picture}
-                alt={`Tuto de ${tutoriels.title}`}
+                alt={`Tuto de ${tutoriels.name}`}
               />
-              <h3 className="font-bold">{tutoriels.title}</h3>
-              <p className="p-1">{tutoriels.article}</p>
+              <h3 className="font-bold">{tutoriels.name}</h3>
+              <p className="p-1">{tutoriels.description}</p>
               <Link
                 to="/tutos"
                 className="mx-auto py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
