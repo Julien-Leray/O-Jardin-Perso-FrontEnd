@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // Base URL of your API updated to local
-const API_BASE_URL = 'http://ns381313.ip-94-23-250.eu:4000/products';
+const API_BASE_URL = 'http://localhost:4000/products';
 
 // Fetch all fruits & legumes
 export const fetchAllProducts = createAsyncThunk(
