@@ -21,7 +21,7 @@ function Tutoriels() {
               </p>
               <Link
                 to={`/tutos/${tutoriel.id}`}
-                className="mt-3 mb-2 bg-[#F6D50E] hover:bg-blue-700 text-[#F5780A] font-bold py-2 px-4 rounded flex justify-center w-full"
+                className="mt-3 mb-2 py-2 px-4 rounded flex justify-center w-full text-sm font-medium text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[F6D50E]"
               >
                 Lire la suite
               </Link>

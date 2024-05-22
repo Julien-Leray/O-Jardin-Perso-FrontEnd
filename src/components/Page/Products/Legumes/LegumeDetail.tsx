@@ -4,7 +4,6 @@ import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { fetchLegumeDetails } from '../../../../store/thunks/productThunks';
 
 function LegumeDetail() {
-  // Utilisez nom_legume pour correspondre à la clé définie dans la route
   const { nomLegume } = useParams();
   const dispatch = useAppDispatch();
   const { selectedLegume, loading, error } = useAppSelector(
@@ -13,23 +12,31 @@ function LegumeDetail() {
 
   useEffect(() => {
     if (nomLegume) {
-      dispatch(fetchLegumeDetails(nomLegume)); // Utilisez nom_legume pour le dispatch
+      dispatch(fetchLegumeDetails(nomLegume));
     }
   }, [nomLegume, dispatch]);
 
-  if (loading) return <div>Chargement...</div>;
-  if (error) return <div>Erreur : {error}</div>;
-  if (!selectedLegume) return <div>Aucun légume sélectionné.</div>;
+  if (loading) return <div className="text-center text-lg">Chargement...</div>;
+  if (error)
+    return (
+      <div className="text-center text-red-600 text-lg">Erreur : {error}</div>
+    );
+  if (!selectedLegume)
+    return <div className="text-center text-lg">Aucun légume sélectionné.</div>;
+
+  const imageUrl = `http://localhost:4000${selectedLegume.picture}`;
 
   return (
-    <div className="container mx-auto mt-5">
-      <h1 className="text-2xl font-bold">{selectedLegume.name}</h1>
-      <p>{selectedLegume.description}</p>
-      <img
-        src={selectedLegume.picture}
-        alt={selectedLegume.name}
-        className="w-full max-w-sm"
-      />
+    <div className="container mx-auto mt-5 mb-5 p-5 rounded-lg shadow-lg bg-[#16A1AF]">
+      <div className="text-white text-center">
+        <h1 className="text-3xl font-bold mb-3">{selectedLegume.name}</h1>
+        <img
+          src={imageUrl}
+          alt={selectedLegume.name}
+          className="mx-auto w-full max-w-md rounded-lg shadow-lg"
+        />
+        <p className="mt-4">{selectedLegume.description}</p>
+      </div>
     </div>
   );
 }
