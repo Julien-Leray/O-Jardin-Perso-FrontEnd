@@ -4,7 +4,6 @@ import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { fetchFruitDetails } from '../../../../store/thunks/productThunks';
 
 function FruitDetail() {
-  // Renommez nom_fruit en nomFruit
   const { nomFruit } = useParams();
   const dispatch = useAppDispatch();
   const { selectedFruit, loading, error } = useAppSelector(
@@ -12,7 +11,6 @@ function FruitDetail() {
   );
 
   useEffect(() => {
-    // Utilisez nomFruit renommé pour le dispatch
     if (nomFruit) {
       dispatch(fetchFruitDetails(nomFruit));
     }
