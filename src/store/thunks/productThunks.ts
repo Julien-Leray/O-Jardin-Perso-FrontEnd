@@ -17,7 +17,7 @@ export const fetchAllProducts = createAsyncThunk(
 export const fetchFruits = createAsyncThunk(
   'products/fetchFruits',
   async () => {
-    const response = await axios.get(`${API_BASE_URL}?category=Fruit`);
+    const response = await axios.get(`${API_BASE_URL}?category=fruit`);
     return response.data;
   }
 );
@@ -26,7 +26,7 @@ export const fetchFruits = createAsyncThunk(
 export const fetchLegumes = createAsyncThunk(
   'products/fetchLegumes',
   async () => {
-    const response = await axios.get(`${API_BASE_URL}?category=Vegetable`);
+    const response = await axios.get(`${API_BASE_URL}?category=vegetable`);
     return response.data;
   }
 );

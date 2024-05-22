@@ -26,7 +26,7 @@ function SearchBar() {
   });
 
   return (
-    <div className="w-full bg-[#F6D50E] py-8 ">
+    <div className="w-full bg-[#F6D50E] py-8">
       <form
         className="flex w-full md:w-2/3 items-center mx-auto pl-8"
         onSubmit={(event) => {
