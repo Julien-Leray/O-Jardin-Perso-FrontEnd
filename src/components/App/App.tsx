@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppDispatch } from '../../hooks/redux';
 
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -19,7 +19,7 @@ function App() {
       dispatch(actionLogIn({ jwt, firstname }));
       addTokenJwtToAxiosInstance(jwt);
     } else {
-      console.log('rien dans le localstorage');
+      console.log('empty localstorage');
     }
   }, []);
 

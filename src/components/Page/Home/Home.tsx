@@ -1,16 +1,6 @@
-import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
-import { fetchAllTutorials } from '../../../store/thunks/tutorielsThunk';
-import { fetchFruits, fetchLegumes } from '../../../store/thunks/productThunks';
 import { Tutorial } from '../../../types/types';
 
-// interface Tutorial {
-//   id: number;
-//   picture: string;
-//   name: string;
-//   description: string;
-// }
 interface Product {
   id: number;
   name: string;

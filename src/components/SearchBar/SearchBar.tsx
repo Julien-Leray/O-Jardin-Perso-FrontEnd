@@ -2,22 +2,18 @@ import React, { useState } from 'react';
 import { Search } from 'react-feather';
 import { Link } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppDispatch } from '../../hooks/redux';
 import { fetchAllProducts } from '../../store/thunks/productThunks';
 import { Product } from '../../types/types';
 
 interface SearchBarProps {
-  // setCurrentCurrency: React.Dispatch<React.SetStateAction<CurrencyI>>;
   products: Product[];
-  // inputValue: string;
-  // setInputValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function SearchBar({ products }: SearchBarProps) {
   const [inputValue, setInputValue] = useState('');
 
   const dispatch = useAppDispatch();
-  console.log(products);
   const filteredProducts = products.filter((product) => {
     const productNameToLower = product.name.toLowerCase();
     const searchStringLower = inputValue.toLowerCase();
@@ -62,9 +58,9 @@ function SearchBar({ products }: SearchBarProps) {
           {inputValue &&
             filteredProducts.map((product) => (
               <Link
-                to={`/${
-                  product.category_id === 1 ? 'fruits' : 'legumes'
-                }/${product.name.toLowerCase()}`}
+                to={`/${product.category_id === 1 ? 'fruits' : 'legumes'}/${
+                  product.id
+                }`}
                 key={product.id}
               >
                 <li
