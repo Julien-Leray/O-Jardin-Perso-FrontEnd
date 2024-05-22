@@ -4,10 +4,12 @@ import {
   fetchFruitDetails,
   fetchLegumes,
   fetchLegumeDetails,
+  fetchAllProducts,
 } from '../thunks/productThunks';
 import { Product, ProductsState } from '../../types/types';
 
 const initialState: ProductsState = {
+  products: [],
   fruits: [],
   legumes: [],
   selectedFruit: null,
@@ -75,6 +77,20 @@ const productsSlice = createSlice({
         }
       )
       .addCase(fetchLegumeDetails.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.loading = false;
+      })
+      .addCase(fetchAllProducts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        fetchAllProducts.fulfilled,
+        (state, action: PayloadAction<Product[]>) => {
+          state.products = action.payload;
+          state.loading = false;
+        }
+      )
+      .addCase(fetchAllProducts.rejected, (state, action) => {
         state.error = action.error.message;
         state.loading = false;
       });

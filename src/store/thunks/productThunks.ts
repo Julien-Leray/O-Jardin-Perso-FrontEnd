@@ -4,6 +4,15 @@ import axios from 'axios';
 // Base URL of your API
 const API_BASE_URL = 'http://ns381313.ip-94-23-250.eu:4000/products';
 
+// Fetch all fruits & legumes
+export const fetchAllProducts = createAsyncThunk(
+  'products/fetchAllProducts',
+  async () => {
+    const response = await axios.get(`${API_BASE_URL}`);
+    return response.data;
+  }
+);
+
 // Fetch all fruits
 export const fetchFruits = createAsyncThunk(
   'products/fetchFruits',
