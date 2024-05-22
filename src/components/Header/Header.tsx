@@ -9,7 +9,6 @@ import logo from '../../assets/logo.png';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  // const [isMobile, setIsMobile] = useState(false);
 
   return (
     <header className="relative mb-6 md:mb-2">
