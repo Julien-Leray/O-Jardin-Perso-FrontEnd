@@ -3,9 +3,12 @@ export interface Product {
   name: string;
   description: string;
   picture?: string;
+  latin_name: string;
+  category_id: number;
 }
 
 export interface ProductsState {
+  products: Product[];
   fruits: Product[];
   legumes: Product[];
   selectedFruit?: Product | null;
