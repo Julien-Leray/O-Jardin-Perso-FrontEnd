@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import data from '../../../data/data';
 import tutoData from '../../../data/tuto';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
@@ -10,56 +11,66 @@ function Home() {
   const vegetables = data.filter((product) => product.category_id === 2);
 
   return (
-    <div className="bg-white text-center">
-      <div className="bg-white text-black py-2 text-sm italic">
+    <>
+      <div className="bg-white text-center py-2 text-sm italic">
         <p>Bienvenue sur notre site web dédié au jardinage!</p>
       </div>
 
-      <div className="md:flex md:justify-around">
-        <div className="bg-[#16A1AF] py-1 my-2 mx-4 rounded">
-          <h2 className="text-base text-black">Fruits </h2>
-          <ul className="text-xs flex flex-wrap justify-around rounded bg-white mx-2 w-330 py-2 m-1.5">
-            {fruits.map((product) => (
-              <li
-                className="my-0.5 p-1 border-black border-2 w-5/12  bg-white text-black"
-                key={product.id}
-              >
-                <img src={product.picture} alt={`Photo de ${product.name}`} />
-                <h3>{product.name}</h3>
-              </li>
-            ))}
-          </ul>
-
-          <p className="bg-[#F5780A] text-white rounded-full px-2 w-36 text-sm md:text-base m-auto my-1">
-            Voir plus
-          </p>
+      <div className="flex flex-col md:flex-row gap-2 md:gap-6">
+        <div className="w-full py-4">
+          <h2 className="text-xl text-center font-bold	p-2">Fruits </h2>
+          <div className="flex flex-col bg-gray-200 rounded-lg p-4">
+            <ul className="flex flex-wrap justify-around  ">
+              {fruits.map((product) => (
+                <li className="my-0.5 p-1 w-5/12 " key={product.id}>
+                  <img
+                    src={product.picture}
+                    alt={`Photo de ${product.name}`}
+                    className="my-0.5 p-1 w-5/12"
+                  />
+                  <h3>{product.name}</h3>
+                </li>
+              ))}
+            </ul>
+            <Link
+              to="/fruits"
+              className="mx-auto mt-6 py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
+            >
+              <button type="button">Voir plus de fruits</button>{' '}
+            </Link>
+          </div>
         </div>
-
-        <div className="bg-[#16A1AF] py-1 my-2 mx-4 rounded">
-          <h2 className="text-base text-black">Légumes</h2>
-          <ul className="text-xs flex flex-wrap justify-around rounded bg-white mx-2 w-330 py-2 m-1.5">
-            {vegetables.map((product) => (
-              <li
-                className="my-0.5  p-1 border-black border-2 w-5/12 bg-white text-black"
-                key={product.id}
-              >
-                <img src={product.picture} alt={`Photo de ${product.name}`} />
-                <h3>{product.name}</h3>
-              </li>
-            ))}
-          </ul>
-
-          <p className="bg-[#F5780A] text-white rounded-full px-2 w-36 text-sm md:text-base m-auto my-1">
-            Voir plus
-          </p>
+        <div className="w-full py-4">
+          <h2 className="text-xl text-center font-bold p-2">Légumes </h2>
+          <div className="flex flex-col bg-gray-200 rounded-lg p-4">
+            <ul className="flex flex-wrap justify-around  ">
+              {vegetables.map((product) => (
+                <li className="my-0.5 p-1 w-5/12 " key={product.id}>
+                  <img
+                    src={product.picture}
+                    alt={`Photo de ${product.name}`}
+                    className="my-0.5 p-1 w-5/12"
+                  />
+                  <h3>{product.name}</h3>
+                </li>
+              ))}
+            </ul>
+            <Link
+              to="/legumes"
+              className="mx-auto mt-6 py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
+            >
+              <button type="button">Voir plus de légumes</button>{' '}
+            </Link>
+          </div>
         </div>
       </div>
-      <div className="bg-[#16A1AF] py-1 my-2 mx-4 rounded ">
-        <h2 className="text-black text-base">Tuto Jardinage</h2>
-        <ul className="text-xs rounded py-3 md:flex md:justify-around m-15 flex flex-col items-center">
+
+      <div className=" flex flex-col rounded  py-6">
+        <h2 className="text-xl text-center font-bold p-4">Tutos jardinage</h2>
+        <ul className="m-15 flex flex-crow items-center  gap-2 md:gap-6">
           {tutoData.map((tuto) => (
             <li
-              className="my-0.5 mx-0.5 p-1 text-black m-1.5 w-full"
+              className="flex flex-col bg-gray-200  p-4   w-full rounded-lg"
               key={tuto.id}
             >
               <img
@@ -67,16 +78,19 @@ function Home() {
                 src={tuto.picture}
                 alt={`Tuto de ${tuto.title}`}
               />
-              <h3 className=" bg-white p-1">{tuto.title}</h3>
-              <p className="p-1">{tuto.article}</p>
-              <p className="bg-[#F5780A] rounded-full px-2 w-36 text-sm md:text-base m-auto my-1 text-white">
-                Lire la suite
-              </p>
+              <h3 className="font-bold">{tuto.title}</h3>
+              {/* <p className="p-1">{tuto.article}</p> */}
+              <Link
+                to="/tutos"
+                className="mx-auto py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
+              >
+                <button type="button">Lire la suite</button>
+              </Link>
             </li>
           ))}
         </ul>
       </div>
-    </div>
+    </>
   );
 }
 
