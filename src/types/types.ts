@@ -28,8 +28,8 @@ export interface SquareMakerProps {
 export interface Tutorials {
   id: number;
   picture: string;
-  name: string;
-  description: string;
+  title: string;
+  article: string;
 }
 
 export interface TutorialsState {
