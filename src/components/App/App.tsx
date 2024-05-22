@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -10,7 +10,6 @@ import { actionLogIn } from '../../store/reducers/user';
 import { addTokenJwtToAxiosInstance } from '../../axios/axios';
 
 function App() {
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -33,7 +32,6 @@ function App() {
       </div>
       <div>
         <Footer />
-
       </div>
     </div>
   );

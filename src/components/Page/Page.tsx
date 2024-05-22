@@ -1,4 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import actionCheckLogin from '../../store/thunks/checkLogin';
 
@@ -22,6 +24,8 @@ import PolitiqueConfidentialite from './PolitiqueConfidentialite/PolitiqueConfid
 import Contact from './Contact/Contact';
 
 import { actionChangeCredential } from '../../store/reducers/user';
+import { fetchAllTutorials } from '../../store/thunks/tutorielsThunk';
+import { fetchFruits, fetchLegumes } from '../../store/thunks/productThunks';
 
 function Page() {
   const location = useLocation();
@@ -35,13 +39,30 @@ function Page() {
     (state) => state.user.credentials.password
   );
 
+  useEffect(() => {
+    dispatch(fetchAllTutorials());
+    dispatch(fetchLegumes());
+    dispatch(fetchFruits());
+  }, []);
+
+  const { tutorials } = useAppSelector((state) => state.tutoriels);
+  const { legumes, fruits } = useAppSelector((state) => state.products);
+  const { products } = useAppSelector((state) => state.products);
+
   return (
     <div className="page">
       {location.pathname !== '/connexion' &&
-        location.pathname !== '/inscription' && <SearchBar />}
+        location.pathname !== '/inscription' && (
+          <SearchBar products={products} />
+        )}
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <Home tutorials={tutorials} legumes={legumes} fruits={fruits} />
+          }
+        />
         <Route path="/fruits" element={<Fruits />} />
         <Route path="/fruits/:nomFruit" element={<FruitDetail />} />
         <Route path="/legumes" element={<Legumes />} />

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import { fetchAllTutorials } from '../../../store/thunks/tutorielsThunk';
 import { fetchFruits, fetchLegumes } from '../../../store/thunks/productThunks';
+import { Tutorial } from '../../../types/types';
 
 // interface Tutorial {
 //   id: number;
@@ -15,43 +16,32 @@ interface Product {
   name: string;
   description: string;
 }
-function Home() {
-  const dispatch = useAppDispatch();
-  const { tutorials } = useAppSelector((state) => state.tutoriels);
-  const { legumes } = useAppSelector((state) => state.products);
-  const { fruits } = useAppSelector((state) => state.products);
-
-  // const filteredProducts = products.filter((product) => {
-
-  //   return productNameToLower.includes(searchStringLower);
-  // });
-
+interface HomeProps {
+  tutorials: Tutorial[];
+  legumes: Product[];
+  fruits: Product[];
+}
+function Home({ tutorials, legumes, fruits }: HomeProps) {
   const getRandomTutos = () => {
     if (tutorials.length <= 2) return tutorials;
     const twoTutoOnHome = [...tutorials].sort(() => 0.5 - Math.random());
     return twoTutoOnHome.slice(0, 3);
   };
 
-  const getRandomFruits = (fruits: Product[]): Product[] => {
+  const getRandomFruits = () => {
     if (fruits.length <= 2) return fruits;
     const fruitsOnHome = [...fruits].sort(() => 0.5 - Math.random());
     return fruitsOnHome.slice(0, 4);
   };
-  const getRandomLegumes = (legumes: Product[]): Product[] => {
+  const getRandomLegumes = () => {
     if (legumes.length <= 2) return legumes;
     const legumeOnHome = [...legumes].sort(() => 0.5 - Math.random());
     return legumeOnHome.slice(0, 4);
   };
 
   const randomTutos = getRandomTutos();
-  console.log(randomTutos);
-  const randomLegumes = getRandomLegumes(legumes);
-  const randomFruits = getRandomFruits(fruits);
-  useEffect(() => {
-    dispatch(fetchAllTutorials());
-    dispatch(fetchLegumes());
-    dispatch(fetchFruits());
-  }, [dispatch]);
+  const randomLegumes = getRandomLegumes();
+  const randomFruits = getRandomFruits();
 
   return (
     <>
