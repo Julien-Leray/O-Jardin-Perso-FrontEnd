@@ -25,14 +25,14 @@ const getRandomTutos = (tuto: Tutorials[]): Tutorials[] => {
 
 const getRandomFruits = (fruits: Product[]): Product[] => {
   if (fruits.length <= 2) return fruits;
-  const twoTutoOnHome= [...fruits].sort(() => 0.5 - Math.random());
-  return twoTutoOnHome.slice(0, 2);
+  const fruitsOnHome= [...fruits].sort(() => 0.5 - Math.random());
+  return fruitsOnHome.slice(0, 2);
 };
 
 const getRandomLegumes = (legumes: Product[]): Product[] => {
   if (legumes.length <= 2) return legumes;
-  const twoTutoOnHome= [...legumes].sort(() => 0.5 - Math.random());
-  return twoTutoOnHome.slice(0, 2);
+  const legumeOnHome= [...legumes].sort(() => 0.5 - Math.random());
+  return legumeOnHome.slice(0, 2);
 };
 
 function Home() {

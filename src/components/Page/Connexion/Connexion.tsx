@@ -1,10 +1,12 @@
 import React, { FormEvent } from 'react';
 import { User, Lock, XCircle, Info } from 'react-feather';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Input from './ConnexionInput';
-import { useAppSelector } from '../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import actionCheckLogin from '../../../store/thunks/checkLogin';
 
 interface LoginFormProps {
+  logged: boolean;
   email: string;
   password: string;
   changeField: (value: string, name: 'email' | 'password') => void;
@@ -12,26 +14,30 @@ interface LoginFormProps {
 }
 
 function Connexion({
+  logged,
   email,
   password,
   changeField,
   handleLogin,
 }: LoginFormProps) {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    handleLogin();
-  };
-
   const handleChangeField = (name: 'email' | 'password') => (value: string) => {
     changeField(value, name);
   };
 
   const loginError = useAppSelector((state) => state.user.error);
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1); // Navigue à l'emplacement précédent
   };
-
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleLogin();
+  };
+  if (logged) {
+    navigate('/mon_jardin');
+  }
   return (
     <div className="flex flex-col justify-center rounded-lg items-center">
       <button type="button" className="self-end pr-10" onClick={goBack}>
@@ -78,14 +84,15 @@ function Connexion({
           >
             Continuer
           </button>
-          <NavLink to="/inscription">
+
+          <Link to="/inscription">
             <button
               type="button"
               className="w-full px-6 py-3 rounded-full bg-[#F6D50E] hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2"
             >
               Créer un compte
             </button>
-          </NavLink>
+          </Link>
         </form>
       </div>
     </div>

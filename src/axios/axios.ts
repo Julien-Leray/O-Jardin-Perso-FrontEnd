@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  // baseURL: 'https://orecipes-api.onrender.com/api/',
+  baseURL: 'http://locahost:4000/',
 });
 
 export function addTokenJwtToAxiosInstance(token: string) {
