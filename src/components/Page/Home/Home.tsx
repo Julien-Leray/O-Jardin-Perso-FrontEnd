@@ -38,16 +38,14 @@ const getRandomLegumes = (legumes: Product[]): Product[] => {
 
 function Home() {
   const dispatch = useAppDispatch();
-  const { tuto } = useAppSelector((state) => state.tutoriels);
 
+  const { tuto } = useAppSelector((state) => state.tutoriels);
   const randomTutos = getRandomTutos(tuto);
 
   const { legumes } = useAppSelector((state) => state.products);
-
   const randomLegumes = getRandomLegumes(legumes);
 
   const { fruits } = useAppSelector((state) => state.products);
-
   const randomFruits = getRandomFruits(fruits);
 
   useEffect(() => {
@@ -81,7 +79,7 @@ function Home() {
               to="/fruits"
               className="mx-auto mt-6 py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
             >
-              <button type="button">Voir plus de fruits</button>{' '}
+              <button type="button">Voir plus de fruits</button>
             </Link>
           </div>
         </div>
@@ -111,7 +109,7 @@ function Home() {
       </div>
       <div className=" flex flex-col rounded  py-6">
         <h2 className="text-xl text-center font-bold p-4">Tutos jardinage</h2>
-        <ul className="m-15 flex flex-crow items-center gap-2 md:gap-6">
+        <ul className="m-15 flex flex-col md:flex-row items-center gap-2 md:gap-6">
           {randomTutos.map((tutoriels) => (
             <li
               className="flex flex-col bg-gray-200 p-4 w-full rounded-lg"
