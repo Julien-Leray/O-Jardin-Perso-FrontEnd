@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import { fetchTutorials} from '../../../store/reducers/tutoriels';
-import { fetchFruits, fetchLegumes } from '../../../store/reducers/products';
+import products, { fetchFruits, fetchLegumes } from '../../../store/reducers/products';
 import { Link } from 'react-router-dom';
 
 interface Tutorials {
@@ -11,9 +11,27 @@ interface Tutorials {
   description: string;
 }
 
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+}
+
 const getRandomTutos = (tuto: Tutorials[]): Tutorials[] => {
   if (tuto.length <= 2) return tuto;
   const twoTutoOnHome= [...tuto].sort(() => 0.5 - Math.random());
+  return twoTutoOnHome.slice(0, 2);
+};
+
+const getRandomFruits = (fruits: Product[]): Product[] => {
+  if (fruits.length <= 2) return fruits;
+  const twoTutoOnHome= [...fruits].sort(() => 0.5 - Math.random());
+  return twoTutoOnHome.slice(0, 2);
+};
+
+const getRandomLegumes = (legumes: Product[]): Product[] => {
+  if (legumes.length <= 2) return legumes;
+  const twoTutoOnHome= [...legumes].sort(() => 0.5 - Math.random());
   return twoTutoOnHome.slice(0, 2);
 };
 
@@ -26,7 +44,11 @@ function Home() {
 
   const {legumes} = useAppSelector((state) => state.products);
 
+  const randomLegumes = getRandomLegumes(legumes);
+
   const { fruits } = useAppSelector((state) => state.products);
+
+  const randomFruits= getRandomFruits(fruits);
 
   useEffect(() => {
     dispatch(fetchTutorials());
@@ -34,9 +56,6 @@ function Home() {
     dispatch(fetchFruits());
   }, [dispatch]);
 
-
-  // const fruitsFilter = data.filter(product => product.category_id === 1);
-  // const vegetablesFilter = data.filter(product => product.category_id === 2);
   
   return (
 
@@ -52,7 +71,7 @@ function Home() {
       <div className="bg-[#16A1AF] py-1 my-2 mx-4 rounded">
               <h2 className="text-base text-black">Fruits </h2>
             <ul className="text-xs flex flex-wrap justify-around rounded bg-white mx-2 w-330 py-2 m-1.5">
-            {fruits.map((product)=>(
+            {randomFruits.map((product)=>(
               <li className= "my-0.5 p-1 border-black border-2 w-5/12  bg-white text-black" key={product.id}>
                 {/* <img src={product.picture} alt={`Photo de ${product.name}`}  /> */}
                 <h3>{product.name}</h3>
@@ -62,14 +81,14 @@ function Home() {
 
             </ul> 
 
-            <p className="bg-[#F5780A] text-white rounded-full px-2 w-36 text-sm md:text-base m-auto my-1" >Voir plus</p>
+            <Link to={'/fruits'} className="bg-[#F5780A] text-white rounded-full px-2 w-36 text-sm md:text-base m-auto my-1" >Voir plus</Link>
 
       </div>
 
           <div className="bg-[#16A1AF] py-1 my-2 mx-4 rounded">
             <h2 className="text-base text-black">Légumes</h2>
             <ul className="text-xs flex flex-wrap justify-around rounded bg-white mx-2 w-330 py-2 m-1.5">
-            {legumes.map((product)=>(
+            {randomLegumes.map((product)=>(
               <li className= "my-0.5  p-1 border-black border-2 w-5/12 bg-white text-black" key={product.id}>
                 {/* <img src={product.picture} alt={`Photo de ${product.name}`}  /> */}
                 <h3>{product.name}</h3>
@@ -79,7 +98,7 @@ function Home() {
 
             </ul> 
 
-            <p className="bg-[#F5780A] text-white rounded-full px-2 w-36 text-sm md:text-base m-auto my-1" >Voir plus</p>
+            <Link to={'/legumes'} className="bg-[#F5780A] text-white rounded-full px-2 w-36 text-sm md:text-base m-auto my-1" >Voir plus</Link>
           
           </div>
       </div>
