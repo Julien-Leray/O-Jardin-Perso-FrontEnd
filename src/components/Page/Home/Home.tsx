@@ -1,15 +1,63 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import data from '../../../data/data';
 import tutoData from '../../../data/tuto';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
-import product from '../../../store/reducers/products';
+import { fetchTutorials} from '../../../store/reducers/tutoriels';
+import { fetchFruits, fetchLegumes } from '../../../store/reducers/products';
+
+interface Tutorials {
+  id: number;
+  picture: string;
+  name: string;
+  description: string;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+}
+
+const getRandomTutos = (tuto: Tutorials[]): Tutorials[] => {
+  if (tuto.length <= 2) return tuto;
+  const twoTutoOnHome= [...tuto].sort(() => 0.5 - Math.random());
+  return twoTutoOnHome.slice(0, 2);
+};
+
+const getRandomFruits = (fruits: Product[]): Product[] => {
+  if (fruits.length <= 2) return fruits;
+  const fruitsOnHome= [...fruits].sort(() => 0.5 - Math.random());
+  return fruitsOnHome.slice(0, 2);
+};
+
+const getRandomLegumes = (legumes: Product[]): Product[] => {
+  if (legumes.length <= 2) return legumes;
+  const legumeOnHome= [...legumes].sort(() => 0.5 - Math.random());
+  return legumeOnHome.slice(0, 2);
+};
 
 function Home() {
-  const fruits = data.filter((product) => product.category_id === 1);
-  const vegetables = data.filter((product) => product.category_id === 2);
 
+  const dispatch = useAppDispatch();
+  const {tuto} = useAppSelector((state) => state.tutoriels);
+
+  const randomTutos = getRandomTutos(tuto);
+
+  const {legumes} = useAppSelector((state) => state.products);
+
+  const randomLegumes = getRandomLegumes(legumes);
+
+  const { fruits } = useAppSelector((state) => state.products);
+
+  const randomFruits= getRandomFruits(fruits);
+
+  useEffect(() => {
+    dispatch(fetchTutorials());
+    dispatch(fetchLegumes());
+    dispatch(fetchFruits());
+  }, [dispatch]);
+
+  
   return (
     <>
       <div className="bg-white text-center py-2 text-sm italic">
@@ -21,10 +69,9 @@ function Home() {
           <h2 className="text-xl text-center font-bold	p-2">Fruits </h2>
           <div className="flex flex-col bg-gray-200 rounded-lg p-4">
             <ul className="flex flex-wrap justify-around  ">
-              {fruits.map((product) => (
-                <li className="my-0.5 p-1 w-5/12 " key={product.id}>
+            {randomFruits.map((product)=>(                <li className="my-0.5 p-1 w-5/12 " key={product.id}>
                   <img
-                    src={product.picture}
+                    // src={product.picture}
                     alt={`Photo de ${product.name}`}
                     className="my-0.5 p-1 w-5/12"
                   />
@@ -44,10 +91,9 @@ function Home() {
           <h2 className="text-xl text-center font-bold p-2">Légumes </h2>
           <div className="flex flex-col bg-gray-200 rounded-lg p-4">
             <ul className="flex flex-wrap justify-around  ">
-              {vegetables.map((product) => (
-                <li className="my-0.5 p-1 w-5/12 " key={product.id}>
+            {randomLegumes.map((product)=>(                <li className="my-0.5 p-1 w-5/12 " key={product.id}>
                   <img
-                    src={product.picture}
+                    // src={product.picture}
                     alt={`Photo de ${product.name}`}
                     className="my-0.5 p-1 w-5/12"
                   />
@@ -64,33 +110,29 @@ function Home() {
           </div>
         </div>
       </div>
-
-      <div className=" flex flex-col rounded  py-6">
-        <h2 className="text-xl text-center font-bold p-4">Tutos jardinage</h2>
-        <ul className="m-15 flex flex-crow items-center  gap-2 md:gap-6">
-          {tutoData.map((tuto) => (
+      <div className="bg-[#16A1AF] py-1 my-2 mx-4 rounded ">
+        <h2 className="text-black text-base">Tuto Jardinage</h2>
+        <ul className="text-xs rounded py-3 md:flex md:justify-around m-15 flex flex-col items-center">
+          {randomTutos.map((tutoriels) => (
             <li
-              className="flex flex-col bg-gray-200  p-4   w-full rounded-lg"
-              key={tuto.id}
+              className="my-0.5 mx-0.5 p-1 text-black m-1.5 w-full"
+              key={tutoriels.id}
             >
               <img
                 className="p-1"
-                src={tuto.picture}
-                alt={`Tuto de ${tuto.title}`}
+                src={tutoriels.picture}
+                alt={`Tuto de ${tutoriels.title}`}
               />
-              <h3 className="font-bold">{tuto.title}</h3>
-              {/* <p className="p-1">{tuto.article}</p> */}
-              <Link
-                to="/tutos"
-                className="mx-auto py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
-              >
-                <button type="button">Lire la suite</button>
-              </Link>
+              <h3 className=" bg-white p-1">{tuto.title}</h3>
+              <p className="p-1">{tutoriels.article}</p>
+              <p className="bg-[#F5780A] rounded-full px-2 w-36 text-sm md:text-base m-auto my-1 text-white">
+                Lire la suite
+              </p>
             </li>
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 }
 
