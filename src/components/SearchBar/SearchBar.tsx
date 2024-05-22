@@ -19,11 +19,11 @@ function SearchBar() {
     (state) => state.products
   );
 
-  const filteredProducts = products.filter((product) => {
-    const productNameToLower = product.name.toLowerCase();
-    const searchStringLower = inputValue.toLowerCase();
-    return productNameToLower.includes(searchStringLower);
-  });
+  // const filteredProducts = products.filter((product) => {
+  //   const productNameToLower = product.name.toLowerCase();
+  //   const searchStringLower = inputValue.toLowerCase();
+  //   return productNameToLower.includes(searchStringLower);
+  // });
 
   return (
     <div className="w-full bg-[#F6D50E] py-8">
