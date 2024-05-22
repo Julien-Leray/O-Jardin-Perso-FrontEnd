@@ -4,15 +4,18 @@ import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { fetchLegumeDetails } from '../../../../store/thunks/productThunks';
 
 function LegumeDetail() {
-  const { id } = useParams();
+  // Utilisez nom_legume pour correspondre à la clé définie dans la route
+  const { nomLegume } = useParams();
   const dispatch = useAppDispatch();
   const { selectedLegume, loading, error } = useAppSelector(
     (state) => state.products
   );
 
   useEffect(() => {
-    if (id) dispatch(fetchLegumeDetails(id));
-  }, [id, dispatch]);
+    if (nomLegume) {
+      dispatch(fetchLegumeDetails(nomLegume)); // Utilisez nom_legume pour le dispatch
+    }
+  }, [nomLegume, dispatch]);
 
   if (loading) return <div>Chargement...</div>;
   if (error) return <div>Erreur : {error}</div>;

@@ -43,9 +43,9 @@ function Page() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/fruits" element={<Fruits />} />
-        <Route path="/fruits/:nom_fruit" element={<FruitDetail />} />
+        <Route path="/fruits/:nomFruit" element={<FruitDetail />} />
         <Route path="/legumes" element={<Legumes />} />
-        <Route path="/legumes/:nom_legume" element={<LegumeDetail />} />
+        <Route path="/legumes/:nomLegume" element={<LegumeDetail />} />
         <Route path="/tutos" element={<Tutoriels />} />
         <Route path="/tutos/:titre" element={<TutorielDetail />} />
         <Route
