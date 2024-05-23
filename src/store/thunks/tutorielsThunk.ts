@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import axiosInstance from '../../axios/axios';
 
-const API_BASE_URL_TUTOS = 'http://localhost:4000/tutorials/';
+const API_BASE_URL_TUTOS = 'http://localhost:4000/api/tutorials/';
 // const API_BASE_URL = 'http://ns381313.ip-94-23-250.eu:4000/tutorials/';
 
 // export const fetchTutorials = createAsyncThunk(

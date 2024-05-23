@@ -24,7 +24,7 @@ function Fruits() {
           >
             <img
               className="w-full h-48 object-cover container mx-auto mt-5 mb-5 p-5"
-              src={`http://localhost:4000${fruit.picture}`}
+              src={`http://localhost:4000/api${fruit.picture}`}
               alt={fruit.name}
             />
             <div className="px-6 py-4">
