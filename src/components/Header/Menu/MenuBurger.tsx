@@ -10,7 +10,7 @@ interface MenuBurgerProps {
 
 function MenuBurger({ isOpen, setIsOpen }: MenuBurgerProps) {
   return (
-    <nav className="absolute z-40 h-dvh w-full p-6 mt-6 flex flex-col items-center bg-white text-2xl md:hidden">
+    <nav className="absolute z-40 min-h-max w-full p-6 my-6 flex flex-col items-center bg-white text-2xl md:hidden">
       <button
         className="self-end		"
         type="button"
@@ -21,8 +21,8 @@ function MenuBurger({ isOpen, setIsOpen }: MenuBurgerProps) {
         <XCircle size="40" />
       </button>
 
-      <Menu />
-      <ConnexionBurger />
+      <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
+      <ConnexionBurger isOpen={isOpen} setIsOpen={setIsOpen} />
     </nav>
   );
 }

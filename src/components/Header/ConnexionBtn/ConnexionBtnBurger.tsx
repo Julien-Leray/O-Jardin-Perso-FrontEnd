@@ -1,10 +1,15 @@
 import React from 'react';
 import ConnexionBtn from './ConnexionBtn';
 
-function ConnexionBtnBurger() {
+interface ConnexionBtnBurgerProps {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function ConnexionBtnBurger({ isOpen, setIsOpen }: ConnexionBtnBurgerProps) {
   return (
     <div className="md:hidden pt-6">
-      <ConnexionBtn />
+      <ConnexionBtn isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 }
