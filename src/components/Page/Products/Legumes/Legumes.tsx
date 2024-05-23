@@ -26,7 +26,7 @@ function Legumes() {
           >
             <img
               className="w-full h-48 object-cover container mx-auto mt-5 mb-5 p-5"
-              src={`http://localhost:4000/api${legume.picture}`} // Assurez-vous que le chemin d'accès est correct
+              src={`http://localhost:4000/${legume.picture}`} // Assurez-vous que le chemin d'accès est correct
               alt={legume.name}
             />
             <div className="px-6 py-4">
