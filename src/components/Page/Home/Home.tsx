@@ -96,7 +96,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
             >
               {tutoriel.title}
               <img
-                src={`http://localhost:4000/api${tutoriel.picture}`}
+                src={`http://localhost:4000${tutoriel.picture}`}
                 alt={`Tuto de ${tutoriel.title}`}
                 className="mx-auto w-full max-w-md rounded-lg shadow-lg"
               />
