@@ -1,34 +1,33 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Tutorials, TutorialsState } from '../../types/types';
-import { fetchTutorials } from '../thunks/tutorielsThunk';
+import { PayloadAction, createReducer, createAction } from '@reduxjs/toolkit';
+import { Tutorial } from '../../types/types';
+import { fetchAllTutorials } from '../thunks/tutorielsThunk';
 
-const initialState: TutorialsState = {
-  tuto: [],
+interface TutorialState {
+  tutorials: Tutorial[];
+  loading: boolean;
+  error: string | null | undefined;
+}
+
+const initialState: TutorialState = {
+  tutorials: [],
   loading: false,
   error: null,
 };
 
+export const actionAllTutos = createAction<[]>('tuto/ALL');
 
-const tutorialsSlice = createSlice({
-  name: 'tutorials',
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchTutorials.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(
-        fetchTutorials.fulfilled,
-        (state, action: PayloadAction<Tutorials[]>) => {
-          state.tuto = action.payload;
-          state.loading = false;
-        }
-      )
-      .addCase(fetchTutorials.rejected, (state, action) => {
-        state.error = action.error.message;
-        state.loading = false;
-      });
-  },
+const tutoReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(fetchAllTutorials.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(fetchAllTutorials.fulfilled, (state, action) => {
+      state.tutorials = action.payload;
+      state.loading = false;
+    })
+    .addCase(fetchAllTutorials.rejected, (state, action) => {
+      state.error = action.error.message;
+      state.loading = false;
+    });
 });
-export default tutorialsSlice.reducer;
+export default tutoReducer;

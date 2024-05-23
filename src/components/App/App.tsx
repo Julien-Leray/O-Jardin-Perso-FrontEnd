@@ -10,7 +10,6 @@ import { actionLogIn } from '../../store/reducers/user';
 import { addTokenJwtToAxiosInstance } from '../../axios/axios';
 
 function App() {
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -20,7 +19,7 @@ function App() {
       dispatch(actionLogIn({ jwt, firstname }));
       addTokenJwtToAxiosInstance(jwt);
     } else {
-      console.log('rien dans le localstorage');
+      console.log('empty localstorage');
     }
   }, []);
 
@@ -33,7 +32,6 @@ function App() {
       </div>
       <div>
         <Footer />
-
       </div>
     </div>
   );
