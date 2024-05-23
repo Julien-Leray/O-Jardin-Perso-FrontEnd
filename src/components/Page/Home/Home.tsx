@@ -5,12 +5,14 @@ interface Product {
   id: number;
   name: string;
   description: string;
+  picture?: string;
 }
 interface HomeProps {
   tutorials: Tutorial[];
   legumes: Product[];
   fruits: Product[];
 }
+
 function Home({ tutorials, legumes, fruits }: HomeProps) {
   const getRandomTutos = () => {
     if (tutorials.length <= 2) return tutorials;
@@ -20,6 +22,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
 
   const getRandomFruits = () => {
     if (fruits.length <= 2) return fruits;
+    console.log(fruits)
     const fruitsOnHome = [...fruits].sort(() => 0.5 - Math.random());
     return fruitsOnHome.slice(0, 4);
   };
@@ -33,6 +36,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
   const randomLegumes = getRandomLegumes();
   const randomFruits = getRandomFruits();
 
+
   return (
     <>
       <div className="bg-white text-center py-2 text-sm italic">
@@ -45,11 +49,11 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
             <ul className="flex flex-wrap justify-around  ">
               {randomFruits.map((product) => (
                 <li className="my-0.5 p-1 w-5/12 " key={product.id}>
-                  {/* <img
-                    // src={product.picture}
+                  <img
+                    src={`http://ns381313.ip-94-23-250.eu:4000${product.picture}`}
                     alt={`Photo de ${product.name}`}
                     className="my-0.5 p-1 w-5/12"
-                  /> */}
+                  />
                   <h3>{product.name}</h3>
                 </li>
               ))}
@@ -68,11 +72,11 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
             <ul className="flex flex-wrap justify-around  ">
               {randomLegumes.map((product) => (
                 <li className="my-0.5 p-1 w-5/12 " key={product.id}>
-                  {/* <img
-                    // src={product.picture}
+                  <img
+                    src={`http://ns381313.ip-94-23-250.eu:4000${product.picture}`}
                     alt={`Photo de ${product.name}`}
                     className="my-0.5 p-1 w-5/12"
-                  /> */}
+                  />
                   <h3>{product.name}</h3>
                 </li>
               ))}
