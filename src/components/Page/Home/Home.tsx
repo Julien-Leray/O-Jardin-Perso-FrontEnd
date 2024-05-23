@@ -40,8 +40,8 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
       </div>
       <div className="flex flex-col md:flex-row gap-2 md:gap-6">
         <div className="w-full py-4">
-          <h2 className="text-xl text-center font-bold  p-2">Fruits </h2>
-          <div className="flex flex-col bg-gray-200 rounded-lg p-4">
+          <h2 className="text-xl text-center font-bold p-2">Fruits </h2>
+          <div className="flex flex-col bg-gray-200 rounded-lg ">
             <ul className="flex flex-wrap justify-around  ">
               {randomFruits.map((product) => (
                 <li className="my-0.5 p-1 w-5/12 " key={product.id}>
