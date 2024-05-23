@@ -3,7 +3,6 @@ import { User, Lock, XCircle, Info } from 'react-feather';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from './ConnexionInput';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-// import actionCheckLogin from '../../../store/thunks/checkLogin';
 
 interface LoginFormProps {
   logged: boolean;
@@ -25,7 +24,6 @@ function Connexion({
   };
 
   const loginError = useAppSelector((state) => state.user.error);
-  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const goBack = () => {

@@ -1,9 +1,9 @@
 import { PayloadAction, createReducer, createAction } from '@reduxjs/toolkit';
-import { Tutorials } from '../../types/types';
+import { Tutorial } from '../../types/types';
 import { fetchAllTutorials } from '../thunks/tutorielsThunk';
 
 interface TutorialState {
-  tutorials: Tutorials[];
+  tutorials: Tutorial[];
   loading: boolean;
   error: string | null | undefined;
 }

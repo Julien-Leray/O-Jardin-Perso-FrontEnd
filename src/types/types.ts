@@ -25,7 +25,7 @@ export interface SquareMakerProps {
 
 // Tutorials
 
-export interface Tutorials {
+export interface Tutorial {
   id: number;
   picture: string;
   title: string;
@@ -33,7 +33,7 @@ export interface Tutorials {
 }
 
 export interface TutorialsState {
-  tuto: Tutorials[];
+  tuto: Tutorial[];
   loading: boolean;
   error: string | null | undefined;
 }
