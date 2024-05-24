@@ -1,8 +1,8 @@
-// src/components/PotagerVirtuel.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
-import { SquareMakerProps } from '../../../../types/types';
+import { SquareMakerProps, Product } from '../../../../types/types';
+import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
 
 function SquareMaker({ horizontal, vertical }: SquareMakerProps) {
   const squares = Array.from({ length: horizontal * vertical }).map(
@@ -25,6 +25,12 @@ function SquareMaker({ horizontal, vertical }: SquareMakerProps) {
 function PotagerVirtuel() {
   const dispatch = useAppDispatch();
   const { horizontal, vertical } = useAppSelector((state) => state.potager);
+  const allProducts = useAppSelector((state) => state.products.products);
+  const [garden, setGarden] = useState<Product[]>([]);
+
+  const addToGarden = (product: Product) => {
+    setGarden((prevGarden) => [...prevGarden, product]);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -52,6 +58,24 @@ function PotagerVirtuel() {
           </label>
         </div>
         <SquareMaker horizontal={horizontal} vertical={vertical} />
+      </div>
+      <PotagerSearchBar products={allProducts} addToGarden={addToGarden} />
+      <div className="mt-6 w-full">
+        <h2 className="text-center font-bold mb-4">Mon Jardin</h2>
+        <ul className="flex flex-wrap justify-center">
+          {garden.map((product) => (
+            <li key={product.id} className="w-1/4 p-2">
+              <div className="border p-4 rounded">
+                <img
+                  src={`http://localhost:4000${product.picture}`}
+                  alt={product.name}
+                  className="w-full h-32 object-cover"
+                />
+                <div className="text-center mt-2">{product.name}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
