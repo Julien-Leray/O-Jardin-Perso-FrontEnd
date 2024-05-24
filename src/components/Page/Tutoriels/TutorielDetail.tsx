@@ -11,7 +11,7 @@ interface TutoDetailProps {
 function TutorielDetail({ tutorials }: TutoDetailProps) {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const tutorial = tutorials.find((tuto) => tuto.id.toString() === id);
+  const tutorial = tutorials.find((tuto) => tuto.id);
 
   useEffect(() => {
     if (id) {
