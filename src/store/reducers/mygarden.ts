@@ -1,49 +1,42 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
-import myGardenThunks from '../thunks/myGardenThunks.ts';
 import { Product } from '../../types/types';
+import actionGetDataUser from '../thunks/myGardenThunks';
 
 // -- STATE intial et son interface --
 interface MyGardenState {
-  product_id: [];
+  token: string;
+  product_id: Product[];
   user_id: [];
-  loading: false;
-  error: null;
+  loading: boolean;
+  error: string | null | undefined;
 }
 
-export const initialState: MyGardenState = {};
+const initialState: MyGardenState = {
+  token: '',
+  product_id: [],
+  user_id: [],
+  loading: false,
+  error: null,
+};
 
-export const actionChangeCredential = createAction<{
-  name: 'email' | 'password';
-  value: string;
-}>('user/CHANGE_CREDENTIAL');
+export const actionDisplayDataUser = createAction<{
+  product_id: Product[];
+  user_id: [];
+  token: '';
+}>('user/DISPLAY_DATA');
 
-export const actionLogOut = createAction('user/LOGOUT');
-export const actionLogIn = createAction<{
-  jwt: string;
-  firstname: string;
-}>('user/LOGIN');
-
-const userReducer = createReducer(initialState, (builder) => {
+const myGardenReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(actionChangeCredential, (state, action) => {
-      state.credentials[action.payload.name] = action.payload.value;
-    })
-    .addCase(actionCheckLogin.fulfilled, (state, action) => {
-      state.logged = true;
-      state.token = action.payload.token;
+    .addCase(actionGetDataUser.fulfilled, (state, action) => {
+      // state.token = action.payload.token;
+      state.product_id = action.payload.productId;
+      state.user_id = action.payload.userId;
       state.error = null;
+      console.log(action.payload.productId, action.payload.userId);
     })
-    .addCase(actionCheckLogin.rejected, (state) => {
+    .addCase(actionGetDataUser.rejected, (state) => {
       state.error = 'Erreur de connexion';
-    })
-    .addCase(actionLogOut, (state) => {
-      state.logged = false;
-    })
-    .addCase(actionLogIn, (state, action) => {
-      state.logged = true;
-      state.token = action.payload.jwt;
-      state.firstname = action.payload.firstname;
     });
 });
 
-export default userReducer;
+export default myGardenReducer;

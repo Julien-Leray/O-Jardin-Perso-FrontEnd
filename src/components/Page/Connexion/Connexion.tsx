@@ -3,6 +3,7 @@ import { User, Lock, XCircle, Info } from 'react-feather';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from './ConnexionInput';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import actionGetDataUser from '../../../store/thunks/myGardenThunks';
 
 interface LoginFormProps {
   logged: boolean;
@@ -24,6 +25,7 @@ function Connexion({
   };
 
   const loginError = useAppSelector((state) => state.user.error);
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const goBack = () => {
@@ -35,6 +37,7 @@ function Connexion({
   };
   if (logged) {
     navigate('/mon_jardin');
+    dispatch(actionGetDataUser());
   }
   return (
     <div className="flex flex-col justify-center rounded-lg items-center">

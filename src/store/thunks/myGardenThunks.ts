@@ -7,15 +7,15 @@ const actionGetDataUser = createAsyncThunk(
   'user/GET_DATA',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
+    console.log('my token:', state.user.token);
+
     const response = await axiosInstance.get('/me/garden', {
-      token: state.user.token,
+      data: state.user.token,
     });
-    const { user_id, product_id } = response.data;
+    const { userId, productId } = response.data;
+    console.log('my response:', userId, productId);
 
-    // addTokenJwtToAxiosInstance(token);
-    // addTokenAndPseudoToLocalStorage(token, firstname);
-
-    return { user_id, product_id };
+    return { userId, productId };
   }
 );
 

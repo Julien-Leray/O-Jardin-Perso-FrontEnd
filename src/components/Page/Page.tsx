@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import actionCheckLogin from '../../store/thunks/checkLogin';
+import actionGetDataUser from '../../store/thunks/myGardenThunks';
 
 import Home from './Home/Home';
 import Fruits from './Products/Fruits/Fruits';
@@ -46,8 +47,9 @@ function Page() {
   }, []);
 
   const { tutorials } = useAppSelector((state) => state.tutoriels);
-  const { legumes, fruits } = useAppSelector((state) => state.products);
-  const { products } = useAppSelector((state) => state.products);
+  const { products, legumes, fruits } = useAppSelector(
+    (state) => state.products
+  );
 
   return (
     <div className="page">
@@ -94,7 +96,7 @@ function Page() {
           }
         />
         <Route path="/inscription" element={<Inscription />} />
-        {logged && <Route path="/mon_jardin" element={<MonJardin />} />}
+        <Route path="/mon_jardin" element={logged && <MonJardin />} />
 
         <Route
           path="/mon_jardin/potager-virtuel"
