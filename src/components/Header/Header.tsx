@@ -9,7 +9,6 @@ import logo from '../../assets/logo.png';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  // const [isMobile, setIsMobile] = useState(false);
 
   return (
     <header className="relative mb-6 md:mb-2">
@@ -33,7 +32,13 @@ function Header() {
           )}
         </button>
       </div>
-      <NavLink className="" to="/">
+      <NavLink
+        className=""
+        to="/"
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
+      >
         <img
           src={logo}
           className="w-1/2 mx-auto md:w-64 pt-6"

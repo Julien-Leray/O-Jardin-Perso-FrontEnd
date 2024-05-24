@@ -1,4 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import actionCheckLogin from '../../store/thunks/checkLogin';
 
@@ -12,7 +14,7 @@ import Legumes from './Products/Legumes/Legumes';
 import LegumeDetail from './Products/Legumes/LegumeDetail';
 import Tutoriels from './Tutoriels/Tutoriels';
 import TutorielDetail from './Tutoriels/TutorielDetail';
-import Inscription from '../Header/Inscription/Inscription';
+import Inscription from './Inscription/Inscription';
 import MonJardin from './MonJardin/MonJardin';
 import PotagerVirtuel from './MonJardin/PotagerVirtuel/PotagerVirtuel';
 import GestionProfil from './MonJardin/GestionProfil/GestionProfil';
@@ -22,6 +24,8 @@ import PolitiqueConfidentialite from './PolitiqueConfidentialite/PolitiqueConfid
 import Contact from './Contact/Contact';
 
 import { actionChangeCredential } from '../../store/reducers/user';
+import { fetchAllTutorials } from '../../store/thunks/tutorielsThunk';
+import { fetchFruits, fetchLegumes } from '../../store/thunks/productThunks';
 
 function Page() {
   const location = useLocation();
@@ -35,24 +39,41 @@ function Page() {
     (state) => state.user.credentials.password
   );
 
+  useEffect(() => {
+    dispatch(fetchAllTutorials());
+    dispatch(fetchLegumes());
+    dispatch(fetchFruits());
+  }, []);
+
+  const { tutorials } = useAppSelector((state) => state.tutoriels);
+  const { legumes, fruits } = useAppSelector((state) => state.products);
+  const { products } = useAppSelector((state) => state.products);
+
   return (
     <div className="page">
       {location.pathname !== '/connexion' &&
-        location.pathname !== '/inscription' && <SearchBar />}
+        location.pathname !== '/inscription' && (
+          <SearchBar products={products} />
+        )}
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <Home tutorials={tutorials} legumes={legumes} fruits={fruits} />
+          }
+        />
         <Route path="/fruits" element={<Fruits />} />
-        <Route path="/fruits/:nom_fruit" element={<FruitDetail />} />
+        <Route path="/fruits/:nomFruit" element={<FruitDetail />} />
         <Route path="/legumes" element={<Legumes />} />
-        <Route path="/legumes/:nom_legume" element={<LegumeDetail />} />
+        <Route path="/legumes/:nomLegume" element={<LegumeDetail />} />
         <Route path="/tutos" element={<Tutoriels />} />
         <Route path="/tutos/:titre" element={<TutorielDetail />} />
         <Route
           path="/connexion"
           element={
             <Connexion
-              // logged={logged}
+              logged={logged}
               email={emailFormState}
               password={passFromState}
               changeField={(value, name) => {

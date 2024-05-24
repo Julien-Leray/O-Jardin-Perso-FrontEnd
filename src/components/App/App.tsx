@@ -19,7 +19,7 @@ function App() {
       dispatch(actionLogIn({ jwt, firstname }));
       addTokenJwtToAxiosInstance(jwt);
     } else {
-      console.log('rien dans le localstorage');
+      console.log('empty localstorage');
     }
   }, []);
 
