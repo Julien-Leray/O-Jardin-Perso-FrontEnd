@@ -21,11 +21,13 @@ function Fruits() {
           {fruits.map((fruit) => (
             <li key={fruit.id} className="mx-auto w-5/6 md:w-1/3 p-4">
               <div className="flex flex-col flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
-                <img
-                  className="w-full h-48 object-cover mx-auto"
-                  src={`http://localhost:4000/${fruit.picture}`}
-                  alt={fruit.name}
-                />
+                <Link to={`/fruits/${fruit.id}`}>
+                  <img
+                    className="w-full h-48 object-cover mx-auto"
+                    src={`http://localhost:4000/${fruit.picture}`}
+                    alt={fruit.name}
+                  />
+                </Link>
                 <div className="flex flex-col p-6">
                   <h3 className="font-bold text-center mb-2">{fruit.name}</h3>
                   <p className="italic text-sm my-4">
