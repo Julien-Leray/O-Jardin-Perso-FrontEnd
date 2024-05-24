@@ -37,3 +37,15 @@ export interface TutorialsState {
   loading: boolean;
   error: string | null | undefined;
 }
+
+export interface Meteo {
+  name: string;
+  temp: string;
+  icon: string;
+}
+
+export interface MeteoState {
+  meteo: Meteo[];
+  loading: boolean;
+  error: string | null | undefined;
+}
