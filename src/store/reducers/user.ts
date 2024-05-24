@@ -2,7 +2,7 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 import actionCheckLogin from '../thunks/checkLogin';
 
 // -- STATE intial et son interface --
-interface UserState {
+export interface UserState {
   token: null | string;
   error: null | string;
   logged: boolean;
