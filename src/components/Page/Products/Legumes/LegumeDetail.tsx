@@ -24,7 +24,7 @@ function LegumeDetail() {
   if (!selectedLegume)
     return <div className="text-center text-lg">Aucun légume sélectionné.</div>;
 
-  const imageUrl = `http://localhost:4000/api${selectedLegume.picture}`;
+  const imageUrl = `http://localhost:4000/${selectedLegume.picture}`;
 
   return (
     <div className="container mx-auto mt-5 mb-5 p-5 rounded-lg shadow-lg bg-[#16A1AF]">
