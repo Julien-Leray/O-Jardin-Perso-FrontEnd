@@ -1,6 +1,9 @@
-import { PayloadAction, createReducer, createAction } from '@reduxjs/toolkit';
+import { createReducer, createAction } from '@reduxjs/toolkit';
 import { Tutorial } from '../../types/types';
-import { fetchAllTutorials } from '../thunks/tutorielsThunk';
+import {
+  fetchAllTutorials,
+  fetchTutorialDetails,
+} from '../thunks/tutorielsThunk';
 
 interface TutorialState {
   tutorials: Tutorial[];
@@ -26,6 +29,18 @@ const tutoReducer = createReducer(initialState, (builder) => {
       state.loading = false;
     })
     .addCase(fetchAllTutorials.rejected, (state, action) => {
+      state.error = action.error.message;
+      state.loading = false;
+    })
+    .addCase(fetchTutorialDetails.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(fetchTutorialDetails.fulfilled, (state, action) => {
+      state.tutorials = action.payload;
+      state.loading = false;
+    })
+
+    .addCase(fetchTutorialDetails.rejected, (state, action) => {
       state.error = action.error.message;
       state.loading = false;
     });

@@ -1,24 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import tutoriels from '../../../data/data';
+import { useAppDispatch } from '../../../hooks/redux';
+import { fetchTutorialDetails } from '../../../store/thunks/tutorielsThunk';
+import { Tutorial } from '../../../types/types';
 
-function TutorielDetail() {
-  const { titre } = useParams();
-  const tutoriel = tutoriels.find((t) => t.id.toString() === titre);
+interface TutoDetailProps {
+  tutorials: Tutorial[];
+}
 
-  if (!tutoriel) {
-    return <div>Tutoriel non trouvé</div>;
+function TutorielDetail({ tutorials }: TutoDetailProps) {
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const tutorial = tutorials.find((tuto) => tuto.id.toString() === id);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchTutorialDetails());
+    }
+  }, [dispatch, id]);
+
+  if (!tutorial) {
+    return (
+      <div className="container mx-auto px-4 py-8">Tutoriel non trouvé</div>
+    );
   }
 
   return (
-    <div className="container mx-auto px-4">
-      <div className="text-center font-bold text-3xl mb-6">{tutoriel.name}</div>
+    <div className="container mx-auto px-4 py-8">
+      <div className="text-center font-bold text-3xl mb-4">
+        {tutorial.title}
+      </div>
       <img
-        src={tutoriel.picture}
-        alt={tutoriel.name}
-        className="w-full h-64 object-cover rounded"
+        src={`http://localhost:4000${tutorial.picture}`}
+        alt={tutorial.title}
+        className="mx-auto w-full max-w-xl h-auto object-cover rounded-lg shadow-lg"
       />
-      <p className="mt-4">{tutoriel.description}</p>
+      <p className="text-gray-700 mt-4 text-lg leading-relaxed">
+        {tutorial.article}
+      </p>
     </div>
   );
 }
