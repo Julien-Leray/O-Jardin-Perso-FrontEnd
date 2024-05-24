@@ -14,35 +14,42 @@ function Tutoriels() {
   }, [dispatch]);
 
   return (
-    <div className="container mx-auto px-4">
-      <div className="text-center font-bold text-3xl mb-6">Tutoriels</div>
+    <div className="flex mx-auto flex-col my-6">
+      <h2 className="text-xl text-center font-bold p-2">Tutoriels</h2>
       {loading && <p>Chargement...</p>}
       {error && <p>Erreur : {error}</p>}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {tutorials.map((tutoriel) => (
-          <div key={tutoriel.id} className="bg-white p-4 shadow rounded">
-            <img
-              src={`http://localhost:4000${tutoriel.picture}`}
-              alt={tutoriel.title}
-              className="w-full h-64 object-cover rounded"
-            />
-            <div className="mt-4">
-              <div className="font-semibold text-xl mb-2">{tutoriel.title}</div>
-              <p className="text-gray-700 text-base">
-                {tutoriel.article
-                  ? tutoriel.article.substring(0, 100)
-                  : 'Pas de description'}
-                ...
-              </p>
-              <Link
-                to={`/tutos/${tutoriel.id}`}
-                className="mt-3 mb-2 py-2 px-4 rounded flex justify-center w-full text-sm font-medium text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[F6D50E]"
-              >
-                Lire la suite
-              </Link>
-            </div>
-          </div>
-        ))}
+      <div>
+        <ul className="flex flex-wrap md:flex-row -m-4">
+          {tutorials.map((tutoriel) => (
+            <li key={tutoriel.id} className=" w-5/6 md:w-1/3 p-4">
+              <div className="flex flex-col justify-normal flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
+                <Link to={`/tutos/${tutoriel.id}`}>
+                  <img
+                    src={`http://localhost:4000${tutoriel.picture}`}
+                    alt={tutoriel.title}
+                    className="w-full h-48 object-cover mx-auto"
+                  />
+                </Link>
+
+                <div className="flex flex-col p-6">
+                  <h3 className="font-bold text-center">{tutoriel.title}</h3>
+                  <p className="italic text-sm my-4">
+                    {tutoriel.article
+                      ? tutoriel.article.substring(0, 100)
+                      : 'Pas de description'}
+                    ...
+                  </p>
+                  <Link
+                    to={`/tutos/${tutoriel.id}`}
+                    className="mx-auto py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
+                  >
+                    <button type="button">En savoir plus</button>
+                  </Link>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

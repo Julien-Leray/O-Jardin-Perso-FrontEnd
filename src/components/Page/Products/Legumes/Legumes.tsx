@@ -19,7 +19,7 @@ function Legumes() {
       <div className="">
         <ul className="flex flex-wrap md:flex-row -m-4">
           {legumes.map((legume) => (
-            <li key={legume.id} className="mx-auto w-5/6 md:w-1/3 p-4">
+            <li key={legume.id} className="w-5/6 md:w-1/3 p-4">
               <div className="flex flex-col flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
                 <Link to={`/legumes/${legume.id}`}>
                   <img
@@ -29,7 +29,10 @@ function Legumes() {
                   />
                 </Link>
                 <div className="flex flex-col p-6">
-                  <h3 className="font-bold text-center mb-2">{legume.name}</h3>
+                  <h3 className="font-bold text-center mb-2">{legume.name}</h3>{' '}
+                  <span className="italic text-center text-xs mb-2">
+                    {legume.latin_name}
+                  </span>
                   <p className="italic text-sm my-4">
                     {legume.description.slice(0, 100)}...
                   </p>
