@@ -22,7 +22,6 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
 
   const getRandomFruits = () => {
     if (fruits.length <= 2) return fruits;
-    console.log(fruits)
     const fruitsOnHome = [...fruits].sort(() => 0.5 - Math.random());
     return fruitsOnHome.slice(0, 4);
   };
@@ -50,7 +49,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
               {randomFruits.map((product) => (
                 <li className="my-0.5 p-1 w-5/12 " key={product.id}>
                   <img
-                    src={`http://ns381313.ip-94-23-250.eu:4000${product.picture}`}
+                    src={`http://localhost:4000/${product.picture}`}
                     alt={`Photo de ${product.name}`}
                     className="my-0.5 p-1 w-5/12"
                   />
@@ -73,7 +72,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
               {randomLegumes.map((product) => (
                 <li className="my-0.5 p-1 w-5/12 " key={product.id}>
                   <img
-                    src={`http://ns381313.ip-94-23-250.eu:4000${product.picture}`}
+                    src={`http://localhost:4000/${product.picture}`}
                     alt={`Photo de ${product.name}`}
                     className="my-0.5 p-1 w-5/12"
                   />
@@ -100,13 +99,13 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
             >
               {tutoriel.title}
               <img
-                src={`http://localhost:4000${tutoriel.picture}`}
+                src={`http://localhost:4000/${tutoriel.picture}`}
                 alt={`Tuto de ${tutoriel.title}`}
                 className="mx-auto w-full max-w-md rounded-lg shadow-lg"
               />
 
               <Link
-                to="/tutos"
+                to={`/tutos/${tutoriel.id}`}
                 className="mx-auto py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
               >
                 <button type="button">Lire la suite</button>
