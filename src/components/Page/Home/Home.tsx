@@ -5,6 +5,7 @@ interface Product {
   id: number;
   name: string;
   description: string;
+  picture?: string;
 }
 interface HomeProps {
   tutorials: Tutorial[];
@@ -45,11 +46,11 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
             <ul className="flex flex-wrap justify-around  ">
               {randomFruits.map((product) => (
                 <li className="my-0.5 p-1 w-5/12 " key={product.id}>
-                  {/* <img
-                    // src={product.picture}
+                  <img
+                    src={`http://localhost:4000${product.picture}`}
                     alt={`Photo de ${product.name}`}
                     className="my-0.5 p-1 w-5/12"
-                  /> */}
+                  />
                   <h3>{product.name}</h3>
                 </li>
               ))}
@@ -68,11 +69,11 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
             <ul className="flex flex-wrap justify-around  ">
               {randomLegumes.map((product) => (
                 <li className="my-0.5 p-1 w-5/12 " key={product.id}>
-                  {/* <img
-                    // src={product.picture}
+                  <img
+                    src={`http://localhost:4000${product.picture}`}
                     alt={`Photo de ${product.name}`}
                     className="my-0.5 p-1 w-5/12"
-                  /> */}
+                  />
                   <h3>{product.name}</h3>
                 </li>
               ))}
