@@ -25,7 +25,6 @@ function Connexion({
   };
 
   const loginError = useAppSelector((state) => state.user.error);
-  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const goBack = () => {
@@ -37,7 +36,6 @@ function Connexion({
   };
   if (logged) {
     navigate('/mon_jardin');
-    dispatch(actionGetDataUser());
   }
   return (
     <div className="flex flex-col justify-center rounded-lg items-center">

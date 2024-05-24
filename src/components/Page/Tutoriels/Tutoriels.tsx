@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchAllTutorials } from '../../../store/thunks/tutorielsThunk';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { useAppSelector } from '../../../hooks/redux';
 import { Tutorial } from '../../../types/types';
 
 interface Tutoprops {
@@ -9,13 +7,8 @@ interface Tutoprops {
 }
 
 function Tutoriels({ tutorials }: Tutoprops) {
-  const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.tutoriels.loading);
   const error = useAppSelector((state) => state.tutoriels.error);
-
-  useEffect(() => {
-    dispatch(fetchAllTutorials());
-  }, [dispatch]);
 
   return (
     <div className="flex mx-auto flex-col my-6">

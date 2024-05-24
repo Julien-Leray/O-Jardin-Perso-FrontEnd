@@ -25,7 +25,7 @@ import PolitiqueConfidentialite from './PolitiqueConfidentialite/PolitiqueConfid
 import Contact from './Contact/Contact';
 
 import { actionChangeCredential } from '../../store/reducers/user';
-import { fetchAllTutorials } from '../../store/thunks/tutorielsThunk';
+import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
 import { fetchFruits, fetchLegumes } from '../../store/thunks/productThunks';
 
 function Page() {

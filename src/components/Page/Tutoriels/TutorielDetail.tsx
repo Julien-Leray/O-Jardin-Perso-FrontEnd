@@ -1,7 +1,3 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useAppDispatch } from '../../../hooks/redux';
-import { fetchTutorialDetails } from '../../../store/thunks/tutorielsThunk';
 import { Tutorial } from '../../../types/types';
 
 interface TutoDetailProps {
@@ -9,15 +5,7 @@ interface TutoDetailProps {
 }
 
 function TutorielDetail({ tutorials }: TutoDetailProps) {
-  const { id } = useParams();
-  const dispatch = useAppDispatch();
   const tutorial = tutorials.find((tuto) => tuto.id);
-
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchTutorialDetails());
-    }
-  }, [dispatch, id]);
 
   if (!tutorial) {
     return (

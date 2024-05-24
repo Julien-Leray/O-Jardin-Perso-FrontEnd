@@ -13,7 +13,7 @@ const actionGetDataUser = createAsyncThunk(
       data: state.user.token,
     });
     const { userId, productId } = response.data;
-    console.log('my response:', userId, productId);
+    console.log('my response:', response.data);
 
     return { userId, productId };
   }
