@@ -2,10 +2,14 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchAllTutorials } from '../../../store/thunks/tutorielsThunk';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { Tutorial } from '../../../types/types';
 
-function Tutoriels() {
+interface Tutoprops {
+  tutorials: Tutorial[];
+}
+
+function Tutoriels({ tutorials }: Tutoprops) {
   const dispatch = useAppDispatch();
-  const { tutorials } = useAppSelector((state) => state.tutoriels);
   const loading = useAppSelector((state) => state.tutoriels.loading);
   const error = useAppSelector((state) => state.tutoriels.error);
 

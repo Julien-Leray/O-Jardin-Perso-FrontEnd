@@ -23,6 +23,14 @@ export const fetchAllTutorials = createAsyncThunk(
   }
 );
 
+export const fetchTutorialDetails = createAsyncThunk(
+  'tutoriels/fetchTutorialDetails',
+  async (tutorialId) => {
+    const response = await axios.get(`${API_BASE_URL_TUTOS}${tutorialId}`);
+    return response.data;
+  }
+);
+
 // export const fetchAllTutorials = createAsyncThunk(
 //   'tutos/fetchAllTutorials',
 //   async () => {
