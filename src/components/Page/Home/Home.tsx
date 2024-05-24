@@ -12,7 +12,6 @@ interface HomeProps {
   legumes: Product[];
   fruits: Product[];
 }
-
 function Home({ tutorials, legumes, fruits }: HomeProps) {
   const getRandomTutos = () => {
     if (tutorials.length <= 2) return tutorials;
@@ -35,7 +34,6 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
   const randomLegumes = getRandomLegumes();
   const randomFruits = getRandomFruits();
 
-
   return (
     <>
       <div className="bg-white text-center py-2 text-sm italic">
@@ -49,7 +47,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
               {randomFruits.map((product) => (
                 <li className="my-0.5 p-1 w-5/12 " key={product.id}>
                   <img
-                    src={`http://localhost:4000/${product.picture}`}
+                    src={`http://localhost:4000${product.picture}`}
                     alt={`Photo de ${product.name}`}
                     className="my-0.5 p-1 w-5/12"
                   />
@@ -72,7 +70,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
               {randomLegumes.map((product) => (
                 <li className="my-0.5 p-1 w-5/12 " key={product.id}>
                   <img
-                    src={`http://localhost:4000/${product.picture}`}
+                    src={`http://localhost:4000${product.picture}`}
                     alt={`Photo de ${product.name}`}
                     className="my-0.5 p-1 w-5/12"
                   />
@@ -99,13 +97,13 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
             >
               {tutoriel.title}
               <img
-                src={`http://localhost:4000/${tutoriel.picture}`}
+                src={`http://localhost:4000${tutoriel.picture}`}
                 alt={`Tuto de ${tutoriel.title}`}
                 className="mx-auto w-full max-w-md rounded-lg shadow-lg"
               />
 
               <Link
-                to={`/tutos/${tutoriel.id}`}
+                to="/tutos"
                 className="mx-auto py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
               >
                 <button type="button">Lire la suite</button>
