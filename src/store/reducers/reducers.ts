@@ -3,6 +3,7 @@ import userReducer from './user';
 import potagerReducer from './potager';
 import productsReducer from './products';
 import tutorielsReducer from './tutoriels';
+import myGardenReducer from './mygarden';
 import meteoReducer from './meteo';
 
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   potager: potagerReducer,
   products: productsReducer,
   tutoriels: tutorielsReducer,
+  myGarden: myGardenReducer,
   meteo: meteoReducer,
 });
 
