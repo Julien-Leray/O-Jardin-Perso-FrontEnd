@@ -26,7 +26,11 @@ import Contact from './Contact/Contact';
 
 import { actionChangeCredential } from '../../store/reducers/user';
 import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
-import { fetchFruits, fetchLegumes } from '../../store/thunks/productThunks';
+import {
+  fetchAllProducts,
+  fetchFruits,
+  fetchLegumes,
+} from '../../store/thunks/productThunks';
 
 function Page() {
   const location = useLocation();
@@ -44,6 +48,7 @@ function Page() {
     dispatch(fetchAllTutorials());
     dispatch(fetchLegumes());
     dispatch(fetchFruits());
+    dispatch(fetchAllProducts());
   }, []);
 
   const { tutorials } = useAppSelector((state) => state.tutoriels);

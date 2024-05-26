@@ -79,7 +79,6 @@ function SearchBar({ products }: SearchBarProps) {
             }}
             onChange={(event) => {
               setInputValue(event.target.value);
-              dispatch(fetchAllProducts());
             }}
           />
         </div>
