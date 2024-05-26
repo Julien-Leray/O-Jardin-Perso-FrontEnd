@@ -8,6 +8,7 @@ import Page from '../Page/Page';
 import { getTokenAndPseudoFromLocalStorage } from '../../localStorage/localstorage';
 import { actionLogIn } from '../../store/reducers/user';
 import { addTokenJwtToAxiosInstance } from '../../axios/axios';
+import actionGetDataUser from '../../store/thunks/myGardenThunks';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ function App() {
     if (jwt) {
       dispatch(actionLogIn({ jwt, firstname }));
       addTokenJwtToAxiosInstance(jwt);
+      dispatch(actionGetDataUser(jwt));
     } else {
       console.log('empty localstorage');
     }
