@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, FocusEvent } from 'react';
 import { Search } from 'react-feather';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '../../hooks/redux';
 import { fetchAllProducts } from '../../store/thunks/productThunks';
@@ -14,6 +14,7 @@ function SearchBar({ products }: SearchBarProps) {
   const refSubmitSearchbar = useRef<null | HTMLFormElement>(null);
   const refInputSearchbar = useRef<null | HTMLInputElement>(null);
   const refListeSearchbar = useRef<null | HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
@@ -35,14 +36,13 @@ function SearchBar({ products }: SearchBarProps) {
     }, 0);
   };
 
-  const handleFocus = () => {
-    setIsFilterVisible(true);
-  };
-
   const filteredProducts = products.filter((product) => {
     const productNameToLower = product.name.toLowerCase();
     const searchStringLower = inputValue.toLowerCase();
     return productNameToLower.includes(searchStringLower);
+  });
+  const matchingProduct = filteredProducts.find((product) => {
+    return product.name.toLowerCase() === inputValue;
   });
 
   return (
@@ -54,6 +54,13 @@ function SearchBar({ products }: SearchBarProps) {
           event.preventDefault();
           setInputValue(inputValue);
           setInputValue('');
+          navigate(
+            matchingProduct
+              ? `/${
+                  filteredProducts[0].category_id === 1 ? 'fruits' : 'legumes'
+                }/${filteredProducts[0].id}`
+              : '/'
+          );
         }}
       >
         <div className="relative w-full  ">
@@ -67,13 +74,21 @@ function SearchBar({ products }: SearchBarProps) {
             placeholder="Rechercher un fruit ou un légume..."
             value={inputValue}
             onBlur={handleBlur}
-            onFocus={handleFocus}
+            onFocus={() => {
+              setIsFilterVisible(true);
+            }}
             onChange={(event) => {
               setInputValue(event.target.value);
               dispatch(fetchAllProducts());
             }}
           />
         </div>
+        <button
+          type="submit"
+          className="py-4 px-6 -translate-x-10 text-sm font-medium text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
+        >
+          Rechercher
+        </button>
       </form>
       <div
         className="w-full md:w-2/3 mx-auto pl-14 pr-36 rounded-lg"
