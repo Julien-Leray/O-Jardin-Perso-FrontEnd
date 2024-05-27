@@ -9,6 +9,7 @@ interface MyGardenState {
   error: string | null | undefined;
   products: Product[];
   user: User[];
+  logged: boolean;
 }
 
 const initialState: MyGardenState = {
@@ -17,18 +18,20 @@ const initialState: MyGardenState = {
   user: [],
   loading: false,
   error: null,
+  logged: false,
 };
 
-export const actionDisplayDataUser = createAction<{
-  products: Product[];
-  user: User[];
-}>('user/DISPLAY_DATA');
+// export const actionDisplayDataUser = createAction<{
+//   products: Product[];
+//   user: User[];
+// }>('user/DISPLAY_DATA');
 
 const myGardenReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actionGetDataUser.fulfilled, (state, action) => {
       state.products = action.payload.products;
       state.user = action.payload.user;
+      state.logged = true;
       state.error = null;
     })
     .addCase(actionGetDataUser.rejected, (state) => {

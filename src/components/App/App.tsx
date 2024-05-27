@@ -8,16 +8,15 @@ import Page from '../Page/Page';
 import { getTokenAndPseudoFromLocalStorage } from '../../localStorage/localstorage';
 import { actionLogIn } from '../../store/reducers/user';
 import { addTokenJwtToAxiosInstance } from '../../axios/axios';
-import actionGetDataUser from '../../store/thunks/myGardenThunks';
 
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const { jwt, firstname } = getTokenAndPseudoFromLocalStorage();
+    const { jwt, user } = getTokenAndPseudoFromLocalStorage();
 
     if (jwt) {
-      dispatch(actionLogIn({ jwt, firstname }));
+      dispatch(actionLogIn({ jwt, user }));
       addTokenJwtToAxiosInstance(jwt);
     } else {
       console.log('empty localstorage');
