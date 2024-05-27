@@ -1,20 +1,3 @@
-
-//     const dailyWeatherForecast = response.data.list.filter((weatherForecast: any) =>
-//       weatherForecast.dt_txt.includes("12:00:00")
-//     ).slice(0, 5);
-
-//     return {
-//       name: response.data.city.name,
-//       weatherForecast: dailyWeatherForecast.map((weatherForecast: any) => ({
-//         //format date with day.js
-//         date: dayjs(weatherForecast.dt_txt).locale('fr').format('dddd DD MMMM'),
-//         temp: Math.round(weatherForecast.main.temp),
-//         icon: weatherForecast.weather[0].icon
-//       }))
-//     };
-//   }
-// );
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -29,6 +12,7 @@ export const fetchMeteo = createAsyncThunk(
 
     //day's date 
     const currentMoment = dayjs();
+    console.log('cest moi', currentMoment) 
 
     //Start of Time : today 
     const weatherDay = currentMoment.startOf('day');
@@ -43,6 +27,7 @@ export const fetchMeteo = createAsyncThunk(
       }
       return weathercurrent;
     }, null);
+
 
     const forecastsForFourDays = response.data.list.filter((weatherForecast: any) =>
       dayjs(weatherForecast.dt_txt).isAfter(weatherDay) &&

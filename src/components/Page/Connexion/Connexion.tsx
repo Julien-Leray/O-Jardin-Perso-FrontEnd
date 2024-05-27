@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Input from './ConnexionInput';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import actionGetDataUser from '../../../store/thunks/myGardenThunks';
+import { actionLogIn } from '../../../store/reducers/user';
 
 interface LoginFormProps {
   logged: boolean;
@@ -25,6 +26,7 @@ function Connexion({
   };
 
   const loginError = useAppSelector((state) => state.user.error);
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const goBack = () => {
@@ -35,6 +37,7 @@ function Connexion({
     handleLogin();
   };
   if (logged) {
+    dispatch(actionGetDataUser());
     navigate('/mon_jardin');
   }
   return (

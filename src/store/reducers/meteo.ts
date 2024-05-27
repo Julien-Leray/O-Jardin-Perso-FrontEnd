@@ -34,4 +34,3 @@ const meteoReducer = createReducer(initialState, (builder) => {
 
 export default meteoReducer;
 
-

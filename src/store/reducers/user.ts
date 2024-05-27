@@ -1,42 +1,18 @@
-import { createAction, createReducer } from '@reduxjs/toolkit';
+import { PayloadAction, createAction, createReducer } from '@reduxjs/toolkit';
 import actionCheckLogin from '../thunks/checkLogin';
+import { UserState } from '../../types/types';
 
 // -- STATE intial et son interface --
-export interface UserState {
-  token: null | string;
-  error: null | string;
-  logged: boolean;
-  credentials: {
-    email: string;
-    password: string;
-  };
-  firstname: string;
-  lastname: string;
-  address: string;
-  zip_code: number;
-  city: string;
-  watering_alert: boolean;
-  forecast_alert: boolean;
-  created_at: string;
-  updated_at: null;
-}
+
 export const initialState: UserState = {
   token: null,
   error: null,
   logged: false,
   credentials: {
-    email: 'test2@julien.fr',
-    password: 'test',
+    email: '',
+    password: '',
   },
-  firstname: 'julien',
-  lastname: 'julien',
-  address: 'bujvdividpv',
-  zip_code: 56000,
-  city: 'Vannes',
-  watering_alert: false,
-  forecast_alert: false,
-  created_at: '2024-05-17T12:04:20.389Z',
-  updated_at: null,
+  user: [],
 };
 
 export const actionChangeCredential = createAction<{
@@ -47,7 +23,7 @@ export const actionChangeCredential = createAction<{
 export const actionLogOut = createAction('user/LOGOUT');
 export const actionLogIn = createAction<{
   jwt: string;
-  firstname: string;
+  user: [];
 }>('user/LOGIN');
 
 const userReducer = createReducer(initialState, (builder) => {
@@ -69,7 +45,7 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(actionLogIn, (state, action) => {
       state.logged = true;
       state.token = action.payload.jwt;
-      state.firstname = action.payload.firstname;
+      state.user = action.payload.user;
     });
 });
 
