@@ -1,8 +1,20 @@
-import { PayloadAction, createAction, createReducer } from '@reduxjs/toolkit';
+import { createAction, createReducer } from '@reduxjs/toolkit';
 import actionCheckLogin from '../thunks/checkLogin';
-import { UserState } from '../../types/types';
+import { User } from '../../types/types';
 
 // -- STATE intial et son interface --
+
+interface UserState {
+  token: null | string;
+  error: null | string;
+  logged: boolean;
+  credentials: {
+    email: string;
+    password: string;
+  };
+  user: User[];
+  isAdmin: boolean;
+}
 
 export const initialState: UserState = {
   token: null,
@@ -13,6 +25,7 @@ export const initialState: UserState = {
     password: '',
   },
   user: [],
+  isAdmin: false,
 };
 
 export const actionChangeCredential = createAction<{
@@ -35,17 +48,18 @@ const userReducer = createReducer(initialState, (builder) => {
       state.logged = true;
       state.token = action.payload.token;
       state.error = null;
+      state.isAdmin = action.payload.isAdmin;
     })
     .addCase(actionCheckLogin.rejected, (state) => {
       state.error = 'Erreur de connexion';
     })
     .addCase(actionLogOut, (state) => {
       state.logged = false;
+      state.isAdmin = false;
     })
     .addCase(actionLogIn, (state, action) => {
       state.logged = true;
       state.token = action.payload.jwt;
-      state.user = action.payload.user;
     });
 });
 

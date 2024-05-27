@@ -11,13 +11,13 @@ const actionGetDataUser = createAsyncThunk(
     const response = await axiosInstance.get('/me/garden', {
       data: state.user.token,
     });
-    const { user } = response.data[0].result;
+    const userData = response.data[0].result.user;
     const { products } = response.data[1];
 
-    console.log('me:', user);
-    console.log('my products:', products);
+    // console.log('me:', userData);
+    // console.log('my products:', products);
 
-    return { user, products };
+    return { userData, products };
   }
 );
 

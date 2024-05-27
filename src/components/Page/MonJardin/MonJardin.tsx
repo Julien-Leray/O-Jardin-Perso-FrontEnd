@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { fetchMeteo } from '../../../store/thunks/meteoThunk';
+import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 
 function MonJardin() {
-
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.myGarden.user);
+  const { products } = useAppSelector((state) => state.myGarden);
+
   const meteo = useAppSelector((state) => state.meteo);
   const cityName = user.city;
 
@@ -19,9 +20,14 @@ function MonJardin() {
   return (
     <div>
       <h1>Bienvenue {user.firstname}</h1>
-      <Link to="/mon_jardin/potager-virtuel" className="text-blue-500 hover:text-blue-700">
+
+      <Link
+        to="/mon_jardin/potager-virtuel"
+        className="text-blue-500 hover:text-blue-700"
+      >
         Gérez votre jardin virtuel ici.
       </Link>
+
       {meteo && meteo.name ? (
         <div className="bg-gray-200 rounded-lg p-4 my-2 ">
           <h2 className="font-bold ">Météo à {meteo.name}</h2>
