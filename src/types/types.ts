@@ -38,6 +38,8 @@ export interface TutorialsState {
   error: string | null | undefined;
 }
 
+// Météo
+
 export interface Meteo {
   name: string;
   temp: string;
@@ -48,4 +50,32 @@ export interface MeteoState {
   meteo: Meteo[];
   loading: boolean;
   error: string | null | undefined;
+}
+
+// Users
+
+export interface User {
+  address: string;
+  city: string;
+  created_at: string;
+  email: string;
+  firstname: string;
+  forecast_alert: boolean;
+  id: number;
+  is_admin: boolean;
+  lastname: string;
+  updated_at: null | string;
+  watering_alert: boolean;
+  zip_code: string;
+}
+
+export interface UserState {
+  token: null | string;
+  error: null | string;
+  logged: boolean;
+  user: User[];
+  credentials: {
+    email: string;
+    password: string;
+  };
 }
