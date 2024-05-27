@@ -6,6 +6,7 @@ import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
 import { Product } from '../../../../types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
 import DraggableProduct from './DraggableProduct';
+import virtualGardenThunks from '../../../../store/thunks/virtualGardenThunks';
 
 const ItemTypes = {
   PRODUCT: 'product',
@@ -14,13 +15,14 @@ const ItemTypes = {
 interface SquareProps {
   position: string;
   children: React.ReactNode;
-  moveProduct: (id: number, position: string) => void;
+  moveProduct: (id: number, position: string, productId: number) => void;
 }
 
 function Square({ position, children, moveProduct }: SquareProps) {
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.PRODUCT,
-    drop: (item: { id: number }) => moveProduct(item.id, position),
+    drop: (item: { id: number; productId: number }) =>
+      moveProduct(item.id, position, item.productId),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
@@ -42,7 +44,7 @@ interface SquareMakerProps {
   horizontal: number;
   vertical: number;
   products: Product[];
-  moveProduct: (id: number, position: string) => void;
+  moveProduct: (id: number, position: string, productId: number) => void;
 }
 
 function SquareMaker({
@@ -87,10 +89,27 @@ function PotagerVirtuel() {
     setGarden((prevGarden) => [...prevGarden, { ...product, position: '' }]);
   };
 
-  const moveProduct = (id: number, position: string) => {
-    setGarden((prevGarden) =>
-      prevGarden.map((item) => (item.id === id ? { ...item, position } : item))
+  const moveProduct = (id: number, position: string, productId: number) => {
+    console.log(
+      `Moving product with id: ${id} to position: ${position} with productId: ${productId}`
     );
+    const product = garden.find((p) => p.id === id);
+    if (product) {
+      dispatch(
+        virtualGardenThunks.updateProductPosition({
+          id: product.id,
+          position,
+          quantity: 1,
+          productId,
+        })
+      );
+
+      setGarden((prevGarden) =>
+        prevGarden.map((item) =>
+          item.id === id ? { ...item, position } : item
+        )
+      );
+    }
   };
 
   return (

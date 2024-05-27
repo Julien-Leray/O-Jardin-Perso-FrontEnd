@@ -13,7 +13,7 @@ interface DraggableProductProps {
 function DraggableProduct({ product }: DraggableProductProps) {
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.PRODUCT,
-    item: { id: product.id },
+    item: { id: product.id, productId: product.id },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
