@@ -5,6 +5,7 @@ export interface Product {
   picture?: string;
   latin_name: string;
   category_id: number;
+  position?: string;
 }
 
 export interface ProductsState {
@@ -12,18 +13,15 @@ export interface ProductsState {
   fruits: Product[];
   legumes: Product[];
   selectedFruit?: Product | null;
-  selectedLegume?: Product | null; // Ajout de null comme type acceptable
+  selectedLegume?: Product | null;
   loading: boolean;
   error: string | null | undefined;
 }
-// interface du potagervirtuel
 
 export interface SquareMakerProps {
   horizontal: number;
   vertical: number;
 }
-
-// Tutorials
 
 export interface Tutorial {
   id: number;
