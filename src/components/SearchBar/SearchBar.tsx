@@ -16,8 +16,6 @@ function SearchBar({ products }: SearchBarProps) {
   const refListeSearchbar = useRef<null | HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  const dispatch = useAppDispatch();
-
   const [inputValue, setInputValue] = useState('');
   const [isFilterVisible, setIsFilterVisible] = useState(true);
 
