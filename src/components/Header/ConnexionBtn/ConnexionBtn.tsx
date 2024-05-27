@@ -4,12 +4,12 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { actionLogOut } from '../../../store/reducers/user';
 import { removeTokenJwtFromAxiosInstance } from '../../../axios/axios';
 
-interface MenuProps {
+interface ConnexionBtnProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function ConnexionBtn({ isOpen, setIsOpen }: MenuProps) {
+function ConnexionBtn({ isOpen, setIsOpen }: ConnexionBtnProps) {
   const isLogged = useAppSelector((state) => state.user.logged);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ function ConnexionBtn({ isOpen, setIsOpen }: MenuProps) {
         <NavLink
           to="/connexion"
           onClick={() => {
-            setIsOpen(!isOpen);
+            setIsOpen(false);
           }}
         >
           <button
@@ -35,8 +35,9 @@ function ConnexionBtn({ isOpen, setIsOpen }: MenuProps) {
         <button
           className="px-6 py-3 rounded-full bg-black text-white focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2"
           type="button"
-          onClick={() => {
-            setIsOpen(!isOpen);
+          onClick={(event) => {
+            event.preventDefault();
+            setIsOpen(false);
             dispatch(actionLogOut());
             removeTokenJwtFromAxiosInstance();
             navigate('/');

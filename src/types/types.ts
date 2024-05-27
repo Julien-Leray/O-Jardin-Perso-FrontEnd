@@ -36,6 +36,8 @@ export interface TutorialsState {
   error: string | null | undefined;
 }
 
+// Météo
+
 export interface Meteo {
   name: string;
   temp: string;
