@@ -13,10 +13,12 @@ const actionCheckLogin = createAsyncThunk(
       password: state.user.credentials.password,
     });
     const { user, token } = response.data;
+    const isAdmin = response.data.user.is_admin;
+
     addTokenJwtToAxiosInstance(token);
     addTokenAndPseudoToLocalStorage(token);
 
-    return { user, token };
+    return { user, isAdmin, token };
   }
 );
 

@@ -6,18 +6,17 @@ import { useAppSelector } from '../../../hooks/redux';
 
 function MonJardin() {
   const dispatch = useDispatch();
-  const { user } = useAppSelector((state) => state.myGarden);
-  console.log(user.email);
+  const user = useAppSelector((state) => state.myGarden.user);
   const { products } = useAppSelector((state) => state.myGarden);
 
-  // const meteo = useSelector((state) => state.meteo);
-  // const cityName = user.city;
+  const meteo = useSelector((state) => state.meteo);
+  const cityName = user.city;
 
-  // useEffect(() => {
-  //   if (cityName) {
-  //     dispatch(fetchMeteo(cityName));
-  //   }
-  // }, [dispatch, cityName]);
+  useEffect(() => {
+    if (cityName) {
+      dispatch(fetchMeteo(cityName));
+    }
+  }, [dispatch, cityName]);
 
   return (
     <div>
@@ -30,7 +29,7 @@ function MonJardin() {
         Gérez votre jardin virtuel ici.
       </Link>
 
-      {/* {meteo && meteo.name ? (
+      {meteo && meteo.name ? (
         <div className="bg-gray-200 rounded-lg p-4 my-2">
           <h2 className="font-bold  ">Météo à {meteo.name}</h2>
           <p>Température: {meteo.temp}°C</p>
@@ -42,7 +41,7 @@ function MonJardin() {
         </div>
       ) : (
         <p>Chargement des données météo...</p>
-      )} */}
+      )}
     </div>
   );
 }

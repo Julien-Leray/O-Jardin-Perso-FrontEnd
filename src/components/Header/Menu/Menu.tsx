@@ -9,10 +9,8 @@ interface MenuProps {
 }
 
 function Menu({ isOpen, setIsOpen }: MenuProps) {
-  const logged = useAppSelector((state) => state.myGarden.logged);
-  // à corriger ! :
-
-  const isAdmin = useAppSelector((state) => state.user.logged);
+  const logged = useAppSelector((state) => state.user.logged);
+  const isAdmin = useAppSelector((state) => state.user.isAdmin);
 
   return (
     <>

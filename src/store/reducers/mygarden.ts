@@ -4,34 +4,24 @@ import actionGetDataUser from '../thunks/myGardenThunks';
 
 // -- STATE intial et son interface --
 interface MyGardenState {
-  // token: string;
   loading: boolean;
   error: string | null | undefined;
   products: Product[];
-  user: User[];
-  logged: boolean;
+  user: User;
 }
 
 const initialState: MyGardenState = {
-  // token: '',
   products: [],
   user: [],
   loading: false,
   error: null,
-  logged: false,
 };
-
-// export const actionDisplayDataUser = createAction<{
-//   products: Product[];
-//   user: User[];
-// }>('user/DISPLAY_DATA');
 
 const myGardenReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actionGetDataUser.fulfilled, (state, action) => {
       state.products = action.payload.products;
-      state.user = action.payload.user;
-      state.logged = true;
+      state.user = action.payload.userData;
       state.error = null;
     })
     .addCase(actionGetDataUser.rejected, (state) => {
