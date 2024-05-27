@@ -49,3 +49,18 @@ export interface MeteoState {
   loading: boolean;
   error: string | null | undefined;
 }
+
+// Users
+
+export interface User {
+  id: number;
+  email: string;
+  firstname: string;
+  // lastname: string;
+  // address: string;
+  zip_code: string;
+  city: string;
+  // watering_alert: boolean;
+  // forecast_alert: boolean;
+  is_admin: boolean;
+}

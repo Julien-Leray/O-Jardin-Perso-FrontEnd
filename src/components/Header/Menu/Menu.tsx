@@ -10,6 +10,7 @@ interface MenuProps {
 
 function Menu({ isOpen, setIsOpen }: MenuProps) {
   const logged = useAppSelector((state) => state.user.logged);
+  const isAdmin = useAppSelector((state) => state.user.isAdmin);
 
   return (
     <>
@@ -17,7 +18,7 @@ function Menu({ isOpen, setIsOpen }: MenuProps) {
         className="w-full md:w-auto text-center py-4 md:py-0 hover:font-[800] border-b border-black md:border-none "
         to="/"
         onClick={() => {
-          setIsOpen(!isOpen);
+          setIsOpen(false);
         }}
       >
         Accueil
@@ -35,7 +36,7 @@ function Menu({ isOpen, setIsOpen }: MenuProps) {
             to="/fruits"
             className="my-2 block  hover:underline md:mx-2"
             onClick={() => {
-              setIsOpen(!isOpen);
+              setIsOpen(false);
             }}
           >
             Fruits
@@ -45,7 +46,7 @@ function Menu({ isOpen, setIsOpen }: MenuProps) {
             to="/legumes"
             className="my-2 block py-1 hover:underline hover:underline md:mx-2"
             onClick={() => {
-              setIsOpen(!isOpen);
+              setIsOpen(false);
             }}
           >
             Légumes
@@ -57,7 +58,7 @@ function Menu({ isOpen, setIsOpen }: MenuProps) {
         className="w-full md:w-auto text-center py-4 md:py-0 hover:font-[800] border-b border-black md:border-none "
         to="/tutos"
         onClick={() => {
-          setIsOpen(!isOpen);
+          setIsOpen(false);
         }}
       >
         Tutos
@@ -66,7 +67,7 @@ function Menu({ isOpen, setIsOpen }: MenuProps) {
         className="w-full md:w-auto  text-center  py-4 md:py-0 hover:font-[800]"
         to="/contact"
         onClick={() => {
-          setIsOpen(!isOpen);
+          setIsOpen(false);
         }}
       >
         Contact
@@ -77,10 +78,23 @@ function Menu({ isOpen, setIsOpen }: MenuProps) {
           className="w-full md:w-auto text-center hover:font-[800] px-6 py-3 rounded-full bg-[#16A1AF] text-white focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2"
           to="/mon_jardin"
           onClick={() => {
-            setIsOpen(!isOpen);
+            setIsOpen(false);
           }}
         >
           Mon Jardin
+        </NavLink>
+      )}
+
+      {isAdmin && (
+        <NavLink
+          className="w-full md:w-auto text-center px-6 py-3 rounded-full bg-[#7AC808] text-white hover:font-[800] focus:outline-none focus:ring-2 focus:ring-[#7AC808] focus:ring-offset-2"
+          to="http://localhost:4000/api/products/admin/"
+          target="_blank"
+          onClick={() => {
+            setIsOpen(false);
+          }}
+        >
+          Admin
         </NavLink>
       )}
     </>
