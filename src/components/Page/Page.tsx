@@ -2,7 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import actionCheckLogin from '../../store/thunks/checkLogin';
+import userAction from '../../store/thunks/userThunk';
 import actionGetDataUser from '../../store/thunks/myGardenThunks';
 
 import Home from './Home/Home';
@@ -31,6 +31,7 @@ import {
   fetchFruits,
   fetchLegumes,
 } from '../../store/thunks/productThunks';
+import { boolean } from 'joi';
 
 function Page() {
   const location = useLocation();
@@ -100,12 +101,17 @@ function Page() {
                 );
               }}
               handleLogin={() => {
-                dispatch(actionCheckLogin());
+                dispatch(userAction.actionCheckLogin());
               }}
             />
           }
         />
-        <Route path="/inscription" element={<Inscription />} />
+          <Route
+          path="/inscription"
+          element={<Inscription 
+            handleVerifyEmail={(email) => dispatch(userAction.actionVerifyEmailExist(email))}
+            handleSignup={(newUser) => dispatch(userAction.actionNewUser(newUser))} />}
+        />        
         <Route path="/mon_jardin" element={logged && <MonJardin />} />
 
         <Route
