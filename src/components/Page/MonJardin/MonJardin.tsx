@@ -1,21 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchMeteo } from '../../../store/thunks/meteoThunk';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
+import MaMeteo from './Meteo/Meteo';
+import MesFavoris from './Favoris/MesFavoris';
 
 function MonJardin() {
-  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.myGarden.user);
-  const { products } = useAppSelector((state) => state.myGarden);
-
-  const meteo = useAppSelector((state) => state.meteo);
-  const cityName = user.city;
-
-  useEffect(() => {
-    if (cityName) {
-      dispatch(fetchMeteo(cityName));
-    }
-  }, [dispatch, cityName]);
 
   return (
     <div>
@@ -27,26 +17,8 @@ function MonJardin() {
       >
         Gérez votre jardin virtuel ici.
       </Link>
-
-      {meteo && meteo.name ? (
-        <div className="bg-gray-200 rounded-lg p-4 my-2 ">
-          <h2 className="font-bold ">Météo à {meteo.name}</h2>
-          <div className='flex flex-wrap justify-around'>
-          {meteo.weatherForecast.map((dailyWeather) => (
-            
-            <div key={dailyWeather.date}>
-              <p>{dailyWeather.date}</p>
-              <p>{dailyWeather.temp}°C</p>
-              <img src={`http://openweathermap.org/img/w/${dailyWeather.icon}.png`} alt="weather icon" />
-            </div>
-            
-          ))}
-          </div>
-
-        </div>
-      ) : (
-        <p>Chargement des données météo...</p>
-      )}
+      <MaMeteo user={user} />
+      <MesFavoris user={user} />
     </div>
   );
 }

@@ -12,12 +12,12 @@ const actionCheckLogin = createAsyncThunk(
       email: state.user.credentials.email,
       password: state.user.credentials.password,
     });
-    const { firstname, token } = response.data;
+    const { user, token } = response.data;
 
     addTokenJwtToAxiosInstance(token);
-    addTokenAndPseudoToLocalStorage(token, firstname);
+    addTokenAndPseudoToLocalStorage(token);
 
-    return { firstname, token };
+    return { user, token };
   }
 );
 const actionNewUser = createAsyncThunk(

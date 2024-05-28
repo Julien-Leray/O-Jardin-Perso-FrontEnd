@@ -1,7 +1,8 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import userActions from '../thunks/userThunk';
 import { boolean } from 'joi';
-import { User } from '../../@types/types';
+import actionCheckLogin from '../thunks/user';
+import { User } from '../../types/types';
 
 // -- STATE intial et son interface --
 
@@ -48,7 +49,9 @@ export const actionNewUser = createAction<{
   zip_code: string;
   city: string;
 }>('user/NEW_USER');
-export const actionVerifyEmailExist = createAction<string>('user/VERIFY_EMAIL_EXIST');
+export const actionVerifyEmailExist = createAction<string>(
+  'user/VERIFY_EMAIL_EXIST'
+);
 
 const userReducer = createReducer(initialState, (builder) => {
   builder
@@ -70,7 +73,7 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(actionLogIn, (state, action) => {
       state.logged = true;
       state.token = action.payload.jwt;
-      // state.user.firstname = action.payload.user.firstname;
+      state.user = action.payload.user;
     })
     .addCase(userActions.actionNewUser.fulfilled, (state, action) => {
       state.firstname = action.payload.firstname;
@@ -83,7 +86,7 @@ const userReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     .addCase(userActions.actionNewUser.rejected, (state, action) => {
-      state.error = action.payload as string || 'Erreur de connexion';
+      state.error = (action.payload as string) || 'Erreur de connexion';
     })
     .addCase(userActions.actionVerifyEmailExist.fulfilled, (state, action) => {
       state.error = null;

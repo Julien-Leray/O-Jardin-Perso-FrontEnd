@@ -1,24 +1,21 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart } from 'react-feather';
+import { Heart, XCircle } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { Product } from '../../../../@types/types';
-import { actionAddProductToFav } from '../../../../store/thunks/favoritesThunks';
+import {
+  actionAddProductToFav,
+  actionDeleteFav,
+} from '../../../../store/thunks/favoritesThunks';
 
 interface FruitsProps {
   fruits: Product[];
   logged: boolean;
-  isFavActive: boolean;
-  setIsFavActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Fruits({ logged, isFavActive, fruits, setIsFavActive }: FruitsProps) {
+function Fruits({ logged, fruits }: FruitsProps) {
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.products);
-
-  useEffect(() => {
-    // dispatch(fetchFruits());
-  }, [dispatch]);
 
   return (
     <div className="flex mx-auto flex-col my-6">
@@ -38,26 +35,40 @@ function Fruits({ logged, isFavActive, fruits, setIsFavActive }: FruitsProps) {
                   />
                 </Link>
                 {logged && (
-                  <button type="button" className="place-self-end mr-4 mt-4">
-                    <Heart
-                      size="35"
-                      className={`rounded-full p-2 ${
-                        isFavActive && 'bg-[#16A1AF] text-white'
-                      }`}
+                  <div className="flex flex-row justify-end">
+                    {/* {!fruit.isFav && ( */}
+                    <button
+                      type="button"
+                      className="  mr-4 mt-4"
                       onClick={(event) => {
                         event.preventDefault();
-                        if (!fruit.isFav) {
-                          setIsFavActive(true);
-                          dispatch(actionAddProductToFav({ id: fruit.id }));
-                          console.log('fav ajouté');
-                        } else {
-                          setIsFavActive(false);
-                          console.log('fav supprimé');
-                          // dispatch(actionDeleteFav());
-                        }
+                        dispatch(actionAddProductToFav(fruit.id));
                       }}
-                    />
-                  </button>
+                    >
+                      <Heart
+                        size="35"
+                        className={`rounded-full p-2 ${
+                          fruit.isFav && 'bg-[#16A1AF] text-white'
+                        }`}
+                      />
+                    </button>
+                    {/* )} */}
+                    <button
+                      type="button"
+                      className=" mr-4 mt-4"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        dispatch(actionDeleteFav(fruit.id));
+                      }}
+                    >
+                      <XCircle
+                        size="35"
+                        className={`rounded-full p-2 ${
+                          fruit.isFav && 'bg-[#16A1AF] text-white'
+                        }`}
+                      />
+                    </button>
+                  </div>
                 )}
 
                 <div className="flex flex-col p-6 ">

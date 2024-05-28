@@ -27,10 +27,7 @@ import Contact from './Contact/Contact';
 
 import { actionChangeCredential } from '../../store/reducers/user';
 import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
-import {
-  fetchAllProducts,
-  fetchAllProductsbyCategory,
-} from '../../store/thunks/productThunks';
+import { fetchAllProductsbyCategory } from '../../store/thunks/productThunks';
 
 function Page() {
   const location = useLocation();
@@ -55,11 +52,6 @@ function Page() {
     (state) => state.products.productsByCat
   );
 
-  const favProductTab = useAppSelector(
-    (state) => state.myGarden.favProductsTab
-  );
-  const [isFavActive, setIsFavActive] = useState(false);
-
   return (
     <div className="page">
       {location.pathname !== '/connexion' &&
@@ -74,26 +66,12 @@ function Page() {
         />
         <Route
           path="/fruits"
-          element={
-            <Fruits
-              fruits={fruits}
-              logged={logged}
-              isFavActive={isFavActive}
-              setIsFavActive={setIsFavActive}
-            />
-          }
+          element={<Fruits fruits={fruits} logged={logged} />}
         />
         <Route path="/fruits/:nomFruit" element={<FruitDetail />} />
         <Route
           path="/legumes"
-          element={
-            <Legumes
-              legumes={legumes}
-              logged={logged}
-              isFavActive={isFavActive}
-              setIsFavActive={setIsFavActive}
-            />
-          }
+          element={<Legumes legumes={legumes} logged={logged} />}
         />
         <Route path="/legumes/:nomLegume" element={<LegumeDetail />} />
         <Route path="/tutos" element={<Tutoriels tutorials={tutorials} />} />

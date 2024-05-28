@@ -27,7 +27,6 @@ export const fetchAllProducts = createAsyncThunk(
   'products/fetchAll',
   async () => {
     const response = await axiosInstance.get('/products/');
-    console.log(response.data);
     return response.data;
   }
 );

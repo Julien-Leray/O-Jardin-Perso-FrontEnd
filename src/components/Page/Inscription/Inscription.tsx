@@ -30,7 +30,10 @@ interface InscriptionProps {
   handleVerifyEmail: (email: string) => string;
 }
 
-const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEmail }) => {
+const Inscription: React.FC<InscriptionProps> = ({
+  handleSignup,
+  handleVerifyEmail,
+}) => {
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -44,7 +47,7 @@ const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEma
     confirmPassword: '',
     address: '',
     zip_code: '',
-    city: ''
+    city: '',
   });
 
   const [errors, setErrors] = useState<Errors>({});
@@ -53,7 +56,7 @@ const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEma
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -74,7 +77,12 @@ const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEma
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Les mots de passe doivent correspondre';
     }
-    if (formData.zip_code && !/^0[1-9]\d{3}$|^[1-8]\d{4}$|^9[0-5]\d{3}$|^97[0-5]\d{2}$|^98[6-8]\d{2}$|^98000$/.test(formData.zip_code)) {
+    if (
+      formData.zip_code &&
+      !/^0[1-9]\d{3}$|^[1-8]\d{4}$|^9[0-5]\d{3}$|^97[0-5]\d{2}$|^98[6-8]\d{2}$|^98000$/.test(
+        formData.zip_code
+      )
+    ) {
       newErrors.zip_code = 'Code postal invalide';
     }
     return newErrors;
@@ -89,24 +97,20 @@ const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEma
       return;
     }
 
-    const emailExist = await handleVerifyEmail(formData.email as string);
+    const emailExist = handleVerifyEmail(formData.email as string);
     console.log(emailExist);
     if (emailExist.payload === 'Email déjà utilisé') {
       setErrors({ email: 'Cet email est déjà utilisé' });
-      return;
     } else {
+      const { confirmPassword, ...dataToSend } = formData;
+      const filteredDataToSend = Object.fromEntries(
+        Object.entries(dataToSend).filter(([_, value]) => value)
+      );
 
-    const { confirmPassword, ...dataToSend } = formData;
-    const filteredDataToSend = Object.fromEntries(
-      Object.entries(dataToSend).filter(([_, value]) => value)
-    );
-
-    handleSignup(filteredDataToSend as unknown as FormData);
-    navigate('/connexion');
+      handleSignup(filteredDataToSend as unknown as FormData);
+      navigate('/connexion');
     }
   };
-  
-
 
   return (
     <div className="flex flex-col justify-center rounded-lg items-center ">
@@ -143,8 +147,12 @@ const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEma
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black ml-4"
             />
           </div>
-          {errors.firstname && <p className="text-red-500 text-xs">{errors.firstname}</p>}
-          {errors.lastname && <p className="text-red-500 text-xs">{errors.lastname}</p>}
+          {errors.firstname && (
+            <p className="text-red-500 text-xs">{errors.firstname}</p>
+          )}
+          {errors.lastname && (
+            <p className="text-red-500 text-xs">{errors.lastname}</p>
+          )}
 
           <label
             htmlFor="email"
@@ -163,7 +171,9 @@ const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEma
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border border-black "
             />
           </div>
-          {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
+          {errors.email && (
+            <p className="text-red-500 text-xs">{errors.email}</p>
+          )}
 
           <label
             htmlFor="password"
@@ -183,7 +193,9 @@ const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEma
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border border-black"
             />
           </div>
-          {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
+          {errors.password && (
+            <p className="text-red-500 text-xs">{errors.password}</p>
+          )}
 
           <label
             htmlFor="confirmPassword"
@@ -203,7 +215,9 @@ const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEma
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border border-black"
             />
           </div>
-          {errors.confirmPassword && <p className="text-red-500 text-xs">{errors.confirmPassword}</p>}
+          {errors.confirmPassword && (
+            <p className="text-red-500 text-xs">{errors.confirmPassword}</p>
+          )}
 
           <div className="items-center text-center md:rounded-full  font-bold text-lg mb-2">
             <span className="mr-2 self-center">Adresse postale</span>
@@ -227,7 +241,7 @@ const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEma
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black "
             />
           </div>
-          
+
           <div className="flex items-center mb-4 md:mb-8">
             <input
               name="zip_code"
@@ -244,8 +258,12 @@ const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEma
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black ml-4"
             />
           </div>
-          {errors.zip_code && <p className="text-red-500 text-xs">{errors.zip_code}</p>}
-          {errors.apiError && <p className="text-red-500 text-xs">{errors.apiError}</p>}
+          {errors.zip_code && (
+            <p className="text-red-500 text-xs">{errors.zip_code}</p>
+          )}
+          {errors.apiError && (
+            <p className="text-red-500 text-xs">{errors.apiError}</p>
+          )}
 
           <button
             type="submit"
@@ -264,6 +282,6 @@ const Inscription: React.FC<InscriptionProps> = ({ handleSignup, handleVerifyEma
       </div>
     </div>
   );
-}
+};
 
 export default Inscription;

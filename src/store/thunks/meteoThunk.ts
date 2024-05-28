@@ -12,7 +12,7 @@ export const fetchMeteo = createAsyncThunk(
 
     // day's date
     const currentMoment = dayjs();
-    console.log('cest moi', currentMoment);
+    // console.log('cest moi', currentMoment);
 
     // Start of Time : today
     const weatherDay = currentMoment.startOf('day');

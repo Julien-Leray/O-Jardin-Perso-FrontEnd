@@ -35,6 +35,7 @@ function Connexion({
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleLogin();
+    dispatch(actionGetDataUser());
   };
   if (logged) {
     dispatch(actionGetDataUser());
