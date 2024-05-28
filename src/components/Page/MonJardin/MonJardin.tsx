@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchMeteo } from '../../../store/thunks/meteoThunk';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
+import dayjs from 'dayjs';
+import 'dayjs/locale/fr';
 
 function MonJardin() {
   const dispatch = useAppDispatch();
@@ -17,9 +19,12 @@ function MonJardin() {
     }
   }, [dispatch, cityName]);
 
+    // dayjs.locale('fr');
+    // const dateOfDay = dayjs().format('dddd DD MMMM')
+
   return (
     <div>
-      <h1>Bienvenue {user.firstname}</h1>
+      <h1 className='flex justify-center m-2'>Bienvenue {user.firstname}</h1>
 
       <Link
         to="/mon_jardin/potager-virtuel"
@@ -28,25 +33,36 @@ function MonJardin() {
         Gérez votre jardin virtuel ici.
       </Link>
 
-      {meteo && meteo.name ? (
-        <div className="bg-gray-200 rounded-lg p-4 my-2 ">
-          <h2 className="font-bold ">Météo à {meteo.name}</h2>
-          <div className='flex flex-wrap justify-around'>
-          {meteo.weatherForecast.map((dailyWeather) => (
-            
-            <div key={dailyWeather.date}>
-              <p>{dailyWeather.date}</p>
-              <p>{dailyWeather.temp}°C</p>
-              <img src={`http://openweathermap.org/img/w/${dailyWeather.icon}.png`} alt="weather icon" />
-            </div>
-            
-          ))}
-          </div>
+      <div className='flex flex-wrap flex-col md:flex-row md:justify-around'>
+
+        <div className="rounded-lg shadow-lg border border-gray-200 m-1 p-4 md:my-2 md:w-1/4">
+
+            <h2 className="font-bold ">Mes alertes</h2>
+            {/* <p>{dateOfDay} </p> */}
+            <p>Arroser la laitue</p>
 
         </div>
-      ) : (
-        <p>Chargement des données météo...</p>
-      )}
+
+        {meteo && meteo.name ? (
+
+          <div className="rounded-lg m-1 shadow-lg border border-gray-200 md:w-5/5 md:p-2 md:my-2">
+            <h2 className="font-bold ml-2">Météo à {meteo.name}</h2>
+              <div className='flex flex-wrap justify-around'>
+              {meteo.weatherForecast.map((dailyWeather) => (
+                
+                <div className="rounded-lg p-1 flex flex-col items-center" key={dailyWeather.date}>
+                  <p>{dailyWeather.date}</p>
+                  <p>{dailyWeather.temp}°C</p>
+                  <img src={`http://openweathermap.org/img/w/${dailyWeather.icon}.png`} alt="weather icon" />
+                </div>
+                
+              ))}
+              </div>
+          </div>
+        ) : (
+          <p>Chargement des données météo...</p>
+        )}
+      </div>
     </div>
   );
 }
