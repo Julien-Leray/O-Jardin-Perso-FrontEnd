@@ -6,6 +6,10 @@ export interface Product {
   latin_name: string;
   category_id: number;
   position?: string;
+  plantation_date:string;
+  harvest_date : string;
+  watering_frequency:string,
+  
 }
 
 export interface ProductsState {
