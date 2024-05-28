@@ -10,41 +10,40 @@ export const fetchMeteo = createAsyncThunk(
       `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=218f32cd39f9bdde590c689d89e8d6e4`
     );
 
-    //day's date 
-    const currentMoment = dayjs();
-    console.log('cest moi', currentMoment) 
+ //day's date 
+ const currentMoment = dayjs();
 
-    //Start of Time : today 
-    const weatherDay = currentMoment.startOf('day');
+ const weatherDay = response.data.list.filter((weatherForecast: any) => {
 
-    const forecastForDay = response.data.list.reduce((weathercurrent: any, weatherForecast: any) => {
-      
-      const forecastDate = dayjs(weatherForecast.dt_txt);
-      if (forecastDate.isSame(weatherDay, 'day')) {
-        if (!weathercurrent || Math.abs(forecastDate.diff(currentMoment)) < Math.abs(dayjs(weathercurrent.dt_txt).diff(currentMoment))) {
-          return weatherForecast;
-        }
-      }
-      return weathercurrent;
-    }, null);
+   const forecastDate = dayjs(weatherForecast.dt_txt).startOf('day');
+   return forecastDate.isSame(currentMoment, 'day');
+ });
 
 
-    const forecastsForFourDays = response.data.list.filter((weatherForecast: any) =>
-      dayjs(weatherForecast.dt_txt).isAfter(weatherDay) &&
-      weatherForecast.dt_txt.includes("12:00:00")
-    ).slice(0, 4);
+ const forecastForToday = weatherDay.reduce((weathercurrent: any, weatherForecast: any) => {
+   const forecastDate = dayjs(weatherForecast.dt_txt);
+   if (!weathercurrent || forecastDate.diff(currentMoment) < dayjs(weathercurrent.dt_txt).diff(currentMoment)) {
+     return weatherForecast;
+   }
+   return weathercurrent;
+ }, null);
 
-  
-    const combinedForecasts = [forecastForDay, ...forecastsForFourDays];
+ const forecastsForFourDays = response.data.list.filter((weatherForecast: any) => {
 
-    return {
-      name: response.data.city.name,
-      weatherForecast: combinedForecasts.map((weatherForecast: any) => ({
-        // Format date with day.js
-        date: dayjs(weatherForecast.dt_txt).locale('fr').format('dddd DD MMMM'),
-        temp: Math.round(weatherForecast.main.temp),
-        icon: weatherForecast.weather[0].icon
-      }))
-    };
-  }
+   const forecastDate = dayjs(weatherForecast.dt_txt).startOf('day');
+   return forecastDate.isAfter(currentMoment) && weatherForecast.dt_txt.includes("12:00:00");
+ }).slice(0, 4);
+
+ const forecasts = forecastForToday ? [forecastForToday, ...forecastsForFourDays] : forecastsForFourDays;
+
+ return {
+   name: response.data.city.name,
+   weatherForecast: forecasts.map((weatherForecast: any) => ({
+     // Format date with day.js
+     date: dayjs(weatherForecast.dt_txt).locale('fr').format('dddd DD MMMM'),
+     temp: Math.round(weatherForecast.main.temp),
+     icon: weatherForecast.weather[0].icon
+   }))
+ };
+}
 );
