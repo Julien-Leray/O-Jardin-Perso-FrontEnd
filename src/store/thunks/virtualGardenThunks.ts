@@ -1,25 +1,38 @@
+// src/store/thunks/potagerVirtuelThunks.ts
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../axios/axios';
+import { Product } from '../../types/types';
+import { RootState } from '../../store/store';
+
 
 interface UpdateProductPositionPayload {
-  id: number;
-  position: string;
-  quantity: number;
-  productId: number;
+  product_id: number;
+  position: number;
+  quantity: number; 
 }
 
-const updateProductPosition = createAsyncThunk(
-  'virtualGarden/updateProductPosition',
-  async (payload: UpdateProductPositionPayload) => {
-    const { id, position, quantity, productId } = payload;
+export const fetchProducts = createAsyncThunk('potagerVirtuel/fetchProducts', async () => {
+  const response = await axiosInstance.get<Product[]>('/products');
+  return response.data;
+});
 
-    console.log('Sending payload to backend:', payload);
+export const updateProductPosition = createAsyncThunk(
+  'potagerVirtuel/updateProductPosition',
+  async (payload: UpdateProductPositionPayload, { getState }) => {
+    const { position, product_id } = payload;
+    const state = getState() as RootState;
+    const token = localStorage.getItem('token');
 
-    const response = await axiosInstance.get(`/me/virtual-garden/${id}`, {
-      params: {
-        position,
-        quantity,
-        productId,
+    console.log('Sending payload to backend:', position);
+
+    const response = await axiosInstance.post(`/me/virtual-garden`, {
+      position,
+      product_id,
+      quantity: 1,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -28,7 +41,3 @@ const updateProductPosition = createAsyncThunk(
     return response.data;
   }
 );
-
-export default {
-  updateProductPosition,
-};

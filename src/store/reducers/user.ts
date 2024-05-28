@@ -1,7 +1,7 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import userActions from '../thunks/userThunk';
 import { boolean } from 'joi';
-import actionCheckLogin from '../thunks/user';
+import actionCheckLogin from '../thunks/userThunk';
 import { User } from '../../types/types';
 
 // -- STATE intial et son interface --
@@ -73,6 +73,7 @@ const userReducer = createReducer(initialState, (builder) => {
       state.logged = true;
       state.token = action.payload.jwt;
       state.firstname = action.payload.firstname;
+      
     })
     .addCase(userActions.actionNewUser.fulfilled, (state, action) => {
       state.firstname = action.payload.firstname;

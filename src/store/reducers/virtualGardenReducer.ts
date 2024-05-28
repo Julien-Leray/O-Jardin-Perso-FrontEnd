@@ -1,44 +1,54 @@
-import { createReducer } from '@reduxjs/toolkit';
-import virtualGardenThunks from '../thunks/virtualGardenThunks';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Product } from '../../types/types';
+import { fetchAllProducts } from '../thunks/productThunks';
 
-interface VirtualGardenState {
+interface PotagerVirtuelState {
   products: Product[];
+  garden: Product[];
   loading: boolean;
-  error: string | null | undefined;
+  error: string | null;
 }
 
-const initialState: VirtualGardenState = {
+const initialState: PotagerVirtuelState = {
   products: [],
+  garden: [],
   loading: false,
   error: null,
 };
 
-const virtualGardenReducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(virtualGardenThunks.updateProductPosition.pending, (state) => {
-      state.loading = true;
-    })
-    .addCase(
-      virtualGardenThunks.updateProductPosition.fulfilled,
-      (state, action) => {
-        state.loading = false;
-        const updatedProduct = action.payload;
-        const index = state.products.findIndex(
-          (p) => p.id === updatedProduct.id
-        );
-        if (index !== -1) {
-          state.products[index] = updatedProduct;
-        }
+const potagerVirtuelSlice = createSlice({
+  name: 'potagerVirtuel',
+  initialState,
+  reducers: {
+    addToGarden: (state, action: PayloadAction<Product>) => {
+      console.log('Reducer - addToGarden:', action.payload);
+      state.garden.push(action.payload);
+    },
+    updateProductPosition: (state, action: PayloadAction<{ product_id: number, position: number   }>) => {
+      console.log('Reducer - updateProductPosition:', action.payload);
+      const { product_id, position } = action.payload;
+      const product = state.garden.find(p => p.id === product_id);
+      if (product) {
+        product.position = position;
       }
-    )
-    .addCase(
-      virtualGardenThunks.updateProductPosition.rejected,
-      (state, action) => {
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAllProducts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchAllProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
-      }
-    );
+        state.products = action.payload;
+      })
+      .addCase(fetchAllProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch products';
+      });
+  }
 });
 
-export default virtualGardenReducer;
+export const { addToGarden, updateProductPosition } = potagerVirtuelSlice.actions;
+
+export default potagerVirtuelSlice.reducer;
