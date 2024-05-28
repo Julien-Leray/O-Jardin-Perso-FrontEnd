@@ -19,6 +19,7 @@ function App() {
     if (jwt) {
       dispatch(actionLogIn({ jwt }));
       addTokenJwtToAxiosInstance(jwt);
+      dispatch(actionGetDataUser(jwt));
     } else {
       console.log('empty localstorage');
     }

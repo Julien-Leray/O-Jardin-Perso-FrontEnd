@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState, FocusEvent } from 'react';
 import { Search } from 'react-feather';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '../../hooks/redux';
 import { fetchAllProducts } from '../../store/thunks/productThunks';
@@ -11,23 +11,54 @@ interface SearchBarProps {
 }
 
 function SearchBar({ products }: SearchBarProps) {
-  const [inputValue, setInputValue] = useState('');
+  const refSubmitSearchbar = useRef<null | HTMLFormElement>(null);
+  const refInputSearchbar = useRef<null | HTMLInputElement>(null);
+  const refListeSearchbar = useRef<null | HTMLDivElement>(null);
+  const navigate = useNavigate();
 
-  const dispatch = useAppDispatch();
+  const [inputValue, setInputValue] = useState('');
+  const [isFilterVisible, setIsFilterVisible] = useState(true);
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      if (
+        refInputSearchbar.current &&
+        refListeSearchbar.current &&
+        refSubmitSearchbar.current &&
+        !refInputSearchbar.current.contains(document.activeElement) &&
+        !refListeSearchbar.current.contains(document.activeElement) &&
+        !refSubmitSearchbar.current.contains(document.activeElement)
+      ) {
+        setIsFilterVisible(false);
+      }
+    }, 0);
+  };
+
   const filteredProducts = products.filter((product) => {
     const productNameToLower = product.name.toLowerCase();
     const searchStringLower = inputValue.toLowerCase();
     return productNameToLower.includes(searchStringLower);
   });
+  const matchingProduct = filteredProducts.find((product) => {
+    return product.name.toLowerCase() === inputValue;
+  });
 
   return (
     <div className="w-full bg-[#F6D50E] py-8">
       <form
+        ref={refSubmitSearchbar}
         className="flex w-full md:w-2/3 items-center mx-auto pl-8"
         onSubmit={(event) => {
           event.preventDefault();
           setInputValue(inputValue);
           setInputValue('');
+          navigate(
+            matchingProduct
+              ? `/${
+                  filteredProducts[0].category_id === 1 ? 'fruits' : 'legumes'
+                }/${filteredProducts[0].id}`
+              : '/'
+          );
         }}
       >
         <div className="relative w-full  ">
@@ -35,14 +66,17 @@ function SearchBar({ products }: SearchBarProps) {
             <Search />
           </div>
           <input
+            ref={refInputSearchbar}
             type="text"
             className="bg-white text-gray-900 text-sm rounded-full focus:ring-[#F6D50E] block w-full ps-10 py-4"
             placeholder="Rechercher un fruit ou un légume..."
-            required
             value={inputValue}
+            onBlur={handleBlur}
+            onFocus={() => {
+              setIsFilterVisible(true);
+            }}
             onChange={(event) => {
               setInputValue(event.target.value);
-              dispatch(fetchAllProducts());
             }}
           />
         </div>
@@ -53,25 +87,30 @@ function SearchBar({ products }: SearchBarProps) {
           Rechercher
         </button>
       </form>
-      <div className="w-full md:w-2/3 mx-auto pl-14 pr-36 rounded-lg">
-        <ul className="mt-1 bg-white z-10 divide-y divide-[#F6D50E]">
-          {inputValue &&
-            filteredProducts.map((product) => (
-              <Link
-                to={`/${product.category_id === 1 ? 'fruits' : 'legumes'}/${
-                  product.id
-                }`}
-                key={product.id}
-              >
-                <li
-                  className="hover:bg-[#F5780A] text-black hover:text-white py-2 px-4 flex w-full "
+      <div
+        className="w-full md:w-2/3 mx-auto pl-14 pr-36 rounded-lg"
+        ref={refListeSearchbar}
+      >
+        {isFilterVisible && (
+          <ul className="mt-1 bg-white z-10 divide-y divide-[#F6D50E]">
+            {inputValue &&
+              filteredProducts.map((product) => (
+                <Link
+                  to={`/${product.category_id === 1 ? 'fruits' : 'legumes'}/${
+                    product.id
+                  }`}
                   key={product.id}
                 >
-                  {product.name}
-                </li>
-              </Link>
-            ))}
-        </ul>
+                  <li
+                    className="hover:bg-[#F5780A] text-black hover:text-white py-2 px-4 flex w-full "
+                    key={product.id}
+                  >
+                    {product.name}
+                  </li>
+                </Link>
+              ))}
+          </ul>
+        )}
       </div>
     </div>
   );

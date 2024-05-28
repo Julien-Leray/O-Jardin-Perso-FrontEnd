@@ -48,7 +48,7 @@ export interface MeteoState {
   meteo: Meteo[];
   loading: boolean;
   error: string | null | undefined;
-  name:string;
+  name: string;
 }
 
 // Users
