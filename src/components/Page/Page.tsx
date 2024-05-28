@@ -37,6 +37,7 @@ function Page() {
   const dispatch = useAppDispatch();
 
   const logged = useAppSelector((state) => state.user.logged);
+
   const emailFormState = useAppSelector(
     (state) => state.user.credentials.email
   );
@@ -55,6 +56,7 @@ function Page() {
   const { products, legumes, fruits } = useAppSelector(
     (state) => state.products
   );
+  const favProducTab = useAppSelector((state) => state.myGarden.favProducts);
 
   return (
     <div className="page">
@@ -70,7 +72,10 @@ function Page() {
             <Home tutorials={tutorials} legumes={legumes} fruits={fruits} />
           }
         />
-        <Route path="/fruits" element={<Fruits />} />
+        <Route
+          path="/fruits"
+          element={<Fruits logged={logged} favProducTab={favProducTab} />}
+        />
         <Route path="/fruits/:nomFruit" element={<FruitDetail />} />
         <Route path="/legumes" element={<Legumes />} />
         <Route path="/legumes/:nomLegume" element={<LegumeDetail />} />

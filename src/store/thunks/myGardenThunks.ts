@@ -14,8 +14,8 @@ const actionGetDataUser = createAsyncThunk(
     const userData = response.data[0].result.user;
     const { products } = response.data[1];
 
-    // console.log('me:', userData);
-    // console.log('my products:', products);
+    console.log('me:', userData);
+    console.log('my products:', products);
 
     return { userData, products };
   }

@@ -1,9 +1,17 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Heart } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { fetchFruits } from '../../../../store/thunks/productThunks';
 
-function Fruits() {
+interface FruitsProps {
+  logged: boolean;
+  isFavActive: boolean;
+  setIsFavActive: React.Dispatch<React.SetStateAction<boolean>>;
+  favProducts: Product[]
+}
+
+function Fruits({ logged, isFavActive, setIsFavActive }: FruitsProps) {
   const dispatch = useAppDispatch();
   const { fruits, loading, error } = useAppSelector((state) => state.products);
 
@@ -28,6 +36,28 @@ function Fruits() {
                     alt={fruit.name}
                   />
                 </Link>
+                {logged && (
+                  <button type="button" className="place-self-end mr-4 mt-4">
+                    <Heart
+                      size="35"
+                      className={`rounded-full p-2 ${
+                        isFavActive && 'bg-[#16A1AF] text-white'
+                      }`}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        setIsFavActive(!isFavActive);
+                        if (!isFavActive) {
+                          // dispatch(actionAddProductToFav());
+                          console.log('fav ajouté');
+                        } else {
+                          console.log('fav supprimé');
+                          // dispatch(actionDeleteFav());
+                        }
+                      }}
+                    />
+                  </button>
+                )}
+
                 <div className="flex flex-col p-6 ">
                   <h3 className="font-bold text-center mb-2">{fruit.name}</h3>
                   <span className="italic text-center text-xs mb-2">
