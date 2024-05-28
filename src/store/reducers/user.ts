@@ -1,9 +1,12 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import userActions from '../thunks/userThunk';
 import { boolean } from 'joi';
+import actionCheckLogin from '../thunks/user';
+import { User } from '../../types/types';
 
 // -- STATE intial et son interface --
-export interface UserState {
+
+interface UserState {
   token: null | string;
   error: null | string;
   logged: boolean;
@@ -11,35 +14,20 @@ export interface UserState {
     email: string;
     password: string;
   };
-  firstname: string;
-  lastname: string;
-  email: string | boolean;
-  password: string;
-  address: string;
-  zip_code: number;
-  city: string;
-  watering_alert: boolean;
-  forecast_alert: boolean;
-  created_at: string;
-  updated_at: null;
+  user: User[];
+  isAdmin: boolean;
 }
+
 export const initialState: UserState = {
   token: null,
   error: null,
   logged: false,
   credentials: {
-    email: 'test2@julien.fr',
-    password: 'test',
+    email: '',
+    password: '',
   },
-  firstname: 'julien',
-  lastname: 'julien',
-  address: 'bujvdividpv',
-  zip_code: 56000,
-  city: 'Vannes',
-  watering_alert: false,
-  forecast_alert: false,
-  created_at: '2024-05-17T12:04:20.389Z',
-  updated_at: null,
+  user: [],
+  isAdmin: false,
 };
 
 export const actionChangeCredential = createAction<{
@@ -50,7 +38,7 @@ export const actionChangeCredential = createAction<{
 export const actionLogOut = createAction('user/LOGOUT');
 export const actionLogIn = createAction<{
   jwt: string;
-  firstname: string;
+  user: [];
 }>('user/LOGIN');
 export const actionNewUser = createAction<{
   firstname: string;
@@ -72,12 +60,14 @@ const userReducer = createReducer(initialState, (builder) => {
       state.logged = true;
       state.token = action.payload.token;
       state.error = null;
+      state.isAdmin = action.payload.isAdmin;
     })
     .addCase(userActions.actionCheckLogin.rejected, (state) => {
       state.error = 'Erreur de connexion';
     })
     .addCase(actionLogOut, (state) => {
       state.logged = false;
+      state.isAdmin = false;
     })
     .addCase(actionLogIn, (state, action) => {
       state.logged = true;

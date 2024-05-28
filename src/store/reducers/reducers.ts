@@ -5,6 +5,7 @@ import productsReducer from './products';
 import tutorielsReducer from './tutoriels';
 import myGardenReducer from './mygarden';
 import meteoReducer from './meteo';
+import virtualGardenReducer from './virtualGardenReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   tutoriels: tutorielsReducer,
   myGarden: myGardenReducer,
   meteo: meteoReducer,
+  virtualGarden: virtualGardenReducer,
 });
 
 export default rootReducer;

@@ -5,6 +5,7 @@ export interface Product {
   picture?: string;
   latin_name: string;
   category_id: number;
+  position?: string;
 }
 
 export interface ProductsState {
@@ -12,18 +13,15 @@ export interface ProductsState {
   fruits: Product[];
   legumes: Product[];
   selectedFruit?: Product | null;
-  selectedLegume?: Product | null; // Ajout de null comme type acceptable
+  selectedLegume?: Product | null;
   loading: boolean;
   error: string | null | undefined;
 }
-// interface du potagervirtuel
 
 export interface SquareMakerProps {
   horizontal: number;
   vertical: number;
 }
-
-// Tutorials
 
 export interface Tutorial {
   id: number;
@@ -38,6 +36,8 @@ export interface TutorialsState {
   error: string | null | undefined;
 }
 
+// Météo
+
 export interface Meteo {
   name: string;
   temp: string;
@@ -48,4 +48,20 @@ export interface MeteoState {
   meteo: Meteo[];
   loading: boolean;
   error: string | null | undefined;
+  name:string;
+}
+
+// Users
+
+export interface User {
+  id: number;
+  email: string;
+  firstname: string;
+  // lastname: string;
+  // address: string;
+  zip_code: string;
+  city: string;
+  // watering_alert: boolean;
+  // forecast_alert: boolean;
+  is_admin: boolean;
 }
