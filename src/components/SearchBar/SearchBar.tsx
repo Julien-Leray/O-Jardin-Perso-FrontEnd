@@ -1,23 +1,23 @@
-import React, { useEffect, useRef, useState, FocusEvent } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Search } from 'react-feather';
 import { Link, useNavigate } from 'react-router-dom';
-
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchAllProducts } from '../../store/thunks/productThunks';
-import { Product } from '../../types/types';
 
-interface SearchBarProps {
-  products: Product[];
-}
-
-function SearchBar({ products }: SearchBarProps) {
+function SearchBar() {
   const refSubmitSearchbar = useRef<null | HTMLFormElement>(null);
   const refInputSearchbar = useRef<null | HTMLInputElement>(null);
   const refListeSearchbar = useRef<null | HTMLDivElement>(null);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, []);
 
   const [inputValue, setInputValue] = useState('');
   const [isFilterVisible, setIsFilterVisible] = useState(true);
+
+  const products = useAppSelector((state) => state.products.allProducts);
 
   const handleBlur = () => {
     setTimeout(() => {

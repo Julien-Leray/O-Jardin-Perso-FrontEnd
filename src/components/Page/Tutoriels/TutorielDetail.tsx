@@ -1,4 +1,4 @@
-import { Tutorial } from '../../../types/types';
+import { Tutorial } from '../../../@types/types';
 
 interface TutoDetailProps {
   tutorials: Tutorial[];

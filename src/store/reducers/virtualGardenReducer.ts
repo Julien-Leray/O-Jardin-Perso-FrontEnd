@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import virtualGardenThunks from '../thunks/virtualGardenThunks';
-import { Product } from '../../types/types';
+import { Product } from '../../@types/types';
 
 interface VirtualGardenState {
   products: Product[];

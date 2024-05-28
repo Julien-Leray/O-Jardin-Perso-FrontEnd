@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
+import { boolean } from 'joi';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import userAction from '../../store/thunks/userThunk';
 import actionGetDataUser from '../../store/thunks/myGardenThunks';
@@ -28,10 +29,8 @@ import { actionChangeCredential } from '../../store/reducers/user';
 import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
 import {
   fetchAllProducts,
-  fetchFruits,
-  fetchLegumes,
+  fetchAllProductsbyCategory,
 } from '../../store/thunks/productThunks';
-import { boolean } from 'joi';
 
 function Page() {
   const location = useLocation();
@@ -48,23 +47,23 @@ function Page() {
 
   useEffect(() => {
     dispatch(fetchAllTutorials());
-    dispatch(fetchLegumes());
-    dispatch(fetchFruits());
-    dispatch(fetchAllProducts());
+    dispatch(fetchAllProductsbyCategory());
   }, []);
 
   const { tutorials } = useAppSelector((state) => state.tutoriels);
-  const { products, legumes, fruits } = useAppSelector(
-    (state) => state.products
+  const { fruits, legumes } = useAppSelector(
+    (state) => state.products.productsByCat
   );
-  const favProducTab = useAppSelector((state) => state.myGarden.favProducts);
+
+  const favProductTab = useAppSelector(
+    (state) => state.myGarden.favProductsTab
+  );
+  const [isFavActive, setIsFavActive] = useState(false);
 
   return (
     <div className="page">
       {location.pathname !== '/connexion' &&
-        location.pathname !== '/inscription' && (
-          <SearchBar products={products} />
-        )}
+        location.pathname !== '/inscription' && <SearchBar />}
 
       <Routes>
         <Route
@@ -75,10 +74,27 @@ function Page() {
         />
         <Route
           path="/fruits"
-          element={<Fruits logged={logged} favProducTab={favProducTab} />}
+          element={
+            <Fruits
+              fruits={fruits}
+              logged={logged}
+              isFavActive={isFavActive}
+              setIsFavActive={setIsFavActive}
+            />
+          }
         />
         <Route path="/fruits/:nomFruit" element={<FruitDetail />} />
-        <Route path="/legumes" element={<Legumes />} />
+        <Route
+          path="/legumes"
+          element={
+            <Legumes
+              legumes={legumes}
+              logged={logged}
+              isFavActive={isFavActive}
+              setIsFavActive={setIsFavActive}
+            />
+          }
+        />
         <Route path="/legumes/:nomLegume" element={<LegumeDetail />} />
         <Route path="/tutos" element={<Tutoriels tutorials={tutorials} />} />
         <Route
@@ -106,12 +122,19 @@ function Page() {
             />
           }
         />
-          <Route
+        <Route
           path="/inscription"
-          element={<Inscription 
-            handleVerifyEmail={(email) => dispatch(userAction.actionVerifyEmailExist(email))}
-            handleSignup={(newUser) => dispatch(userAction.actionNewUser(newUser))} />}
-        />        
+          element={
+            <Inscription
+              handleVerifyEmail={(email) =>
+                dispatch(userAction.actionVerifyEmailExist(email))
+              }
+              handleSignup={(newUser) =>
+                dispatch(userAction.actionNewUser(newUser))
+              }
+            />
+          }
+        />
         <Route path="/mon_jardin" element={logged && <MonJardin />} />
 
         <Route

@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Tutorial } from '../../types/types';
+import { Tutorial } from '../../@types/types';
 import fetchAllTutorials from '../thunks/tutorielsThunk';
 
 interface TutorialState {

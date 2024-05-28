@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks/redux';
-import { Tutorial } from '../../../types/types';
+import { Tutorial } from '../../../@types/types';
 
 interface Tutoprops {
   tutorials: Tutorial[];
@@ -18,7 +18,7 @@ function Tutoriels({ tutorials }: Tutoprops) {
       <div>
         <ul className="flex flex-wrap md:flex-row -m-4">
           {tutorials.map((tutoriel) => (
-            <li key={tutoriel.id} className=" w-5/6 md:w-1/3 p-4">
+            <li key={tutoriel.id} className=" w-5/6 md:w-1/3 p-4 mx-auto">
               <div className="flex flex-col justify-normal flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
                 <Link to={`/tutos/${tutoriel.id}`}>
                   <img

@@ -1,8 +1,7 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import userActions from '../thunks/userThunk';
 import { boolean } from 'joi';
-import actionCheckLogin from '../thunks/user';
-import { User } from '../../types/types';
+import { User } from '../../@types/types';
 
 // -- STATE intial et son interface --
 
@@ -60,7 +59,6 @@ const userReducer = createReducer(initialState, (builder) => {
       state.logged = true;
       state.token = action.payload.token;
       state.error = null;
-      state.isAdmin = action.payload.isAdmin;
     })
     .addCase(userActions.actionCheckLogin.rejected, (state) => {
       state.error = 'Erreur de connexion';
@@ -72,7 +70,7 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(actionLogIn, (state, action) => {
       state.logged = true;
       state.token = action.payload.jwt;
-      state.firstname = action.payload.firstname;
+      // state.user.firstname = action.payload.user.firstname;
     })
     .addCase(userActions.actionNewUser.fulfilled, (state, action) => {
       state.firstname = action.payload.firstname;

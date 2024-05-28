@@ -6,16 +6,7 @@ export interface Product {
   latin_name: string;
   category_id: number;
   position?: string;
-}
-
-export interface ProductsState {
-  products: Product[];
-  fruits: Product[];
-  legumes: Product[];
-  selectedFruit?: Product | null;
-  selectedLegume?: Product | null;
-  loading: boolean;
-  error: string | null | undefined;
+  isFav: boolean;
 }
 
 export interface SquareMakerProps {
@@ -54,14 +45,16 @@ export interface MeteoState {
 // Users
 
 export interface User {
-  id: number;
+  address: string;
+  city: string;
+  created_at: string;
   email: string;
   firstname: string;
-  // lastname: string;
-  // address: string;
-  zip_code: string;
-  city: string;
-  // watering_alert: boolean;
-  // forecast_alert: boolean;
+  forecast_alert: boolean;
+  id: number;
   is_admin: boolean;
+  lastname: string;
+  updated_at: null;
+  watering_alert: boolean;
+  zip_code: string;
 }

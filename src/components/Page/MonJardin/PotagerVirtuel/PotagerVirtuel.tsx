@@ -3,7 +3,7 @@ import { DndProvider, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
-import { Product } from '../../../../types/types';
+import { Product } from '../../../../@types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
 import DraggableProduct from './DraggableProduct';
 import virtualGardenThunks from '../../../../store/thunks/virtualGardenThunks';

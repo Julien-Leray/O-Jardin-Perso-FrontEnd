@@ -1,12 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Tutorial } from '../../../types/types';
+import { Product, Tutorial } from '../../../@types/types';
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  picture?: string;
-}
 interface HomeProps {
   tutorials: Tutorial[];
   legumes: Product[];

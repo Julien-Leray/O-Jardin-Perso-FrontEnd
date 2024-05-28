@@ -12,7 +12,7 @@ function LegumeDetail() {
 
   useEffect(() => {
     if (nomLegume) {
-      dispatch(fetchLegumeDetails(nomLegume));
+      // dispatch(fetchLegumeDetails(nomLegume));
     }
   }, [nomLegume, dispatch]);
 

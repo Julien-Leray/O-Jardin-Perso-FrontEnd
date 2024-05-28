@@ -1,14 +1,26 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { fetchLegumes } from '../../../../store/thunks/productThunks';
+import { Product } from '../../../../@types/types';
 
-function Legumes() {
+interface LegumesProps {
+  legumes: Product[];
+  logged: boolean;
+  isFavActive: boolean;
+  setIsFavActive: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function Legumes({
+  logged,
+  isFavActive,
+  legumes,
+  setIsFavActive,
+}: LegumesProps) {
   const dispatch = useAppDispatch();
-  const { legumes, loading, error } = useAppSelector((state) => state.products);
+  const { loading, error } = useAppSelector((state) => state.products);
 
   useEffect(() => {
-    dispatch(fetchLegumes());
+    // dispatch(fetchLegumes());
   }, [dispatch]);
 
   return (
@@ -19,7 +31,7 @@ function Legumes() {
       <div className="">
         <ul className="flex flex-wrap md:flex-row -m-4">
           {legumes.map((legume) => (
-            <li key={legume.id} className="w-5/6 md:w-1/3 p-4">
+            <li key={legume.id} className="w-5/6 md:w-1/3 p-4 mx-auto ">
               <div className="flex flex-col flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
                 <Link to={`/legumes/${legume.id}`}>
                   <img

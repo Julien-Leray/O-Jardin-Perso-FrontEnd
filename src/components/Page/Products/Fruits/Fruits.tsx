@@ -2,21 +2,22 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { fetchFruits } from '../../../../store/thunks/productThunks';
+import { Product } from '../../../../@types/types';
+import { actionAddProductToFav } from '../../../../store/thunks/favoritesThunks';
 
 interface FruitsProps {
+  fruits: Product[];
   logged: boolean;
   isFavActive: boolean;
   setIsFavActive: React.Dispatch<React.SetStateAction<boolean>>;
-  favProducts: Product[]
 }
 
-function Fruits({ logged, isFavActive, setIsFavActive }: FruitsProps) {
+function Fruits({ logged, isFavActive, fruits, setIsFavActive }: FruitsProps) {
   const dispatch = useAppDispatch();
-  const { fruits, loading, error } = useAppSelector((state) => state.products);
+  const { loading, error } = useAppSelector((state) => state.products);
 
   useEffect(() => {
-    dispatch(fetchFruits());
+    // dispatch(fetchFruits());
   }, [dispatch]);
 
   return (
@@ -27,7 +28,7 @@ function Fruits({ logged, isFavActive, setIsFavActive }: FruitsProps) {
       <div>
         <ul className="flex flex-wrap md:flex-row -m-4 justify-stretch">
           {fruits.map((fruit) => (
-            <li key={fruit.id} className="w-5/6 md:w-1/3 p-4">
+            <li key={fruit.id} className="w-5/6 md:w-1/3 p-4 mx-auto">
               <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200">
                 <Link to={`/fruits/${fruit.id}`}>
                   <img
@@ -45,11 +46,12 @@ function Fruits({ logged, isFavActive, setIsFavActive }: FruitsProps) {
                       }`}
                       onClick={(event) => {
                         event.preventDefault();
-                        setIsFavActive(!isFavActive);
-                        if (!isFavActive) {
-                          // dispatch(actionAddProductToFav());
+                        if (!fruit.isFav) {
+                          setIsFavActive(true);
+                          dispatch(actionAddProductToFav({ id: fruit.id }));
                           console.log('fav ajouté');
                         } else {
+                          setIsFavActive(false);
                           console.log('fav supprimé');
                           // dispatch(actionDeleteFav());
                         }
