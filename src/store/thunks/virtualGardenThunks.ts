@@ -3,7 +3,7 @@ import axiosInstance from '../../axios/axios';
 
 interface UpdateProductPositionPayload {
   id: number;
-  position: string;
+  position: string[];
   quantity: number;
   productId: number;
 }
@@ -11,16 +11,14 @@ interface UpdateProductPositionPayload {
 const updateProductPosition = createAsyncThunk(
   'virtualGarden/updateProductPosition',
   async (payload: UpdateProductPositionPayload) => {
-    const { id, position, quantity, productId } = payload;
+    const { position, quantity, productId } = payload;
 
     console.log('Sending payload to backend:', payload);
 
-    const response = await axiosInstance.get(`/me/virtual-garden/${id}`, {
-      params: {
-        position,
-        quantity,
-        productId,
-      },
+    const response = await axiosInstance.post(`/me/virtual-garden`, {
+      position,
+      quantity,
+      productId,
     });
 
     console.log('Response from backend:', response.data);

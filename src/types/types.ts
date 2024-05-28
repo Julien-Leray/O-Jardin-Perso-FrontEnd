@@ -1,3 +1,7 @@
+export const ItemTypes = {
+  PRODUCT: 'product',
+};
+
 export interface Product {
   id: number;
   name: string;
@@ -22,6 +26,7 @@ export interface SquareMakerProps {
   horizontal: number;
   vertical: number;
 }
+
 
 export interface Tutorial {
   id: number;

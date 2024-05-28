@@ -1,83 +1,12 @@
 import React, { useState } from 'react';
-import { DndProvider, useDrop } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
 import { Product } from '../../../../types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
-import DraggableProduct from './DraggableProduct';
+import SquareMaker from './SquareMaker';
 import virtualGardenThunks from '../../../../store/thunks/virtualGardenThunks';
-
-const ItemTypes = {
-  PRODUCT: 'product',
-};
-
-interface SquareProps {
-  position: string;
-  children: React.ReactNode;
-  moveProduct: (id: number, position: string, productId: number) => void;
-}
-
-function Square({ position, children, moveProduct }: SquareProps) {
-  const [{ isOver }, drop] = useDrop({
-    accept: ItemTypes.PRODUCT,
-    drop: (item: { id: number; productId: number }) =>
-      moveProduct(item.id, position, item.productId),
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
-  });
-
-  return (
-    <div
-      ref={drop}
-      className={`border border-black w-10 h-10 ${
-        isOver ? 'bg-green-200' : ''
-      }`}
-    >
-      {children}
-    </div>
-  );
-}
-
-interface SquareMakerProps {
-  horizontal: number;
-  vertical: number;
-  products: Product[];
-  moveProduct: (id: number, position: string, productId: number) => void;
-}
-
-function SquareMaker({
-  horizontal,
-  vertical,
-  products,
-  moveProduct,
-}: SquareMakerProps) {
-  const squares = [];
-  for (let row = 0; row < vertical; row += 1) {
-    for (let col = 0; col < horizontal; col += 1) {
-      const position = `${String.fromCharCode(65 + row)}${col + 1}`;
-      const product = products.find((p) => p.position === position);
-      squares.push(
-        <Square key={position} position={position} moveProduct={moveProduct}>
-          {product && <DraggableProduct product={product} />}
-        </Square>
-      );
-    }
-  }
-
-  return (
-    <div
-      className="grid"
-      style={{
-        gridTemplateColumns: `repeat(${horizontal}, 40px)`,
-        justifyContent: 'center',
-      }}
-    >
-      {squares}
-    </div>
-  );
-}
 
 function PotagerVirtuel() {
   const dispatch = useAppDispatch();
@@ -86,6 +15,7 @@ function PotagerVirtuel() {
   const [garden, setGarden] = useState<Product[]>([]);
 
   const addToGarden = (product: Product) => {
+    console.log('Adding product to garden:', product);
     setGarden((prevGarden) => [...prevGarden, { ...product, position: '' }]);
   };
 
@@ -95,12 +25,11 @@ function PotagerVirtuel() {
     );
     const product = garden.find((p) => p.id === id);
     if (product) {
+      const positions = [{ position, productId }];
       dispatch(
         virtualGardenThunks.updateProductPosition({
-          id: product.id,
-          position,
+          positions,
           quantity: 1,
-          productId,
         })
       );
 
