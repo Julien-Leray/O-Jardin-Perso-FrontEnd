@@ -65,3 +65,9 @@ export interface User {
   forecast_alert: boolean;
   is_admin: boolean;
 }
+
+export interface ProductInVirtualGarden {
+  product_id: number;
+  position: string;
+  quantity: number;
+}
