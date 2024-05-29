@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import type { RootState } from '../store';
-import axiosInstance, { addTokenJwtToAxiosInstance } from '../../axios/axios';
-import { addTokenAndPseudoToLocalStorage } from '../../localStorage/localstorage';
+import axiosInstance, { addTokenToAxiosInstance } from '../../axios/axios';
+import { addTokenToLocalStorage } from '../../localStorage/localstorage';
 
 const actionCheckLogin = createAsyncThunk(
   'user/CHECK_LOGIN',
@@ -12,12 +12,11 @@ const actionCheckLogin = createAsyncThunk(
       email: state.user.credentials.email,
       password: state.user.credentials.password,
     });
-    const { firstname, token } = response.data;
+    const { token } = response.data;
 
-    addTokenJwtToAxiosInstance(token);
-    addTokenAndPseudoToLocalStorage(token, firstname);
-
-    return { firstname, token };
+    addTokenToAxiosInstance(token);
+    addTokenToLocalStorage(token);
+    return { token };
   }
 );
 const actionNewUser = createAsyncThunk(

@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { fetchMeteo } from '../../../../store/thunks/meteoThunk';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
-import { User } from '../../../../@types/types';
+import { User, UserData } from '../../../../@types/types';
 
 interface MeteoProps {
-  user: User;
+  userData: UserData;
 }
-function MaMeteo({ user }: MeteoProps) {
+function MaMeteo({ userData }: MeteoProps) {
   const dispatch = useAppDispatch();
 
   const meteo = useAppSelector((state) => state.meteo);
-  const cityName = user.city;
+  const cityName = userData.city;
 
   useEffect(() => {
     if (cityName) {

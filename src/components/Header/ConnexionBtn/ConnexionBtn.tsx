@@ -40,6 +40,7 @@ function ConnexionBtn({ isOpen, setIsOpen }: ConnexionBtnProps) {
             setIsOpen(false);
             dispatch(actionLogOut());
             removeTokenJwtFromAxiosInstance();
+            localStorage.removeItem('token');
             navigate('/');
           }}
         >

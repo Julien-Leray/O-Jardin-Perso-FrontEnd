@@ -58,3 +58,18 @@ export interface User {
   watering_alert: boolean;
   zip_code: string;
 }
+
+export interface UserData {
+  address: string;
+  city: string;
+  email: string;
+  firstname: string;
+  forecast_alert: boolean;
+  id: null | number;
+  lastname: string;
+  watering_alert: boolean;
+  zip_code: string;
+  created_at: string;
+  updated_at: null;
+  is_admin: boolean;
+}

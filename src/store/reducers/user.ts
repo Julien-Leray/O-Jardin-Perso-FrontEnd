@@ -14,7 +14,6 @@ interface UserState {
     email: string;
     password: string;
   };
-  user: User;
 }
 
 export const initialState: UserState = {
@@ -25,7 +24,6 @@ export const initialState: UserState = {
     email: '',
     password: '',
   },
-  user: [],
 };
 
 export const actionChangeCredential = createAction<{
@@ -35,7 +33,7 @@ export const actionChangeCredential = createAction<{
 
 export const actionLogOut = createAction('user/LOGOUT');
 export const actionLogIn = createAction<{
-  jwt: string;
+  token: string;
 }>('user/LOGIN');
 export const actionNewUser = createAction<{
   firstname: string;
@@ -68,16 +66,16 @@ const userReducer = createReducer(initialState, (builder) => {
     })
     .addCase(actionLogIn, (state, action) => {
       state.logged = true;
-      state.token = action.payload.jwt;
+      state.token = action.payload.token;
     })
     .addCase(userActions.actionNewUser.fulfilled, (state, action) => {
-      state.user.firstname = action.payload.firstname;
-      state.user.lastname = action.payload.lastname;
-      state.user.address = action.payload.address;
-      state.user.zip_code = action.payload.zip_code;
-      state.user.city = action.payload.city;
-      state.user.email = action.payload.email;
-      state.user.password = action.payload.password;
+      state.firstname = action.payload.firstname;
+      state.lastname = action.payload.lastname;
+      state.address = action.payload.address;
+      state.zip_code = action.payload.zip_code;
+      state.city = action.payload.city;
+      state.email = action.payload.email;
+      state.password = action.payload.password;
       state.error = null;
     })
     .addCase(userActions.actionNewUser.rejected, (state, action) => {

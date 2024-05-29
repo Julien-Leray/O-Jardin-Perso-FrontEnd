@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, act } from 'react';
 import { User, Lock, XCircle, Info } from 'react-feather';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from './ConnexionInput';
@@ -36,9 +36,9 @@ function Connexion({
     event.preventDefault();
     handleLogin();
   };
+
   if (logged) {
     navigate('/mon_jardin');
-    dispatch(actionGetDataUser());
   }
   return (
     <div className="flex flex-col justify-center rounded-lg items-center">

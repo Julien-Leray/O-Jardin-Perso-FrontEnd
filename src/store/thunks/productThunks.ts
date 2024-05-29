@@ -7,6 +7,7 @@ export const fetchAllProductsbyCategory = createAsyncThunk(
   async () => {
     const response = await axiosInstance.get('/products/');
     const allProducts = response.data;
+
     const sortedProducts = {
       fruits: [] as Product[],
       legumes: [] as Product[],

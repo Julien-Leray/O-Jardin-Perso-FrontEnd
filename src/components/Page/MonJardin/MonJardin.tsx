@@ -9,14 +9,23 @@ function MonJardin() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // dispatch(actionGetDataUser());
+    dispatch(actionGetDataUser());
   }, []);
 
-  const user = useAppSelector((state) => state.myGarden.userData);
-  console.log(user);
+  const { userData } = useAppSelector((state) => state.myGarden);
+  console.log('MonJardin', userData);
   return (
     <div>
-      <h1>Bienvenue {user.firstname}</h1>
+      <button
+        type="button"
+        onClick={(event) => {
+          event.preventDefault();
+          dispatch(actionGetDataUser());
+        }}
+      >
+        X
+      </button>
+      <h1>Bienvenue {userData.firstname}</h1>
 
       <Link
         to="/mon_jardin/potager-virtuel"
@@ -24,7 +33,7 @@ function MonJardin() {
       >
         Gérez votre jardin virtuel ici.
       </Link>
-      <MaMeteo user={user} />
+      <MaMeteo userData={userData} />
       {/* <MesFavoris user={user} /> */}
     </div>
   );

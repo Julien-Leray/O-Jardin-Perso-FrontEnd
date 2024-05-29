@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
   // baseURL: 'http://ns381313.ip-94-23-250.eu:4000/',
 });
 
-export function addTokenJwtToAxiosInstance(token: string) {
+export function addTokenToAxiosInstance(token: string) {
   axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
 }
 

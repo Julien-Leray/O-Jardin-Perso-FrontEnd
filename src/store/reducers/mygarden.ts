@@ -10,7 +10,20 @@ interface MyGardenState {
     favLegumes: Product[];
     favFruits: Product[];
   };
-  userData: User;
+  userData: {
+    address: string;
+    city: string;
+    email: string;
+    firstname: string;
+    forecast_alert: boolean;
+    id: number | null;
+    lastname: string;
+    watering_alert: boolean;
+    zip_code: string;
+    created_at: string;
+    updated_at: null;
+    is_admin: boolean;
+  };
 }
 
 const initialState: MyGardenState = {
@@ -18,7 +31,20 @@ const initialState: MyGardenState = {
     favLegumes: [],
     favFruits: [],
   },
-  userData: [],
+  userData: {
+    address: '',
+    city: '',
+    email: '',
+    firstname: '',
+    forecast_alert: false,
+    id: 0,
+    lastname: '',
+    watering_alert: false,
+    zip_code: '',
+    created_at: '',
+    updated_at: null,
+    is_admin: false,
+  },
   loading: false,
   error: null,
 };
@@ -26,7 +52,7 @@ const initialState: MyGardenState = {
 const myGardenReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actionGetDataUser.fulfilled, (state, action) => {
-      state.favProducts = action.payload.sortedFavProducts;
+      // state.favProducts = action.payload.sortedFavProducts;
       state.userData = action.payload.userData;
       console.log('test', state.userData);
       console.log('test2', action.payload.userData);
