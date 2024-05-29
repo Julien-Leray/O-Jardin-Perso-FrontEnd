@@ -1,7 +1,3 @@
-export const ItemTypes = {
-  PRODUCT: 'product',
-};
-
 export interface Product {
   id: number;
   name: string;
@@ -21,6 +17,17 @@ export interface ProductsState {
   loading: boolean;
   error: string | null | undefined;
 }
+
+export interface SquareMakerProps {
+  horizontal: number;
+  vertical: number;
+  products: Product[];
+  moveProduct: (id: number, position: string, productId: number) => void;
+}
+
+export const ItemTypes = {
+  PRODUCT: 'product',
+};
 
 export interface SquareMakerProps {
   horizontal: number;

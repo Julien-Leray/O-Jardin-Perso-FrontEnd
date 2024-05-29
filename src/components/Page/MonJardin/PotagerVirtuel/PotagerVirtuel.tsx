@@ -28,8 +28,10 @@ function PotagerVirtuel() {
       const positions = [{ position, productId }];
       dispatch(
         virtualGardenThunks.updateProductPosition({
+          id,
           positions,
           quantity: 1,
+          productId,
         })
       );
 

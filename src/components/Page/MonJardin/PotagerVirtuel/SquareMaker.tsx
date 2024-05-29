@@ -1,14 +1,7 @@
 import React from 'react';
 import Square from './Square';
 import DraggableProduct from './DraggableProduct';
-import { Product } from '../../../../types/types';
-
-interface SquareMakerProps {
-  horizontal: number;
-  vertical: number;
-  products: Product[];
-  moveProduct: (id: number, position: string, productId: number) => void;
-}
+import { Product, SquareMakerProps } from '../../../../types/types';
 
 function SquareMaker({
   horizontal,
