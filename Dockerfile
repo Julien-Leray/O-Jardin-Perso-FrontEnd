@@ -11,7 +11,7 @@ RUN pnpm install
 
 COPY . .
 
-RUN echo "VITE_API_URL=http://ns381313.ip-94-23-250.eu" > .env
+RUN echo "VITE_API_URL=http://ns381313.ip-94-23-250.eu:4000" > .env
 
 EXPOSE 3000
 
