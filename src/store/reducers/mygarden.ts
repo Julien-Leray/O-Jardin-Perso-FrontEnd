@@ -6,19 +6,19 @@ import actionGetDataUser from '../thunks/myGardenThunks';
 interface MyGardenState {
   loading: boolean;
   error: string | null | undefined;
-  sortedFavProducts: {
-    favFruits: Product[];
+  favProducts: {
     favLegumes: Product[];
+    favFruits: Product[];
   };
-  user: User;
+  userData: User;
 }
 
 const initialState: MyGardenState = {
-  sortedFavProducts: {
-    favFruits: [],
+  favProducts: {
     favLegumes: [],
+    favFruits: [],
   },
-  user: [],
+  userData: [],
   loading: false,
   error: null,
 };
@@ -26,8 +26,10 @@ const initialState: MyGardenState = {
 const myGardenReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actionGetDataUser.fulfilled, (state, action) => {
-      state.sortedFavProducts = action.payload.sortedFavProducts;
-      state.user = action.payload.userData;
+      state.favProducts = action.payload.sortedFavProducts;
+      state.userData = action.payload.userData;
+      console.log('test', state.userData);
+      console.log('test2', action.payload.userData);
       state.error = null;
     })
     .addCase(actionGetDataUser.rejected, (state) => {

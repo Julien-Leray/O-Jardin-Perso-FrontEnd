@@ -3,9 +3,16 @@ import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import MaMeteo from './Meteo/Meteo';
 import MesFavoris from './Favorites/MesFavoris';
+import actionGetDataUser from '../../../store/thunks/myGardenThunks';
 
 function MonJardin() {
-  const user = useAppSelector((state) => state.myGarden.user);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // dispatch(actionGetDataUser());
+  }, []);
+
+  const user = useAppSelector((state) => state.myGarden.userData);
   console.log(user);
   return (
     <div>
@@ -18,7 +25,7 @@ function MonJardin() {
         Gérez votre jardin virtuel ici.
       </Link>
       <MaMeteo user={user} />
-      <MesFavoris user={user} />
+      {/* <MesFavoris user={user} /> */}
     </div>
   );
 }

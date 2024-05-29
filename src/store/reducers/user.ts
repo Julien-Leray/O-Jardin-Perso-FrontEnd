@@ -1,8 +1,8 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { boolean } from 'joi';
 import userActions from '../thunks/userThunk';
-import actionCheckLogin from '../thunks/user';
-import { User } from '../../types/types';
+import actionCheckLogin from '../thunks/userThunk';
+import { User } from '../../@types/types';
 
 // -- STATE intial et son interface --
 
@@ -15,7 +15,6 @@ interface UserState {
     password: string;
   };
   user: User;
-  isAdmin: boolean;
 }
 
 export const initialState: UserState = {
@@ -27,7 +26,6 @@ export const initialState: UserState = {
     password: '',
   },
   user: [],
-  isAdmin: false,
 };
 
 export const actionChangeCredential = createAction<{
@@ -38,7 +36,6 @@ export const actionChangeCredential = createAction<{
 export const actionLogOut = createAction('user/LOGOUT');
 export const actionLogIn = createAction<{
   jwt: string;
-  user: [];
 }>('user/LOGIN');
 export const actionNewUser = createAction<{
   firstname: string;
@@ -68,21 +65,19 @@ const userReducer = createReducer(initialState, (builder) => {
     })
     .addCase(actionLogOut, (state) => {
       state.logged = false;
-      state.isAdmin = false;
     })
     .addCase(actionLogIn, (state, action) => {
       state.logged = true;
       state.token = action.payload.jwt;
-      state.firstname = action.payload.firstname;
     })
     .addCase(userActions.actionNewUser.fulfilled, (state, action) => {
-      state.firstname = action.payload.firstname;
-      state.lastname = action.payload.lastname;
-      state.address = action.payload.address;
-      state.zip_code = action.payload.zip_code;
-      state.city = action.payload.city;
-      state.email = action.payload.email;
-      state.password = action.payload.password;
+      state.user.firstname = action.payload.firstname;
+      state.user.lastname = action.payload.lastname;
+      state.user.address = action.payload.address;
+      state.user.zip_code = action.payload.zip_code;
+      state.user.city = action.payload.city;
+      state.user.email = action.payload.email;
+      state.user.password = action.payload.password;
       state.error = null;
     })
     .addCase(userActions.actionNewUser.rejected, (state, action) => {

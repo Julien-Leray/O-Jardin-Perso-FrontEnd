@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { boolean } from 'joi';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import userAction from '../../store/thunks/userThunk';
-import actionGetDataUser from '../../store/thunks/myGardenThunks';
 
 import Home from './Home/Home';
 import Fruits from './Products/Fruits/Fruits';
