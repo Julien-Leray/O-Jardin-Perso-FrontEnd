@@ -9,7 +9,7 @@ import {
 } from '../../../../store/thunks/favoritesThunks';
 
 interface FavorisProps {
-  user: User[];
+  user: User;
 }
 function MesFavoris({ user }: FavorisProps) {
   const { favLegumes, favFruits } = useAppSelector(

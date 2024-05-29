@@ -10,7 +10,7 @@ interface MyGardenState {
     favFruits: Product[];
     favLegumes: Product[];
   };
-  user: User[];
+  user: User;
 }
 
 const initialState: MyGardenState = {

@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { User } from '../../../../@types/types';
 
 interface MeteoProps {
-  user: User[];
+  user: User;
 }
 function MaMeteo({ user }: MeteoProps) {
   const dispatch = useAppDispatch();

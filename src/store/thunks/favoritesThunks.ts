@@ -11,7 +11,6 @@ export const actionAddProductToFav = createAsyncThunk(
     console.log('id to send', id);
 
     const response = await axiosInstance.post('/me/garden', {
-      data: state.user.token,
       product_id: id,
     });
 
@@ -23,10 +22,13 @@ export const actionDeleteFav = createAsyncThunk(
   'fav/DELETE_FAV',
   async (id: number, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    console.log('id to delete', id);
+    const userId = state.myGarden.user.id;
+    console.log('id to delete', userId);
 
-    const response = await axiosInstance.delete(`/me/garden/:${id}`, {
-      data: state.user.token,
+    const response = await axiosInstance.delete(`/me/garden/:${userId}`, {
+      data: {
+        product_id: id,
+      },
     });
 
     return response.data;

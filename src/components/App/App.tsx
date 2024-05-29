@@ -14,10 +14,10 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const { jwt } = getTokenAndPseudoFromLocalStorage();
+    const { jwt, firstname } = getTokenAndPseudoFromLocalStorage();
 
     if (jwt) {
-      dispatch(actionLogIn({ jwt }));
+      dispatch(actionLogIn({ jwt, firstname }));
       addTokenJwtToAxiosInstance(jwt);
     } else {
       console.log('empty localstorage');
