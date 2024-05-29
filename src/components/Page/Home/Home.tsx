@@ -49,7 +49,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
                   <Link to={`/fruits/${fruit.id}`}>
                     <div className="flex flex-col flex-grow">
                       <img
-                        src={`http://localhost:4000${fruit.picture}`}
+                        src={`${import.meta.env.VITE_API_URL}${fruit.picture}`}
                         alt={fruit.name}
                         className="w-full h-48 object-cover mx-auto rounded-t-lg"
                       />
@@ -78,7 +78,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
                   <Link to={`/fruits/${legume.id}`}>
                     <div className="flex flex-col flex-grow">
                       <img
-                        src={`http://localhost:4000${legume.picture}`}
+                        src={`${import.meta.env.VITE_API_URL}${legume.picture}`}
                         alt={legume.name}
                         className="w-full h-48 object-cover mx-auto rounded-t-lg"
                       />
@@ -107,7 +107,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
               <div className="flex flex-col flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
                 <Link to={`/tutos/${tutoriel.id}`}>
                   <img
-                    src={`http://localhost:4000${tutoriel.picture}`}
+                    src={`${import.meta.env.VITE_API_URL}${tutoriel.picture}`}
                     alt={`Tuto de ${tutoriel.title}`}
                     className="w-full h-48 object-cover mx-auto"
                   />

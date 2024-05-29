@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { fetchFruitDetails } from '../../../../store/thunks/productThunks';
 
+// const ImageURL = process.env.REACT_APP_API_URL;
+
 function FruitDetail() {
   const { nomFruit } = useParams();
   const dispatch = useAppDispatch();
@@ -24,8 +26,7 @@ function FruitDetail() {
   if (!selectedFruit)
     return <div className="text-center text-lg">Aucun fruit sélectionné.</div>;
 
-  const imageUrl = `http://localhost:4000/${selectedFruit.picture}`;
-
+  const imageUrl = `${import.meta.env.VITE_API_URL}${selectedFruit.picture}`;
   return (
     <div className="container mx-auto mt-5 mb-5 p-5 rounded-lg shadow-lg bg-[#16A1AF]">
       <div className="text-white text-center">
