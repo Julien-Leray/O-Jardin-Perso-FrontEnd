@@ -71,3 +71,4 @@ export interface ProductInVirtualGarden {
   position: string;
   quantity: number;
 }
+

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { updateProductPosition, fetchProducts, fetchAllProductsInVirtualGarden, fetchMatchingProducts } from '../../../../store/thunks/virtualGardenThunks';
@@ -6,8 +5,7 @@ import { addToGarden, addToVirtualGarden } from '../../../../store/reducers/virt
 import { Product } from '../../../../types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
 
-const gridSize = 5; 
-
+const gridSize = 5;
 
 function PotagerVirtuel() {
   const dispatch = useAppDispatch();
@@ -16,7 +14,7 @@ function PotagerVirtuel() {
   const virtualGarden = useAppSelector((state) => state.virtualGarden.virtualGarden);
   const matchingProducts = useAppSelector((state) => state.virtualGarden.matchingProducts);
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
-
+  const [droppedProduct, setDroppedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -24,32 +22,22 @@ function PotagerVirtuel() {
     dispatch(fetchMatchingProducts());
   }, [dispatch]);
 
-
   const handleDragStart = (product: Product) => {
     setDraggedProduct(product);
     console.log('Dragged product:', product);
   };
 
   const handleDrop = (position: string) => {
-    console.log(draggedProduct)
-    console.log('Drop position:', position);
     if (draggedProduct) {
-      console.log('Dropped product:', draggedProduct);
-      dispatch(updateProductPosition({ product_id: draggedProduct.id, position }))
-      dispatch(addToVirtualGarden({ product_id: draggedProduct.id, position, quantity: 1 }))
-      dispatch(fetchAllProductsInVirtualGarden());
-      dispatch(fetchMatchingProducts());
-       
+      dispatch(updateProductPosition({ product_id: draggedProduct.id, position }));
+
+      console.log('Dropped product at position:', position);
       setDraggedProduct(null);
-    } else {
-      console.log('No product is being dragged.');
     }
   };
 
   const handleAddToGarden = (product: Product) => {
     dispatch(addToGarden({ ...product, position: '' }));
-    
-
   };
 
   const renderGrid = () => {
@@ -58,18 +46,19 @@ function PotagerVirtuel() {
       const cols = [];
       for (let col = 0; col < gridSize; col++) {
         const position = `{${row},${col}}`;
+        console.log(matchingProducts);
         const product = matchingProducts.find((p) => {
-          const regex = /\{(\d+), (\d+)\}/; 
-          const match = p.position && p.position.match(regex); // Add null check for p.position
+          const regex = /\{(\d+),(\d+)\}/;
+          const match = p.position && p.position.match(regex);
           if (match) {
             const positionObj = {
-              row: parseInt(match[1]), 
-              col: parseInt(match[2]) 
+              row: parseInt(match[1], 10),
+              col: parseInt(match[2], 10)
             };
-            return positionObj.row === row && positionObj.col === col; // Vérifie si la position correspond à celle recherchée
+            return positionObj.row === row && positionObj.col === col;
           }
-          return false; 
-        });        
+          return false;
+        });
 
         cols.push(
           <div
@@ -84,7 +73,6 @@ function PotagerVirtuel() {
                 alt={product.name}
                 draggable
                 onDragStart={() => handleDragStart(product)}
-                onDragEnd={() => renderGrid()}
                 className="w-12 h-12"
               />
             )}
@@ -103,7 +91,6 @@ function PotagerVirtuel() {
   return (
     <div className="potager-virtuel">
       <h1 className="text-center text-xl font-bold mb-4">Potager Virtuel</h1>
-      
       <div className="grid">{renderGrid()}</div>
       <div className="mt-6 w-full">
         <h2 className="text-center font-bold mb-4">Mon Jardin</h2>
@@ -113,12 +100,12 @@ function PotagerVirtuel() {
             <li key={product.id} className="w-1/4 p-2">
               <div className="border p-4 rounded">
                 <img
-                  src={`http://localhost:4000${product.picture}`}
+                  src={`http://localhost:4000/${product.picture}`}
                   alt={product.name}
                   className="w-full h-32 object-cover"
                   draggable
                   onDragStart={() => handleDragStart(product)}
-                  
+                  onDrop={() => handleDrop(product.position || '')}
                 />
                 <div className="text-center mt-2">{product.name}</div>
               </div>
@@ -131,4 +118,3 @@ function PotagerVirtuel() {
 }
 
 export default PotagerVirtuel;
-

@@ -9,7 +9,7 @@ import { array } from 'joi';
 
 interface UpdateProductPositionPayload {
   product_id: number;
-  position: string;
+  position: string | undefined;
 }
 
 export const fetchProducts = createAsyncThunk('potagerVirtuel/fetchProducts', async () => {
