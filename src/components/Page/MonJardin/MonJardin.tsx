@@ -13,6 +13,7 @@ function MonJardin() {
   }, []);
 
   const { userData } = useAppSelector((state) => state.myGarden);
+
   console.log('MonJardin', userData);
   return (
     <div>
@@ -34,7 +35,7 @@ function MonJardin() {
         Gérez votre jardin virtuel ici.
       </Link>
       <MaMeteo userData={userData} />
-      {/* <MesFavoris user={user} /> */}
+      <MesFavoris userData={userData} />
     </div>
   );
 }

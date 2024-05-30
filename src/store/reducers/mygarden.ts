@@ -49,11 +49,11 @@ const initialState: MyGardenState = {
   error: null,
 };
 
-const myGardenReducer = createReducer(initialState, (builder) => {
+const myGardenReducer = createReducer(initialState, (builder : any) => {
   builder
-    .addCase(actionGetDataUser.fulfilled, (state, action) => {
-      // state.favProducts = action.payload.sortedFavProducts;
-      state.userData = action.payload.userData;
+    .addCase(actionGetDataUser.fulfilled, (state : MyGardenState, action) => {
+      state.favProducts = action.payload.sortedFavProducts;
+      state.userData = action.payload;
       console.log('test', state.userData);
       console.log('test2', action.payload.userData);
       state.error = null;

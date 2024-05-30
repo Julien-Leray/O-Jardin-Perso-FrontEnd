@@ -48,7 +48,7 @@ export const actionVerifyEmailExist = createAction<string>(
   'user/VERIFY_EMAIL_EXIST'
 );
 
-const userReducer = createReducer(initialState, (builder) => {
+const userReducer = createReducer(initialState, (builder : any) => {
   builder
     .addCase(actionChangeCredential, (state, action) => {
       state.credentials[action.payload.name] = action.payload.value;
