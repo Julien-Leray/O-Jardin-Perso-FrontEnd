@@ -18,11 +18,15 @@ export interface ProductsState {
   error: string | null | undefined;
 }
 
-export interface SquareMakerProps {
-  horizontal: number;
-  vertical: number;
+export interface ProductInVirtualGarden {
+  product_id: number;
+  position: string;
+  quantity: number;
 }
 
+export const ItemTypes = {
+  PRODUCT: 'product',
+};
 export interface Tutorial {
   id: number;
   picture: string;
