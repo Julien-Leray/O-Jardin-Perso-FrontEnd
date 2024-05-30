@@ -149,7 +149,7 @@ function PotagerVirtuel() {
               <li key={product.id} className="w-1/4 p-2">
                 <div className="border p-4 rounded">
                   <img
-                    src={`http://localhost:4000${product.picture}`}
+                    src={`${import.meta.env.VITE_API_URL}${product.picture}`}
                     alt={product.name}
                     className="w-full h-32 object-cover"
                     draggable

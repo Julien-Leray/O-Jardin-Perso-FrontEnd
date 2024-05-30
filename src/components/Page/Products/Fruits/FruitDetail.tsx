@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { fetchFruitDetails } from '../../../../store/thunks/productThunks';
 
+
 export  const months = [
   'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 
   'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
@@ -29,7 +30,7 @@ function FruitDetail() {
   if (!selectedFruit)
     return <div className="text-center text-lg">Aucun fruit sélectionné.</div>;
 
-  const imageUrl = `http://localhost:4000/${selectedFruit.picture}`;
+  const imageUrl = `${import.meta.env.VITE_API_URL}/${selectedFruit.picture}`;
 
     // .replace() : Change the {} with nothing
     const plantationDates = selectedFruit.plantation_date.replace(/[{}]/g, '');

@@ -19,7 +19,7 @@ function TutorielDetail({ tutorials }: TutoDetailProps) {
         {tutorial.title}
       </div>
       <img
-        src={`http://localhost:4000${tutorial.picture}`}
+        src={`${import.meta.env.VITE_APP_API_URL}${tutorial.picture}`}
         alt={tutorial.title}
         className="mx-auto w-full max-w-xl h-auto object-cover rounded-lg shadow-lg"
       />

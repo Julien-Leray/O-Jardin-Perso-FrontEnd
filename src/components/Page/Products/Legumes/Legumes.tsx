@@ -24,7 +24,7 @@ function Legumes() {
                 <Link to={`/legumes/${legume.id}`}>
                   <img
                     className="w-full h-48 object-cover mx-auto"
-                    src={`http://localhost:4000/${legume.picture}`}
+                    src={`${import.meta.env.VITE_API_URL}/${legume.picture}`}
                     alt={legume.name}
                   />
                 </Link>

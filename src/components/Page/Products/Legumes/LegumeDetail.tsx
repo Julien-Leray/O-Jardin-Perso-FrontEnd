@@ -25,7 +25,7 @@ function LegumeDetail() {
   if (!selectedLegume)
     return <div className="text-center text-lg">Aucun légume sélectionné.</div>;
 
-  const imageUrl = `http://localhost:4000/${selectedLegume.picture}`;
+  const imageUrl = `${import.meta.env.VITE_API_URL}/${selectedLegume.picture}`;
 
    const plantationDates = selectedLegume.plantation_date.replace(/[{}]/g, '');
 
