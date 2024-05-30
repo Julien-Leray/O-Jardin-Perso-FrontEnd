@@ -18,23 +18,15 @@ export interface ProductsState {
   error: string | null | undefined;
 }
 
-export interface SquareMakerProps {
-  horizontal: number;
-  vertical: number;
-  products: Product[];
-  moveProduct: (id: number, position: string, productId: number) => void;
+export interface ProductInVirtualGarden {
+  product_id: number;
+  position: string;
+  quantity: number;
 }
 
 export const ItemTypes = {
   PRODUCT: 'product',
 };
-
-export interface SquareMakerProps {
-  horizontal: number;
-  vertical: number;
-}
-
-
 export interface Tutorial {
   id: number;
   picture: string;
