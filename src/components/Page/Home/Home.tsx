@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Product, Tutorial } from '../../../@types/types';
+import slugify from '../../../utils/utils';
 
 interface HomeProps {
   tutorials: Tutorial[];
@@ -40,7 +41,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
             <ul className="flex flex-wrap justify-around rounded-lg">
               {randomFruits.map((fruit) => (
                 <li className="mx-auto w-5/6 md:w-1/2 p-4" key={fruit.id}>
-                  <Link to={`/fruits/${fruit.id}`}>
+                  <Link to={`/fruits/${slugify(fruit.name)}`}>
                     <div className="flex flex-col flex-grow">
                       <img
                         src={`http://localhost:4000${fruit.picture}`}
@@ -69,7 +70,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
             <ul className="flex flex-wrap justify-around rounded-lg">
               {randomLegumes.map((legume) => (
                 <li className="mx-auto w-5/6 md:w-1/2 p-4" key={legume.id}>
-                  <Link to={`/fruits/${legume.id}`}>
+                  <Link to={`/legumes/${slugify(legume.name)}`}>
                     <div className="flex flex-col flex-grow">
                       <img
                         src={`http://localhost:4000${legume.picture}`}
@@ -99,7 +100,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
           {randomTutos.map((tutoriel) => (
             <li className="mx-auto w-5/6 md:w-1/3 p-4" key={tutoriel.id}>
               <div className="flex flex-col flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
-                <Link to={`/tutos/${tutoriel.id}`}>
+                <Link to={`/tutos/${slugify(tutoriel.title)}`}>
                   <img
                     src={`http://localhost:4000${tutoriel.picture}`}
                     alt={`Tuto de ${tutoriel.title}`}
@@ -112,7 +113,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
                   </h3>
 
                   <Link
-                    to={`/tutos/${tutoriel.id}`}
+                    to={`/tutos/${slugify(tutoriel.title)}`}
                     className="mx-auto py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
                   >
                     <button type="button">Lire la suite</button>

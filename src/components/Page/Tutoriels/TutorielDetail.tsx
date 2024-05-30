@@ -1,11 +1,15 @@
+import { useParams } from 'react-router-dom';
 import { Tutorial } from '../../../@types/types';
+import findTuto from '../../../store/selectors/tutos';
+import slugify from '../../../utils/utils';
 
 interface TutoDetailProps {
   tutorials: Tutorial[];
 }
 
 function TutorielDetail({ tutorials }: TutoDetailProps) {
-  const tutorial = tutorials.find((tuto) => tuto.id);
+  const params = useParams();
+  const tutorial = findTuto(tutorials, slugify(params.title));
 
   if (!tutorial) {
     return (

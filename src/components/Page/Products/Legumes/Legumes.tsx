@@ -8,6 +8,7 @@ import {
   actionDeleteFav,
 } from '../../../../store/thunks/favoritesThunks';
 import Favorites from '../AddFavorites';
+import slugify from '../../../../utils/utils';
 
 interface FruitsProps {
   legumes: Product[];
@@ -28,7 +29,7 @@ function Legumes({ logged, legumes }: FruitsProps) {
           {legumes.map((legume) => (
             <li key={legume.id} className="w-5/6 md:w-1/3 p-4 mx-auto">
               <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200">
-                <Link to={`/fruits/${legume.id}`}>
+                <Link to={`/legumes/${slugify(legume.name)}`}>
                   <img
                     className="w-full h-48 object-cover mx-auto"
                     src={`http://localhost:4000/${legume.picture}`}
@@ -82,7 +83,7 @@ function Legumes({ logged, legumes }: FruitsProps) {
                     {legume.description.slice(0, 100)}...
                   </p>
                   <Link
-                    to={`/legume/${legume.id}`}
+                    to={`/legumes/${slugify(legume.name)}`}
                     className="mx-auto py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
                   >
                     <button type="button">En savoir plus</button>

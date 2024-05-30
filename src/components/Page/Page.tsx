@@ -52,7 +52,6 @@ function Page() {
   const { tutorials } = useAppSelector((state) => state.tutoriels);
   const allProducts = useAppSelector((state) => state.products.allProducts);
 
-
   const sortedProducts = {
     fruits: [] as Product[],
     legumes: [] as Product[],
@@ -89,15 +88,15 @@ function Page() {
           path="/fruits"
           element={<Fruits fruits={sortedProducts.fruits} logged={logged} />}
         />
-        <Route path="/fruits/:nomFruit" element={<FruitDetail />} />
+        <Route path="/fruits/:name" element={<FruitDetail />} />
         <Route
           path="/legumes"
           element={<Legumes legumes={sortedProducts.legumes} logged={logged} />}
         />
-        <Route path="/legumes/:nomLegume" element={<LegumeDetail />} />
+        <Route path="/legumes/:name" element={<LegumeDetail />} />
         <Route path="/tutos" element={<Tutoriels tutorials={tutorials} />} />
         <Route
-          path="/tutos/:id"
+          path="/tutos/:title"
           element={<TutorielDetail tutorials={tutorials} />}
         />
         <Route

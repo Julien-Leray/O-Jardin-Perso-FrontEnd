@@ -7,6 +7,7 @@ import {
   actionAddProductToFav,
   actionDeleteFav,
 } from '../../../../store/thunks/favoritesThunks';
+import slugify from '../../../../utils/utils';
 
 interface FruitsProps {
   fruits: Product[];
@@ -30,7 +31,7 @@ function Fruits({ logged, fruits }: FruitsProps) {
               className="w-5/6 md:w-1/3 p-4 mx-auto"
             >
               <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200">
-                <Link to={`/fruits/${fruit.id}`}>
+                <Link to={`/fruits/${slugify(fruit.name)}`}>
                   <img
                     className="w-full h-48 object-cover mx-auto"
                     src={`http://localhost:4000/${fruit.picture}`}
@@ -83,7 +84,7 @@ function Fruits({ logged, fruits }: FruitsProps) {
                     {fruit.description.slice(0, 100)}...
                   </p>
                   <Link
-                    to={`/fruits/${fruit.id}`}
+                    to={`/fruits/${slugify(fruit.name)}`}
                     className="mx-auto py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
                   >
                     <button type="button">En savoir plus</button>

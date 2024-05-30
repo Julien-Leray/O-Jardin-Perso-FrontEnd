@@ -6,6 +6,9 @@ export interface Product {
   latin_name: string;
   category_id: number;
   position?: string;
+  plantation_date: string;
+  harvest_date: string;
+  watering_frequency: string;
   isFav: boolean;
 }
 
@@ -59,17 +62,17 @@ export interface User {
   zip_code: string;
 }
 
-export interface UserData {
-  address: string;
-  city: string;
-  email: string;
-  firstname: string;
-  forecast_alert: boolean;
-  id: null | number;
-  lastname: string;
-  watering_alert: boolean;
-  zip_code: string;
-  created_at: string;
-  updated_at: null;
-  is_admin: boolean;
-}
+// export interface UserData {
+//   address: string;
+//   city: string;
+//   email: string;
+//   firstname: string;
+//   forecast_alert: boolean;
+//   id: null | number;
+//   lastname: string;
+//   watering_alert: boolean;
+//   zip_code: string;
+//   created_at: string;
+//   updated_at: null;
+//   is_admin: boolean;
+// }
