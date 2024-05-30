@@ -51,33 +51,28 @@ function LegumeDetail() {
           <h2 className='pt-4 font-bold'>Information sur le produit</h2>
             <p className="mt-4 text-justify">{selectedLegume.description}</p>
 
-            <h2 className="pt-2 font-bold">Périodes de plantation </h2>
+            <h2 className="pt-3 pb-2 font-bold">Périodes de plantation </h2>
   
-          <div className="grid grid-cols-12 gap-2 pb-1">
-          {months.map((month) => (
-            <div key={month} className="text-center text-xs font-semibold pt-4">{month}</div>
-          ))}
-          {months.map((month, index) => (
-            <div
-              key={month}
-              className={`h-8 ${plantationMonths(index) ? 'bg-green-500' : 'bg-gray-300'}`}
-            ></div>
-          ))}
-        </div>
+            <div className="grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-2 bg-white rounded p-2 text-black">
+              {months.map((month, index) => (
+                <div key={month} className="text-center text-xs font-semibold">
+                  {month}
+                  <div className={`h-8 ${plantationMonths(index) ? 'bg-[#F6D50E]' : 'bg-gray-300'}`}></div>
+                </div>
+              ))}
+            </div>
 
-        <h2 className="pt-2 font-bold"> Période de récolte</h2>
+            <h2 className="pt-3 pb-2 font-bold"> Période de récolte</h2>
 
-        <div className="grid grid-cols-12 gap-2 pb-1">
-          {months.map((month) => (
-            <div key={month} className="text-center text-xs font-semibold pt-4">{month}</div>
-          ))}
-          {months.map((month,index) => (
-            <div
-              key={month}
-              className={`h-8 ${harvestMonth(index) ? 'bg-yellow-500' : 'bg-gray-300'}`}
-            ></div>
-          ))}
-        </div>
+            <div className="grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-2 bg-white rounded p-2 text-black">
+              {months.map((month, index) => (
+                <div key={month} className="text-center text-xs font-semibold">
+                  {month}
+                  <div className={`h-8 ${harvestMonth(index) ? 'bg-[#F6D50E]' : 'bg-gray-300'}`}></div>
+                </div>
+              ))}
+            </div>
+
            <h2 className="pt-2 font-bold">Conseils d'arrosage</h2>
            <p className="pt-2"> {selectedLegume.watering_frequency}</p>
              
