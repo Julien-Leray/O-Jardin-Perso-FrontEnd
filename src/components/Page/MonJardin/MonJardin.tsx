@@ -39,7 +39,6 @@ function MonJardin() {
 
             <h2 className="font-bold ">Mes alertes</h2>
             {/* <p>{dateOfDay} </p> */}
-            <p>Arroser la laitue</p>
 
         </div>
 

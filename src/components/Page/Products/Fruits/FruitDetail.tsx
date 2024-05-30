@@ -3,6 +3,11 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { fetchFruitDetails } from '../../../../store/thunks/productThunks';
 
+export  const months = [
+  'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 
+  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+];
+
 function FruitDetail() {
   const { nomFruit } = useParams();
   const dispatch = useAppDispatch();
@@ -26,19 +31,17 @@ function FruitDetail() {
 
   const imageUrl = `http://localhost:4000/${selectedFruit.picture}`;
 
+    // .replace() : Change the {} with nothing
     const plantationDates = selectedFruit.plantation_date.replace(/[{}]/g, '');
+
+    //.split() : split a string into an ordered list
     const monthIndices = plantationDates.split(',').map(Number);
 
-    const recoltDates = selectedFruit.harvest_date.replace(/[{}]/g, '');
-    const monthrecolt = recoltDates.split(',').map(Number);
+    const harvestDates = selectedFruit.harvest_date.replace(/[{}]/g, '');
+    const monthHarvest = harvestDates.split(',').map(Number);
 
-    const months = [
-      'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 
-      'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
-    ];
-
-    const plantationMonths = monthIndices.map(monthIndex => months[monthIndex - 1]);
-    const recoltMonth =monthrecolt.map(recoltIndex =>months[recoltIndex - 1]);
+    const plantationMonths = (index:number) => monthIndices.includes(index + 1);
+    const harvestMonth = (index:number) => monthHarvest.includes(index + 1);
 
   return (
     <div className="container mx-auto mt-5 mb-5 p-5 rounded-lg shadow-lg bg-[#16A1AF]">
@@ -56,14 +59,36 @@ function FruitDetail() {
         <p className="mt-4 text-justify">{selectedFruit.description}</p>
 
         <h2 className="pt-2 font-bold">Périodes de plantation </h2>
-          <p className="pb-1">{plantationMonths.join(', ')}</p>
+  
+          <div className="grid grid-cols-12 gap-2 pb-1">
+          {months.map((month) => (
+            <div key={month} className="text-center text-xs font-semibold pt-4">{month}</div>
+          ))}
+          {months.map((month, index) => (
+            <div
+              key={month}
+              className={`h-8 ${plantationMonths(index) ? 'bg-green-500' : 'bg-gray-300'}`}
+            ></div>
+          ))}
+        </div>
 
         <h2 className="pt-2 font-bold"> Période de récolte</h2>
-        <p className="pb-1 ">{recoltMonth.join(', ')}</p>
+
+        <div className="grid grid-cols-12 gap-2 pb-1">
+          {months.map((month) => (
+            <div key={month} className="text-center text-xs font-semibold pt-4">{month}</div>
+          ))}
+          {months.map((month,index) => (
+            <div
+              key={month}
+              className={`h-8 ${harvestMonth(index) ? 'bg-yellow-500' : 'bg-gray-300'}`}
+            ></div>
+          ))}
+        </div>
 
        <h2 className="pt-2 font-bold">Conseils d'arrosage</h2>
 
-          <p> {selectedFruit.watering_frequency}</p>
+          <p className="pt-2"> {selectedFruit.watering_frequency}</p>
         
       </div>
     </div>
