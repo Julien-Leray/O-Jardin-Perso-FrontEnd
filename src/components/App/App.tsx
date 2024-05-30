@@ -5,19 +5,17 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Page from '../Page/Page';
 
-import {
-  addTokenToLocalStorage,
-  getTokenFromLocalStorage,
-} from '../../localStorage/localstorage';
+import { getTokenFromLocalStorage } from '../../localStorage/localstorage';
 import { actionLogIn } from '../../store/reducers/user';
 import { addTokenToAxiosInstance } from '../../axios/axios';
-import actionGetDataUser from '../../store/thunks/myGardenThunks';
+import { fetchAllProducts } from '../../store/thunks/productThunks';
 
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const { token } = getTokenFromLocalStorage();
+    dispatch(fetchAllProducts());
 
     if (token) {
       dispatch(actionLogIn({ token }));

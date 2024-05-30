@@ -10,10 +10,12 @@ import {
 
 interface FavorisProps {
   userData: UserData;
+  logged: boolean;
 }
-function MesFavoris({ userData }: FavorisProps) {
-
-  const { favLegumes, favFruits } = useAppSelector((state ) => state.myGarden.favProducts);
+function MesFavoris({ userData, logged }: FavorisProps) {
+  const { favLegumes, favFruits } = useAppSelector(
+    (state) => state.myGarden.favProducts
+  );
 
   const dispatch = useAppDispatch();
 
@@ -28,7 +30,10 @@ function MesFavoris({ userData }: FavorisProps) {
           <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-2">
             <ul className="flex flex-wrap justify-around rounded-lg">
               {favFruits.map((fruit) => (
-                <li className="mx-auto w-5/6 md:w-1/2 p-4" key={fruit.id}>
+                <li
+                  className="mx-auto w-5/6 md:w-1/2 p-4"
+                  key={`fruit${fruit.id}`}
+                >
                   <Link to={`/fruits/${fruit.id}`}>
                     <div className="flex flex-col flex-grow">
                       <img
@@ -85,7 +90,10 @@ function MesFavoris({ userData }: FavorisProps) {
           <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-2">
             <ul className="flex flex-wrap justify-around rounded-lg">
               {favLegumes.map((legume) => (
-                <li className="mx-auto w-5/6 md:w-1/2 p-4" key={legume.id}>
+                <li
+                  className="mx-auto w-5/6 md:w-1/2 p-4"
+                  key={`legume${legume.id}`}
+                >
                   <Link to={`/legume/${legume.id}`}>
                     <div className="flex flex-col flex-grow">
                       <img
@@ -94,27 +102,27 @@ function MesFavoris({ userData }: FavorisProps) {
                         className="w-full h-32 object-cover mx-auto rounded-t-lg"
                       />
                       {legume.isFav}
-                      {!legume.isFav && (
+                      <div className="flex flex-row justify-end">
+                        {!legume.isFav && (
+                          <button
+                            type="button"
+                            className="  mr-4 mt-4"
+                            onClick={(event) => {
+                              event.preventDefault();
+                              dispatch(actionAddProductToFav(legume.id));
+                            }}
+                          >
+                            <Heart
+                              size="35"
+                              className={`rounded-full p-2 ${
+                                legume.isFav && 'bg-[#16A1AF] text-white'
+                              }`}
+                            />
+                          </button>
+                        )}
                         <button
                           type="button"
-                          className="place-self-end mr-4 mt-4"
-                          onClick={(event) => {
-                            event.preventDefault();
-                            dispatch(actionAddProductToFav(legume.id));
-                          }}
-                        >
-                          <Heart
-                            size="35"
-                            className={`rounded-full p-2 ${
-                              legume.isFav && 'bg-[#16A1AF] text-white'
-                            }`}
-                          />
-                        </button>
-                      )}
-                      {legume.isFav && (
-                        <button
-                          type="button"
-                          className="place-self-end mr-4 mt-4"
+                          className=" mr-4 mt-4"
                           onClick={(event) => {
                             event.preventDefault();
                             dispatch(actionDeleteFav(legume.id));
@@ -127,7 +135,7 @@ function MesFavoris({ userData }: FavorisProps) {
                             }`}
                           />
                         </button>
-                      )}
+                      </div>
                       <h3 className="font-bold text-center my-2">
                         {legume.name}
                       </h3>

@@ -15,10 +15,10 @@ import {
 
 interface ProductsState {
   allProducts: Product[];
-  productsByCat: {
-    fruits: Product[];
-    legumes: Product[];
-  };
+  // productsByCat: {
+  //   fruits: Product[];
+  //   legumes: Product[];
+  // };
   selectedFruit?: Product | null;
   selectedLegume?: Product | null;
   loading: boolean;
@@ -27,10 +27,6 @@ interface ProductsState {
 
 const initialState: ProductsState = {
   allProducts: [],
-  productsByCat: {
-    fruits: [],
-    legumes: [],
-  },
   selectedFruit: null,
   selectedLegume: null,
   loading: false,
@@ -59,8 +55,8 @@ const productsSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchAllProductsbyCategory.fulfilled, (state, action) => {
-        state.productsByCat.fruits = action.payload.fruits;
-        state.productsByCat.legumes = action.payload.legumes;
+        // state.productsByCat.fruits = action.payload.fruits;
+        // state.productsByCat.legumes = action.payload.legumes;
         state.loading = false;
       })
       .addCase(fetchAllProductsbyCategory.rejected, (state, action) => {
@@ -68,13 +64,12 @@ const productsSlice = createSlice({
         state.loading = false;
       })
       .addCase(actionAddProductToFav.fulfilled, (state, action) => {
-        state.productsByCat.fruits[0].id = action.payload;
-        state.productsByCat.legumes[0].id = action.payload;
-        state.error = null;
+        state.allProducts[0].id = action.payload;
+        state.allProducts[0].id = action.payload;
       })
       .addCase(actionDeleteFav.fulfilled, (state, action) => {
-        state.productsByCat.fruits[0].id = action.payload;
-        state.productsByCat.legumes[0].id = action.payload;
+        state.allProducts[0].id = action.payload;
+        state.allProducts[0].id = action.payload;
         state.error = null;
       });
   },

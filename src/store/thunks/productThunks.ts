@@ -6,20 +6,20 @@ export const fetchAllProductsbyCategory = createAsyncThunk(
   'products/fetchByCategory',
   async () => {
     const response = await axiosInstance.get('/products/');
-    const allProducts = response.data;
-    const sortedProducts = {
-      fruits: [] as Product[],
-      legumes: [] as Product[],
-    };
+    // const allProducts = response.data;
+    // const sortedProducts = {
+    //   fruits: [] as Product[],
+    //   legumes: [] as Product[],
+    // };
 
-    allProducts.forEach((product: Product) => {
-      if (product.category_id === 1) {
-        sortedProducts.fruits.push(product);
-      } else {
-        sortedProducts.legumes.push(product);
-      }
-    });
-    return sortedProducts;
+    // allProducts.forEach((product: Product) => {
+    //   if (product.category_id === 1) {
+    //     sortedProducts.fruits.push(product);
+    //   } else {
+    //     sortedProducts.legumes.push(product);
+    //   }
+    // });
+    return response.data;
   }
 );
 

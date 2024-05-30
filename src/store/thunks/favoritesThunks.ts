@@ -5,14 +5,12 @@ import axiosInstance from '../../axios/axios';
 
 export const actionAddProductToFav = createAsyncThunk(
   'fav/ADD_FAV',
-  async (_, thunkAPI) => {
+  async (id: number, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
 
     const response = await axiosInstance.post('/me/garden', {
-      data: state.user.token,
-      // product_id: state.products.,
+      product_id: id,
     });
-    // const { products } = response.data;
 
     return response.data;
   }
@@ -20,14 +18,15 @@ export const actionAddProductToFav = createAsyncThunk(
 
 export const actionDeleteFav = createAsyncThunk(
   'fav/DELETE_FAV',
-  async (_, thunkAPI) => {
+  async (id: number, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
+    const userId = state.myGarden.userData.id;
 
-    const response = await axiosInstance.post('/me/garden', {
-      // product_id: state.myGarden.favProducts,
-      // user_id: state.myGarden.user.id,
+    const response = await axiosInstance.delete(`/me/garden/:${userId}`, {
+      params: {
+        product_id: id,
+      },
     });
-    // const { products } = response.data;
 
     console.log('my response:', response.data);
 

@@ -5,8 +5,9 @@ import { User, UserData } from '../../../../@types/types';
 
 interface MeteoProps {
   userData: UserData;
+  logged: boolean;
 }
-function MaMeteo({ userData }: MeteoProps) {
+function MaMeteo({ userData, logged }: MeteoProps) {
   const dispatch = useAppDispatch();
 
   const meteo = useAppSelector((state) => state.meteo);

@@ -7,6 +7,7 @@ import {
   actionAddProductToFav,
   actionDeleteFav,
 } from '../../../../store/thunks/favoritesThunks';
+import Favorites from '../AddFavorites';
 
 interface FruitsProps {
   legumes: Product[];
@@ -34,25 +35,26 @@ function Legumes({ logged, legumes }: FruitsProps) {
                     alt={legume.name}
                   />
                 </Link>
+                {/* {logged && <Favorites logged={logged} productCat={legumes} />} */}
                 {logged && (
                   <div className="flex flex-row justify-end">
-                    {/* {!fruit.isFav && ( */}
-                    <button
-                      type="button"
-                      className="  mr-4 mt-4"
-                      onClick={(event) => {
-                        event.preventDefault();
-                        dispatch(actionAddProductToFav(legume.id));
-                      }}
-                    >
-                      <Heart
-                        size="35"
-                        className={`rounded-full p-2 ${
-                          legume.isFav && 'bg-[#16A1AF] text-white'
-                        }`}
-                      />
-                    </button>
-                    {/* )} */}
+                    {!legume.isFav && (
+                      <button
+                        type="button"
+                        className="  mr-4 mt-4"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          dispatch(actionAddProductToFav(legume.id));
+                        }}
+                      >
+                        <Heart
+                          size="35"
+                          className={`rounded-full p-2 ${
+                            legume.isFav && 'bg-[#16A1AF] text-white'
+                          }`}
+                        />
+                      </button>
+                    )}
                     <button
                       type="button"
                       className=" mr-4 mt-4"

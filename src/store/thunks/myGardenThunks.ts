@@ -11,7 +11,7 @@ const actionGetDataUser = createAsyncThunk(
     const state = thunkAPI.getState() as RootState;
     try {
       const response = await axiosInstance.get('/me/garden');
-console.log(response.data)
+      console.log(response.data);
 
       const userData = response.data[0].result.user;
 

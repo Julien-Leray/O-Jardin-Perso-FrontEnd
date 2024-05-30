@@ -5,7 +5,11 @@ import MaMeteo from './Meteo/Meteo';
 import MesFavoris from './Favorites/MesFavoris';
 import actionGetDataUser from '../../../store/thunks/myGardenThunks';
 
-function MonJardin() {
+interface MonJardinProps {
+  logged: boolean;
+}
+
+function MonJardin({ logged }: MonJardinProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -23,19 +27,9 @@ function MonJardin() {
   if (error) {
     return <div>{error}</div>;
   }
-  
-  console.log('MonJardin', userData);
+
   return (
     <div>
-      <button
-        type="button"
-        onClick={(event) => {
-          event.preventDefault();
-          dispatch(actionGetDataUser());
-        }}
-      >
-        X
-      </button>
       <h1>Bienvenue {userData.firstname}</h1>
 
       <Link
@@ -44,8 +38,8 @@ function MonJardin() {
       >
         Gérez votre jardin virtuel ici.
       </Link>
-      <MaMeteo userData={userData} />
-      <MesFavoris userData={userData} />
+      <MaMeteo userData={userData} logged={logged} />
+      <MesFavoris userData={userData} logged={logged} />
     </div>
   );
 }

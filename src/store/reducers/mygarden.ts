@@ -1,6 +1,7 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { Product, User } from '../../@types/types';
 import actionGetDataUser from '../thunks/myGardenThunks';
+import { actionDeleteFav } from '../thunks/favoritesThunks';
 
 // -- STATE intial et son interface --
 interface MyGardenState {
@@ -22,7 +23,6 @@ const initialState: MyGardenState = {
   loading: false,
   error: null,
 };
-
 
 const myGardenReducer = createReducer(initialState, (builder) => {
   builder

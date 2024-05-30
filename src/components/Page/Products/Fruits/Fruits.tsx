@@ -25,7 +25,10 @@ function Fruits({ logged, fruits }: FruitsProps) {
       <div>
         <ul className="flex flex-wrap md:flex-row -m-4 justify-stretch">
           {fruits.map((fruit) => (
-            <li key={fruit.id} className="w-5/6 md:w-1/3 p-4 mx-auto">
+            <li
+              key={`fruits${fruit.id}`}
+              className="w-5/6 md:w-1/3 p-4 mx-auto"
+            >
               <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200">
                 <Link to={`/fruits/${fruit.id}`}>
                   <img
@@ -36,23 +39,23 @@ function Fruits({ logged, fruits }: FruitsProps) {
                 </Link>
                 {logged && (
                   <div className="flex flex-row justify-end">
-                    {/* {!fruit.isFav && ( */}
-                    <button
-                      type="button"
-                      className="  mr-4 mt-4"
-                      onClick={(event) => {
-                        event.preventDefault();
-                        dispatch(actionAddProductToFav(fruit.id));
-                      }}
-                    >
-                      <Heart
-                        size="35"
-                        className={`rounded-full p-2 ${
-                          fruit.isFav && 'bg-[#16A1AF] text-white'
-                        }`}
-                      />
-                    </button>
-                    {/* )} */}
+                    {!fruit.isFav && (
+                      <button
+                        type="button"
+                        className="  mr-4 mt-4"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          dispatch(actionAddProductToFav(fruit.id));
+                        }}
+                      >
+                        <Heart
+                          size="35"
+                          className={`rounded-full p-2 ${
+                            fruit.isFav && 'bg-[#16A1AF] text-white'
+                          }`}
+                        />
+                      </button>
+                    )}
                     <button
                       type="button"
                       className=" mr-4 mt-4"

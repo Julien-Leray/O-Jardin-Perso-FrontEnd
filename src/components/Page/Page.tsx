@@ -26,7 +26,11 @@ import Contact from './Contact/Contact';
 
 import { actionChangeCredential } from '../../store/reducers/user';
 import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
-import { fetchAllProductsbyCategory } from '../../store/thunks/productThunks';
+import {
+  fetchAllProducts,
+  fetchAllProductsbyCategory,
+} from '../../store/thunks/productThunks';
+import { Product } from '../../@types/types';
 
 function Page() {
   const location = useLocation();
@@ -43,13 +47,27 @@ function Page() {
 
   useEffect(() => {
     dispatch(fetchAllTutorials());
-    dispatch(fetchAllProductsbyCategory());
   }, []);
 
   const { tutorials } = useAppSelector((state) => state.tutoriels);
-  const { fruits, legumes } = useAppSelector(
-    (state) => state.products.productsByCat
-  );
+  const allProducts = useAppSelector((state) => state.products.allProducts);
+
+
+  const sortedProducts = {
+    fruits: [] as Product[],
+    legumes: [] as Product[],
+  };
+
+  allProducts.forEach((product: Product) => {
+    if (product.category_id === 1) {
+      sortedProducts.fruits.push(product);
+    } else {
+      sortedProducts.legumes.push(product);
+    }
+    return sortedProducts;
+  });
+
+  console.log(allProducts);
 
   return (
     <div className="page">
@@ -60,17 +78,21 @@ function Page() {
         <Route
           path="/"
           element={
-            <Home tutorials={tutorials} legumes={legumes} fruits={fruits} />
+            <Home
+              tutorials={tutorials}
+              legumes={sortedProducts.legumes}
+              fruits={sortedProducts.fruits}
+            />
           }
         />
         <Route
           path="/fruits"
-          element={<Fruits fruits={fruits} logged={logged} />}
+          element={<Fruits fruits={sortedProducts.fruits} logged={logged} />}
         />
         <Route path="/fruits/:nomFruit" element={<FruitDetail />} />
         <Route
           path="/legumes"
-          element={<Legumes legumes={legumes} logged={logged} />}
+          element={<Legumes legumes={sortedProducts.legumes} logged={logged} />}
         />
         <Route path="/legumes/:nomLegume" element={<LegumeDetail />} />
         <Route path="/tutos" element={<Tutoriels tutorials={tutorials} />} />
@@ -112,7 +134,10 @@ function Page() {
             />
           }
         />
-        <Route path="/mon_jardin" element={logged && <MonJardin />} />
+        <Route
+          path="/mon_jardin"
+          element={logged && <MonJardin logged={logged} />}
+        />
 
         <Route
           path="/mon_jardin/potager-virtuel"
