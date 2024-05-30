@@ -16,8 +16,6 @@ import {
 import { Product } from '../../../../types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
 
-const gridSize = 5;
-
 function PotagerVirtuel() {
   const dispatch = useAppDispatch();
   const { horizontal, vertical } = useAppSelector((state) => state.potager);
@@ -68,9 +66,9 @@ function PotagerVirtuel() {
 
   const renderGrid = () => {
     const rows = [];
-    for (let row = 0; row < gridSize; row += 1) {
+    for (let row = 0; row < vertical; row += 1) {
       const cols = [];
-      for (let col = 0; col < gridSize; col += 1) {
+      for (let col = 0; col < horizontal; col += 1) {
         const position = `{${row},${col}}`;
         const product = matchingProducts.find((p) => {
           const regex = /\{(\d+), (\d+)\}/;
