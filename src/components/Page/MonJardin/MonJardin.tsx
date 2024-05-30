@@ -13,7 +13,17 @@ function MonJardin() {
   }, []);
 
   const { userData } = useAppSelector((state) => state.myGarden);
+  const loading = useAppSelector((state) => state.myGarden.loading);
+  const error = useAppSelector((state) => state.myGarden.error);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+  
   console.log('MonJardin', userData);
   return (
     <div>

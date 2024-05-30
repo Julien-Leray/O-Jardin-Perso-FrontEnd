@@ -9,34 +9,33 @@ const actionGetDataUser = createAsyncThunk(
   'user/GET_DATA',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const response = await axiosInstance.get('/me/garden', {
-      data: state.user.token,
-    });
+    try {
+      const response = await axiosInstance.get('/me/garden');
+console.log(response.data)
 
-   console.log(response.data)
-    const userData = response.data[0].result.user;
-    console.log('response.data UserData', response);
-    const allFavProducts = response.data[0].result.products;
+      const userData = response.data[0].result.user;
 
-    console.log('response.data UserData+Products', userData, allFavProducts);
+      const allFavProducts = response.data[0].result.products;
 
-    const sortedFavProducts = {
-      favFruits: [] as Product[],
-      favLegumes: [] as Product[],
-    };
+      const sortedFavProducts = {
+        favFruits: [] as Product[],
+        favLegumes: [] as Product[],
+      };
 
-    allFavProducts.forEach((product: Product) => {
-      if (product.category_id === 1) {
-        sortedFavProducts.favFruits.push(product);
-      } else {
-        sortedFavProducts.favLegumes.push(product);
-      }
-    });
+      allFavProducts.forEach((product: Product) => {
+        if (product.category_id === 1) {
+          sortedFavProducts.favFruits.push(product);
+        } else {
+          sortedFavProducts.favLegumes.push(product);
+        }
+      });
 
-      console.log('response sortedProducts', sortedFavProducts);
-
-  
-    return { userData, sortedFavProducts };
-});
+      return { userData, sortedFavProducts };
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      return thunkAPI.rejectWithValue('Erreur de connexion');
+    }
+  }
+);
 
 export default actionGetDataUser;

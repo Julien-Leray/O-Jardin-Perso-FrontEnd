@@ -14,6 +14,7 @@ interface UserState {
     email: string;
     password: string;
   };
+  // user: User
 }
 
 export const initialState: UserState = {
@@ -24,6 +25,7 @@ export const initialState: UserState = {
     email: '',
     password: '',
   },
+  // user:{} as User,
 };
 
 export const actionChangeCredential = createAction<{
