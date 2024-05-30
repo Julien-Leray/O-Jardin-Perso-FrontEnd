@@ -7,6 +7,7 @@ import {
   actionAddProductToFav,
   actionDeleteFav,
 } from '../../../../store/thunks/favoritesThunks';
+import actionGetDataUser from '../../../../store/thunks/myGardenThunks';
 
 interface FavorisProps {
   userData: UserData;
@@ -65,6 +66,7 @@ function MesFavoris({ userData, logged }: FavorisProps) {
                           onClick={(event) => {
                             event.preventDefault();
                             dispatch(actionDeleteFav(fruit.id));
+                            dispatch(actionGetDataUser());
                           }}
                         >
                           <XCircle
@@ -126,6 +128,9 @@ function MesFavoris({ userData, logged }: FavorisProps) {
                           onClick={(event) => {
                             event.preventDefault();
                             dispatch(actionDeleteFav(legume.id));
+                            event.preventDefault();
+
+                            dispatch(actionGetDataUser());
                           }}
                         >
                           <XCircle

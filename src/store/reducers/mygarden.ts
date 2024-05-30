@@ -1,9 +1,7 @@
-import { createAction, createReducer } from '@reduxjs/toolkit';
+import { createReducer } from '@reduxjs/toolkit';
 import { Product, User } from '../../@types/types';
 import actionGetDataUser from '../thunks/myGardenThunks';
-import { actionDeleteFav } from '../thunks/favoritesThunks';
 
-// -- STATE intial et son interface --
 interface MyGardenState {
   loading: boolean;
   error: string | null | undefined;
@@ -37,7 +35,6 @@ const myGardenReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     .addCase(actionGetDataUser.rejected, (state, action) => {
-      console.error('actionGetDataUser rejected:', action.payload);
       state.loading = false;
       state.error = action.payload as string;
     });

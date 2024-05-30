@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchAllProducts } from '../thunks/productThunks';
+import fetchAllProducts from '../thunks/productThunks';
 import { Product } from '../../@types/types';
 import {
   actionAddProductToFav,
   actionDeleteFav,
 } from '../thunks/favoritesThunks';
-import slugify from '../../utils/utils';
 
 interface ProductsState {
   allProducts: Product[];

@@ -8,13 +8,10 @@ import { Product } from '../../@types/types';
 const actionGetDataUser = createAsyncThunk(
   'user/GET_DATA',
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState() as RootState;
     try {
       const response = await axiosInstance.get('/me/garden');
-      console.log(response.data);
 
       const userData = response.data[0].result.user;
-
       const allFavProducts = response.data[0].result.products;
 
       const sortedFavProducts = {
@@ -32,7 +29,6 @@ const actionGetDataUser = createAsyncThunk(
 
       return { userData, sortedFavProducts };
     } catch (error) {
-      console.error('Error fetching user data:', error);
       return thunkAPI.rejectWithValue('Erreur de connexion');
     }
   }

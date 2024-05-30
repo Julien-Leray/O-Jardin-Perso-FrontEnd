@@ -50,23 +50,23 @@ function FruitDetail() {
   const harvestMonth = (index: number) => monthHarvest.includes(index + 1);
 
   return (
-    <div className="container mx-auto mt-5 mb-5 p-5 rounded-lg shadow-lg bg-[#16A1AF]">
-      <div className="text-white text-center">
+    <div className="mx-auto w-full mt-5 mb-5 p-5 rounded-lg shadow-lg ">
+      <div className="text-center">
         <h1 className="text-3xl font-bold mb-1">{fruit.name}</h1>
         <p className="italic mb-3">Nom Latin : {fruit.latin_name}</p>
+      </div>
+      <div className="flex flex-col md:flex-row md:gap-4 items-start">
         <img
           src={imageUrl}
           alt={fruit.name}
-          className="mx-auto w-full max-w-md rounded-lg shadow-lg"
+          className="w-full md:w-1/2 mx-auto rounded-lg shadow-lg md:my-4 mt-4"
         />
+        <p className="w-full md:w-1/2 my-4">{fruit.description}</p>
+      </div>
+      <div className="bg-[#16A1AF] rounded-lg p-4 pb-6">
+        <h2 className="pb-2 font-bold text-center">Périodes de plantation </h2>
 
-        <h2 className="pt-4 font-bold">Information sur le produit</h2>
-
-        <p className="mt-4 text-justify">{fruit.description}</p>
-
-        <h2 className="pt-3 pb-2 font-bold">Périodes de plantation </h2>
-
-        <div className="grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-2 bg-white rounded p-2 text-black">
+        <div className=" grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-2 bg-white rounded p-2 text-black">
           {months.map((month, index) => (
             <div key={month} className="text-center text-xs font-semibold">
               {month}
@@ -79,7 +79,7 @@ function FruitDetail() {
           ))}
         </div>
 
-        <h2 className="pt-3 pb-2 font-bold"> Période de récolte</h2>
+        <h2 className="pt-3 pb-2 font-bold text-center"> Période de récolte</h2>
 
         <div className="grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-2 bg-white rounded p-2 text-black">
           {months.map((month, index) => (
@@ -94,9 +94,9 @@ function FruitDetail() {
           ))}
         </div>
 
-        <h2 className="pt-2 font-bold">Conseils d'arrosage</h2>
+        <h2 className="pt-2 font-bold text-center">Conseils d'arrosage</h2>
 
-        <p className="pt-2"> {fruit.watering_frequency}</p>
+        <p className="pt-2 text-center"> {fruit.watering_frequency}</p>
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Search } from 'react-feather';
-import { useAppDispatch } from '../../hooks/redux';
-import { fetchAllProductsbyCategory } from '../../store/thunks/productThunks';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import fetchAllProducts, {
+  fetchAllProductsbyCategory,
+} from '../../store/thunks/productThunks';
 import { Product } from '../../@types/types';
 
 interface PotagerSearchBarProps {
@@ -9,12 +11,16 @@ interface PotagerSearchBarProps {
   addToGarden: (product: Product) => void;
 }
 
-function PotagerSearchBar({ products, addToGarden }: PotagerSearchBarProps) {
+function PotagerSearchBar({
+  // /products
+  addToGarden,
+}: PotagerSearchBarProps) {
   const refSubmitSearchbar = useRef<null | HTMLFormElement>(null);
   const refInputSearchbar = useRef<null | HTMLInputElement>(null);
   const refListeSearchbar = useRef<null | HTMLDivElement>(null);
 
   const dispatch = useAppDispatch();
+  const products = useAppSelector((state) => state.products.allProducts);
 
   const [inputValue, setInputValue] = useState('');
   const [isFilterVisible, setIsFilterVisible] = useState(true);
@@ -64,7 +70,7 @@ function PotagerSearchBar({ products, addToGarden }: PotagerSearchBarProps) {
             value={inputValue}
             onChange={(event) => {
               setInputValue(event.target.value);
-              dispatch(fetchAllProductsbyCategory());
+              dispatch(fetchAllProducts());
               setIsFilterVisible(true);
             }}
             onBlur={handleBlur}

@@ -14,8 +14,6 @@ const initialState: TutorialState = {
   error: null,
 };
 
-// export const actionAllTutos = createAction<[]>('tuto/ALL');
-
 const tutoReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(fetchAllTutorials.pending, (state) => {

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Search } from 'react-feather';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchAllProducts } from '../../store/thunks/productThunks';
+import fetchAllProducts from '../../store/thunks/productThunks';
 
 function SearchBar() {
   const refSubmitSearchbar = useRef<null | HTMLFormElement>(null);
@@ -10,9 +10,9 @@ function SearchBar() {
   const refListeSearchbar = useRef<null | HTMLDivElement>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchAllProducts());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchAllProducts());
+  // }, []);
 
   const [inputValue, setInputValue] = useState('');
   const [isFilterVisible, setIsFilterVisible] = useState(true);

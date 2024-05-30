@@ -8,7 +8,7 @@ import Page from '../Page/Page';
 import { getTokenFromLocalStorage } from '../../localStorage/localstorage';
 import { actionLogIn } from '../../store/reducers/user';
 import { addTokenToAxiosInstance } from '../../axios/axios';
-import { fetchAllProducts } from '../../store/thunks/productThunks';
+import fetchAllProducts from '../../store/thunks/productThunks';
 
 function App() {
   const dispatch = useAppDispatch();

@@ -6,7 +6,6 @@ import axiosInstance from '../../axios/axios';
 export const actionAddProductToFav = createAsyncThunk(
   'fav/ADD_FAV',
   async (id: number, thunkAPI) => {
-
     const response = await axiosInstance.post('/me/garden', {
       product_id: id,
     });
@@ -26,8 +25,6 @@ export const actionDeleteFav = createAsyncThunk(
         product_id: id,
       },
     });
-
-    console.log('my response:', response.data);
 
     return response.data;
   }

@@ -8,6 +8,7 @@ import {
   actionDeleteFav,
 } from '../../../../store/thunks/favoritesThunks';
 import slugify from '../../../../utils/utils';
+import actionGetDataUser from '../../../../store/thunks/myGardenThunks';
 
 interface FruitsProps {
   fruits: Product[];
@@ -63,6 +64,7 @@ function Fruits({ logged, fruits }: FruitsProps) {
                       onClick={(event) => {
                         event.preventDefault();
                         dispatch(actionDeleteFav(fruit.id));
+                        dispatch(actionGetDataUser());
                       }}
                     >
                       <XCircle
