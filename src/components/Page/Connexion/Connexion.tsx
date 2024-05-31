@@ -3,8 +3,7 @@ import { User, Lock, XCircle, Info } from 'react-feather';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from './ConnexionInput';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { actionLogIn } from '../../../store/reducers/user';
-import actionGetDataUser from '../../../store/thunks/myGardenThunks';
+
 
 interface LoginFormProps {
   logged: boolean;

@@ -37,10 +37,14 @@ const productsSlice = createSlice({
         state.loading = false;
       })
       .addCase(actionAddProductToFav.fulfilled, (state, action) => {
+        console.log('delete', state.allProducts[0].name);
         state.allProducts[0].id = action.payload;
+        state.allProducts[0].isFav = true;
       })
       .addCase(actionDeleteFav.fulfilled, (state, action) => {
+        console.log('delete', state.allProducts[0].name);
         state.allProducts[0].id = action.payload;
+        state.allProducts[0].isFav = false;
         state.error = null;
       });
   },

@@ -37,32 +37,29 @@ function Legumes({ logged, legumes }: FruitsProps) {
                     alt={legume.name}
                   />
                 </Link>
-                {/* {logged && <Favorites logged={logged} productCat={legumes} />} */}
                 {logged && (
                   <div className="flex flex-row justify-end">
-                    {!legume.isFav && (
-                      <button
-                        type="button"
-                        className="  mr-4 mt-4"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          dispatch(actionAddProductToFav(legume.id));
-                        }}
-                      >
-                        <Heart
-                          size="35"
-                          className={`rounded-full p-2 ${
-                            legume.isFav && 'bg-[#16A1AF] text-white'
-                          }`}
-                        />
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      className="  mr-4 mt-4"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        dispatch(actionAddProductToFav(legume.id));
+                      }}
+                    >
+                      <Heart
+                        size="35"
+                        className={`rounded-full p-2 ${
+                          legume.isFav && 'bg-[#16A1AF] text-white'
+                        }`}
+                      />
+                    </button>
                     <button
                       type="button"
                       className=" mr-4 mt-4"
                       onClick={(event) => {
                         event.preventDefault();
-                        dispatch(actionDeleteFav(legume.id));
+                        dispatch(actionDeleteFav(fruit.id));
                         dispatch(actionGetDataUser());
                       }}
                     >

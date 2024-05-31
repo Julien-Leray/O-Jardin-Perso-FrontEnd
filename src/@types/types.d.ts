@@ -60,6 +60,7 @@ export interface User {
   updated_at: null;
   watering_alert: boolean;
   zip_code: string;
+  password: string;
 }
 
 // export interface UserData {

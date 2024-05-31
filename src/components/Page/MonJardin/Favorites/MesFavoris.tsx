@@ -43,23 +43,21 @@ function MesFavoris({ userData, logged }: FavorisProps) {
                         className="w-full h-32 object-cover mx-auto rounded-t-lg"
                       />
                       <div className="flex flex-row justify-end">
-                        {!fruit.isFav && (
-                          <button
-                            type="button"
-                            className="  mr-4 mt-4"
-                            onClick={(event) => {
-                              event.preventDefault();
-                              dispatch(actionAddProductToFav(fruit.id));
-                            }}
-                          >
-                            <Heart
-                              size="35"
-                              className={`rounded-full p-2 ${
-                                fruit.isFav && 'bg-[#16A1AF] text-white'
-                              }`}
-                            />
-                          </button>
-                        )}
+                        <button
+                          type="button"
+                          className="  mr-4 mt-4"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            dispatch(actionAddProductToFav(fruit.id));
+                          }}
+                        >
+                          <Heart
+                            size="35"
+                            className={`rounded-full p-2 ${
+                              fruit.isFav && 'bg-[#16A1AF] text-white'
+                            }`}
+                          />
+                        </button>
                         <button
                           type="button"
                           className=" mr-4 mt-4"
