@@ -25,11 +25,6 @@ import PolitiqueConfidentialite from './PolitiqueConfidentialite/PolitiqueConfid
 import Contact from './Contact/Contact';
 
 import { actionChangeCredential } from '../../store/reducers/user';
-import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
-import {
-  fetchAllProducts,
-  fetchAllProductsbyCategory,
-} from '../../store/thunks/productThunks';
 import { Product } from '../../@types/types';
 
 function Page() {
@@ -44,10 +39,6 @@ function Page() {
   const passFromState = useAppSelector(
     (state) => state.user.credentials.password
   );
-
-  useEffect(() => {
-    dispatch(fetchAllTutorials());
-  }, []);
 
   const { tutorials } = useAppSelector((state) => state.tutoriels);
   const allProducts = useAppSelector((state) => state.products.allProducts);
@@ -65,8 +56,6 @@ function Page() {
     }
     return sortedProducts;
   });
-
-  console.log(allProducts);
 
   return (
     <div className="page">
