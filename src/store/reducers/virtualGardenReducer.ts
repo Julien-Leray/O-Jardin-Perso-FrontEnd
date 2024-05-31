@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Product, ProductInVirtualGarden } from '../../types/types';
+import { Product, ProductInVirtualGarden } from '../../@types/types';
 import {
   fetchAllProductsInVirtualGarden,
   fetchProducts,

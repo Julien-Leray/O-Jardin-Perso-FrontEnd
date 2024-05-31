@@ -13,7 +13,7 @@ import {
   addToGarden,
   addToVirtualGarden,
 } from '../../../../store/reducers/virtualGardenReducer';
-import { Product } from '../../../../types/types';
+import { Product } from '../../../../@types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
 
 function PotagerVirtuel() {
@@ -85,14 +85,14 @@ function PotagerVirtuel() {
 
         cols.push(
           <div
-            key={position}
+            key={`${row}-${col}`}
             onDrop={() => handleDrop(position)}
             onDragOver={(e) => e.preventDefault()}
             className="border border-gray-500 w-16 h-16 flex items-center justify-center"
           >
             {product && (
               <img
-                src={`http://localhost:4000/${product.picture}`}
+                src={`${import.meta.env.VITE_API_URL}${product.picture}`}
                 alt={product.name}
                 draggable
                 onDragStart={() => handleDragStart(product)}

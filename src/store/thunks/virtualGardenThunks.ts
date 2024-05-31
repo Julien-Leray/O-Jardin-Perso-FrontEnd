@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../axios/axios';
-import { Product, ProductInVirtualGarden } from '../../types/types';
+import { Product, ProductInVirtualGarden } from '../../@types/types';
 import { RootState } from '../store';
 
 interface UpdateProductPositionPayload {
