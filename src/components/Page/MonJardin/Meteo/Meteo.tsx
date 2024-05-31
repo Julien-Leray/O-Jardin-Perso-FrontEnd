@@ -20,9 +20,9 @@ function MaMeteo({ userData, logged }: MeteoProps) {
   }, [dispatch, cityName]);
 
   return (
-    <div>
+    <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-3/4 bg-gray-200">
       {meteo && meteo.name ? (
-        <div className="bg-gray-200 rounded-lg p-4 my-2 ">
+        <div className=" ">
           <h2 className="font-bold ">Météo à {meteo.name}</h2>
           <div className="flex flex-wrap justify-around">
             {meteo.weatherForecast.map((dailyWeather) => (

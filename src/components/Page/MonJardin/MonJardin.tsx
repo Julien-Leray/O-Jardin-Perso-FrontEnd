@@ -38,7 +38,15 @@ function MonJardin({ logged }: MonJardinProps) {
       >
         Gérez votre jardin virtuel ici.
       </Link>
-      <MaMeteo userData={userData} logged={logged} />
+
+      <div className="flex   flex-col md:flex-row md:justify-between gap-4 -m-4 my-4 ">
+        <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-1/4">
+          <h2 className="font-bold ">Mes alertes</h2>
+          {/* <p>{dateOfDay} </p> */}
+        </div>
+
+        <MaMeteo userData={userData} logged={logged} />
+      </div>
       <MesFavoris userData={userData} logged={logged} />
     </div>
   );
