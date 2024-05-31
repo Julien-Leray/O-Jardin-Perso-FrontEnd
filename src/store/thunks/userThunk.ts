@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import axiosInstance, { addTokenToAxiosInstance } from '../../axios/axios';
 import { addTokenToLocalStorage } from '../../localStorage/localstorage';
+import { User } from 'react-feather';
 
 const actionCheckLogin = createAsyncThunk(
   'user/CHECK_LOGIN',
@@ -21,16 +22,11 @@ const actionCheckLogin = createAsyncThunk(
 );
 const actionNewUser = createAsyncThunk(
   'user/NEW_USER',
-  async (newUser: {
-    firstname: string;
-    lastname: string;
-    email: string;
-    password: string;
-    address?: string;
-    zip_code?: string;
-    city?: string;
+  async (User: { firstname: string; lastname: string; email: string; password: string; address?: string; zip_code?: string; city?: string
   }) => {
-    const response = await axiosInstance.post('/registration', newUser);
+    console.log(User);
+    const response = await axiosInstance.post('/registration', {User});
+    console.log(response.data);
     return response.data;
   }
 );

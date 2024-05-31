@@ -13,6 +13,7 @@ const actionGetDataUser = createAsyncThunk(
 
       const userData = response.data[0].result.user;
       const allFavProducts = response.data[0].result.products;
+      console.log('userData:', userData); 
 
       const sortedFavProducts = {
         favFruits: [] as Product[],

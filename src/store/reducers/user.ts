@@ -34,9 +34,11 @@ export const actionChangeCredential = createAction<{
 }>('user/CHANGE_CREDENTIAL');
 
 export const actionLogOut = createAction('user/LOGOUT');
+
 export const actionLogIn = createAction<{
   token: string;
 }>('user/LOGIN');
+
 export const actionNewUser = createAction<{
   firstname: string;
   lastname: string;
@@ -46,6 +48,7 @@ export const actionNewUser = createAction<{
   zip_code: string;
   city: string;
 }>('user/NEW_USER');
+
 export const actionVerifyEmailExist = createAction<string>(
   'user/VERIFY_EMAIL_EXIST'
 );

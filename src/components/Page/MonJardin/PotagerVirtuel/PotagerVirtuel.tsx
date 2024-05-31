@@ -3,7 +3,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
-import {updateProductPosition, fetchProducts, fetchAllProductsInVirtualGarden, fetchMatchingProducts } from '../../../../store/thunks/virtualGardenThunks';
+import {updateProductPosition, fetchAllProductsInVirtualGarden, fetchMatchingProducts } from '../../../../store/thunks/virtualGardenThunks';
 import {addToGarden, addToVirtualGarden } from '../../../../store/reducers/virtualGardenReducer';
 import { Product } from '../../../../@types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
@@ -19,7 +19,6 @@ function PotagerVirtuel() {
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    dispatch(fetchProducts());
     dispatch(fetchAllProductsInVirtualGarden());
     dispatch(fetchMatchingProducts());
   }, [dispatch]);
