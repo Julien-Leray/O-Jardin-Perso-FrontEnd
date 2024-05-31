@@ -1,20 +1,26 @@
 import React, { useState, useRef } from 'react';
 import { Search } from 'react-feather';
-import { useAppDispatch } from '../../hooks/redux';
-import { fetchAllProducts } from '../../store/thunks/productThunks';
-import { Product } from '../../types/types';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import fetchAllProducts, {
+  fetchAllProductsbyCategory,
+} from '../../store/thunks/productThunks';
+import { Product } from '../../@types/types';
 
 interface PotagerSearchBarProps {
   products: Product[];
   addToGarden: (product: Product) => void;
 }
 
-function PotagerSearchBar({ products, addToGarden }: PotagerSearchBarProps) {
+function PotagerSearchBar({
+  // /products
+  addToGarden,
+}: PotagerSearchBarProps) {
   const refSubmitSearchbar = useRef<null | HTMLFormElement>(null);
   const refInputSearchbar = useRef<null | HTMLInputElement>(null);
   const refListeSearchbar = useRef<null | HTMLDivElement>(null);
 
   const dispatch = useAppDispatch();
+  const products = useAppSelector((state) => state.products.allProducts);
 
   const [inputValue, setInputValue] = useState('');
   const [isFilterVisible, setIsFilterVisible] = useState(true);

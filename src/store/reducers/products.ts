@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import fetchAllProducts from '../thunks/productThunks';
+import { Product } from '../../@types/types';
 import {
-  fetchFruits,
-  fetchFruitDetails,
-  fetchLegumes,
-  fetchLegumeDetails,
-  fetchAllProducts,
-} from '../thunks/productThunks';
-import { Product, ProductsState } from '../../types/types';
+  actionAddProductToFav,
+  actionDeleteFav,
+} from '../thunks/favoritesThunks';
+
+interface ProductsState {
+  allProducts: Product[];
+  loading: boolean;
+  error: string | null | undefined;
+}
 
 const initialState: ProductsState = {
-  products: [],
-  fruits: [],
-  legumes: [],
-  selectedFruit: null,
-  selectedLegume: null,
+  allProducts: [],
   loading: false,
   error: null,
 };
@@ -24,75 +24,28 @@ const productsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchFruits.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(
-        fetchFruits.fulfilled,
-        (state, action: PayloadAction<Product[]>) => {
-          state.fruits = action.payload;
-          state.loading = false;
-        }
-      )
-      .addCase(fetchFruits.rejected, (state, action) => {
-        state.error = action.error.message;
-        state.loading = false;
-      })
-      .addCase(fetchFruitDetails.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(
-        fetchFruitDetails.fulfilled,
-        (state, action: PayloadAction<Product>) => {
-          state.selectedFruit = action.payload;
-          state.loading = false;
-        }
-      )
-      .addCase(fetchFruitDetails.rejected, (state, action) => {
-        state.error = action.error.message;
-        state.loading = false;
-      })
-      .addCase(fetchLegumes.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(
-        fetchLegumes.fulfilled,
-        (state, action: PayloadAction<Product[]>) => {
-          state.legumes = action.payload;
-          state.loading = false;
-        }
-      )
-      .addCase(fetchLegumes.rejected, (state, action) => {
-        state.error = action.error.message;
-        state.loading = false;
-      })
-      .addCase(fetchLegumeDetails.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(
-        fetchLegumeDetails.fulfilled,
-        (state, action: PayloadAction<Product>) => {
-          state.selectedLegume = action.payload;
-          state.loading = false;
-        }
-      )
-      .addCase(fetchLegumeDetails.rejected, (state, action) => {
-        state.error = action.error.message;
-        state.loading = false;
-      })
+
       .addCase(fetchAllProducts.pending, (state) => {
         state.loading = true;
       })
-      .addCase(
-        fetchAllProducts.fulfilled,
-        (state, action: PayloadAction<Product[]>) => {
-          state.products = action.payload;
-          state.loading = false;
-        }
-      )
+      .addCase(fetchAllProducts.fulfilled, (state, action) => {
+        state.allProducts = action.payload;
+        state.loading = false;
+      })
       .addCase(fetchAllProducts.rejected, (state, action) => {
         state.error = action.error.message;
         state.loading = false;
+      })
+      .addCase(actionAddProductToFav.fulfilled, (state, action) => {
+        console.log('delete', state.allProducts[0].name);
+        state.allProducts[0].id = action.payload;
+        state.allProducts[0].isFav = true;
+      })
+      .addCase(actionDeleteFav.fulfilled, (state, action) => {
+        console.log('delete', state.allProducts[0].name);
+        state.allProducts[0].id = action.payload;
+        state.allProducts[0].isFav = false;
+        state.error = null;
       });
   },
 });

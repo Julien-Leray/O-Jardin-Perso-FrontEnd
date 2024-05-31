@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Tutorial } from '../../types/types';
+import { Tutorial } from '../../@types/types';
 import fetchAllTutorials from '../thunks/tutorielsThunk';
 
 interface TutorialState {
@@ -13,8 +13,6 @@ const initialState: TutorialState = {
   loading: false,
   error: null,
 };
-
-// export const actionAllTutos = createAction<[]>('tuto/ALL');
 
 const tutoReducer = createReducer(initialState, (builder) => {
   builder

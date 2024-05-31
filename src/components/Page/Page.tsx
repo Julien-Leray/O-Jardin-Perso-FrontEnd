@@ -1,9 +1,9 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
+import { boolean } from 'joi';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import userAction from '../../store/thunks/userThunk';
-import actionGetDataUser from '../../store/thunks/myGardenThunks';
 
 import Home from './Home/Home';
 import Fruits from './Products/Fruits/Fruits';
@@ -25,19 +25,14 @@ import PolitiqueConfidentialite from './PolitiqueConfidentialite/PolitiqueConfid
 import Contact from './Contact/Contact';
 
 import { actionChangeCredential } from '../../store/reducers/user';
-import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
-import {
-  fetchAllProducts,
-  fetchFruits,
-  fetchLegumes,
-} from '../../store/thunks/productThunks';
-import { boolean } from 'joi';
+import { Product } from '../../@types/types';
 
 function Page() {
   const location = useLocation();
   const dispatch = useAppDispatch();
 
   const logged = useAppSelector((state) => state.user.logged);
+
   const emailFormState = useAppSelector(
     (state) => state.user.credentials.email
   );
@@ -45,39 +40,52 @@ function Page() {
     (state) => state.user.credentials.password
   );
 
-  useEffect(() => {
-    dispatch(fetchAllTutorials());
-    dispatch(fetchLegumes());
-    dispatch(fetchFruits());
-    dispatch(fetchAllProducts());
-  }, []);
-
   const { tutorials } = useAppSelector((state) => state.tutoriels);
-  const { products, legumes, fruits } = useAppSelector(
-    (state) => state.products
-  );
+  const allProducts = useAppSelector((state) => state.products.allProducts);
+
+  const sortedProducts = {
+    fruits: [] as Product[],
+    legumes: [] as Product[],
+  };
+
+  allProducts.forEach((product: Product) => {
+    if (product.category_id === 1) {
+      sortedProducts.fruits.push(product);
+    } else {
+      sortedProducts.legumes.push(product);
+    }
+    return sortedProducts;
+  });
 
   return (
     <div className="page">
       {location.pathname !== '/connexion' &&
-        location.pathname !== '/inscription' && (
-          <SearchBar products={products} />
-        )}
+        location.pathname !== '/inscription' && <SearchBar />}
 
       <Routes>
         <Route
           path="/"
           element={
-            <Home tutorials={tutorials} legumes={legumes} fruits={fruits} />
+            <Home
+              tutorials={tutorials}
+              legumes={sortedProducts.legumes}
+              fruits={sortedProducts.fruits}
+            />
           }
         />
-        <Route path="/fruits" element={<Fruits />} />
-        <Route path="/fruits/:nomFruit" element={<FruitDetail />} />
-        <Route path="/legumes" element={<Legumes />} />
-        <Route path="/legumes/:nomLegume" element={<LegumeDetail />} />
+        <Route
+          path="/fruits"
+          element={<Fruits fruits={sortedProducts.fruits} logged={logged} />}
+        />
+        <Route path="/fruits/:name" element={<FruitDetail />} />
+        <Route
+          path="/legumes"
+          element={<Legumes legumes={sortedProducts.legumes} logged={logged} />}
+        />
+        <Route path="/legumes/:name" element={<LegumeDetail />} />
         <Route path="/tutos" element={<Tutoriels tutorials={tutorials} />} />
         <Route
-          path="/tutos/:id"
+          path="/tutos/:title"
           element={<TutorielDetail tutorials={tutorials} />}
         />
         <Route
@@ -101,13 +109,23 @@ function Page() {
             />
           }
         />
-          <Route
+        <Route
           path="/inscription"
-          element={<Inscription 
-            handleVerifyEmail={(email) => dispatch(userAction.actionVerifyEmailExist(email))}
-            handleSignup={(newUser) => dispatch(userAction.actionNewUser(newUser))} />}
-        />        
-        <Route path="/mon_jardin" element={logged && <MonJardin />} />
+          element={
+            <Inscription
+              handleVerifyEmail={(email) =>
+                dispatch(userAction.actionVerifyEmailExist(email))
+              }
+              handleSignup={(newUser) =>
+                dispatch(userAction.actionNewUser(newUser))
+              }
+            />
+          }
+        />
+        <Route
+          path="/mon_jardin"
+          element={logged && <MonJardin logged={logged} />}
+        />
 
         <Route
           path="/mon_jardin/potager-virtuel"

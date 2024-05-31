@@ -6,10 +6,14 @@ export interface Product {
   latin_name: string;
   category_id: number;
   position?: string;
-  plantation_date:string;
-  harvest_date : string;
-  watering_frequency:string,
-  
+  plantation_date: string;
+  harvest_date: string;
+  watering_frequency: string;
+  isFav: boolean;
+  plantation_date: string;
+  harvest_date: string;
+  watering_frequency: string;
+  isFav: boolean;
 }
 
 export interface ProductsState {
@@ -62,14 +66,17 @@ export interface MeteoState {
 // Users
 
 export interface User {
-  id: number;
+  address: string;
+  city: string;
+  created_at: string;
   email: string;
   firstname: string;
-  // lastname: string;
-  // address: string;
-  zip_code: string;
-  city: string;
-  // watering_alert: boolean;
-  // forecast_alert: boolean;
+  forecast_alert: boolean;
+  id: number;
   is_admin: boolean;
+  lastname: string;
+  updated_at: null;
+  watering_alert: boolean;
+  zip_code: string;
+  password: string;
 }

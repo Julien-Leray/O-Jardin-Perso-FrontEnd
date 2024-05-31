@@ -1,8 +1,8 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
-import userActions from '../thunks/userThunk';
 import { boolean } from 'joi';
-import actionCheckLogin from '../thunks/user';
-import { User } from '../../types/types';
+import userActions from '../thunks/userThunk';
+import actionCheckLogin from '../thunks/userThunk';
+import { User } from '../../@types/types';
 
 // -- STATE intial et son interface --
 
@@ -14,8 +14,7 @@ interface UserState {
     email: string;
     password: string;
   };
-  user: User[];
-  isAdmin: boolean;
+  user: User;
 }
 
 export const initialState: UserState = {
@@ -26,8 +25,7 @@ export const initialState: UserState = {
     email: '',
     password: '',
   },
-  user: [],
-  isAdmin: false,
+  user: {} as User,
 };
 
 export const actionChangeCredential = createAction<{
@@ -37,8 +35,7 @@ export const actionChangeCredential = createAction<{
 
 export const actionLogOut = createAction('user/LOGOUT');
 export const actionLogIn = createAction<{
-  jwt: string;
-  user: [];
+  token: string;
 }>('user/LOGIN');
 export const actionNewUser = createAction<{
   firstname: string;
@@ -49,7 +46,9 @@ export const actionNewUser = createAction<{
   zip_code: string;
   city: string;
 }>('user/NEW_USER');
-export const actionVerifyEmailExist = createAction<string>('user/VERIFY_EMAIL_EXIST');
+export const actionVerifyEmailExist = createAction<string>(
+  'user/VERIFY_EMAIL_EXIST'
+);
 
 const userReducer = createReducer(initialState, (builder) => {
   builder
@@ -60,32 +59,29 @@ const userReducer = createReducer(initialState, (builder) => {
       state.logged = true;
       state.token = action.payload.token;
       state.error = null;
-      state.isAdmin = action.payload.isAdmin;
     })
     .addCase(userActions.actionCheckLogin.rejected, (state) => {
       state.error = 'Erreur de connexion';
     })
     .addCase(actionLogOut, (state) => {
       state.logged = false;
-      state.isAdmin = false;
     })
     .addCase(actionLogIn, (state, action) => {
       state.logged = true;
-      state.token = action.payload.jwt;
-      state.firstname = action.payload.firstname;
+      state.token = action.payload.token;
     })
     .addCase(userActions.actionNewUser.fulfilled, (state, action) => {
-      state.firstname = action.payload.firstname;
-      state.lastname = action.payload.lastname;
-      state.address = action.payload.address;
-      state.zip_code = action.payload.zip_code;
-      state.city = action.payload.city;
-      state.email = action.payload.email;
-      state.password = action.payload.password;
+      state.user.firstname = action.payload.firstname;
+      state.user.lastname = action.payload.lastname;
+      state.user.address = action.payload.address;
+      state.user.zip_code = action.payload.zip_code;
+      state.user.city = action.payload.city;
+      state.user.email = action.payload.email;
+      state.user.password = action.payload.password;
       state.error = null;
     })
     .addCase(userActions.actionNewUser.rejected, (state, action) => {
-      state.error = action.payload as string || 'Erreur de connexion';
+      state.error = (action.payload as string) || 'Erreur de connexion';
     })
     .addCase(userActions.actionVerifyEmailExist.fulfilled, (state, action) => {
       state.error = null;

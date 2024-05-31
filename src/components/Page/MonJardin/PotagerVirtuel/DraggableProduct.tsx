@@ -1,6 +1,10 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { ItemTypes, Product } from '../../../../types/types';
+import { Product } from '../../../../@types/types';
+
+const ItemTypes = {
+  PRODUCT: 'product',
+};
 
 interface DraggableProductProps {
   product: Product;
