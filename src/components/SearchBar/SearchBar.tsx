@@ -30,6 +30,7 @@ function SearchBar() {
         !refSubmitSearchbar.current.contains(document.activeElement)
       ) {
         setIsFilterVisible(false);
+        setInputValue('');
       }
     }, 0);
   };

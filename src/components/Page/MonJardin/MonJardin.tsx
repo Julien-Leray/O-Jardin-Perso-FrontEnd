@@ -2,18 +2,20 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import MaMeteo from './Meteo/Meteo';
-import MesFavoris from './Favorites/MesFavoris';
-import actionGetDataUser from '../../../store/thunks/myGardenThunks';
+import MesFavoris from './Favoris/MesFavoris';
+import { Product } from '../../../@types/types';
+import fetchUserData from '../../../store/thunks/myGardenThunks';
 
 interface MonJardinProps {
   logged: boolean;
+  allFavProducts: Product[];
 }
 
-function MonJardin({ logged }: MonJardinProps) {
+function MonJardin({ logged, allFavProducts }: MonJardinProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(actionGetDataUser());
+    dispatch(fetchUserData());
   }, []);
 
   const { userData } = useAppSelector((state) => state.myGarden);
@@ -47,7 +49,11 @@ function MonJardin({ logged }: MonJardinProps) {
 
         <MaMeteo userData={userData} logged={logged} />
       </div>
-      <MesFavoris userData={userData} logged={logged} />
+      <MesFavoris
+        userData={userData}
+        logged={logged}
+        allFavProducts={allFavProducts}
+      />
     </div>
   );
 }

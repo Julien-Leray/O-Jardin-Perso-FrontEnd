@@ -20,8 +20,6 @@ export interface ProductsState {
   products: Product[];
   fruits: Product[];
   legumes: Product[];
-  selectedFruit?: Product | null;
-  selectedLegume?: Product | null;
   loading: boolean;
   error: string | null | undefined;
 }

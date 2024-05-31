@@ -10,13 +10,13 @@ import { actionLogIn } from '../../store/reducers/user';
 import { addTokenToAxiosInstance } from '../../axios/axios';
 import fetchAllProducts from '../../store/thunks/productThunks';
 import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
+import actionGetDataUser from '../../store/thunks/myGardenThunks';
 
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const { token } = getTokenFromLocalStorage();
-    dispatch(fetchAllProducts());
 
     if (token) {
       dispatch(actionLogIn({ token }));
@@ -27,6 +27,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    dispatch(actionGetDataUser());
     dispatch(fetchAllProducts());
     dispatch(fetchAllTutorials());
   }, []);
