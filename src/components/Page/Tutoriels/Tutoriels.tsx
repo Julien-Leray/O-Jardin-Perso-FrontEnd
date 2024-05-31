@@ -23,7 +23,7 @@ function Tutoriels({ tutorials }: Tutoprops) {
               <div className="flex flex-col justify-normal flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
                 <Link to={`/tutos/${slugify(tutoriel.title)}`}>
                   <img
-                    src={`http://localhost:4000${tutoriel.picture}`}
+                    src={`${import.meta.env.VITE_API_URL}${tutoriel.picture}`}
                     alt={tutoriel.title}
                     className="w-full h-48 object-cover mx-auto"
                   />

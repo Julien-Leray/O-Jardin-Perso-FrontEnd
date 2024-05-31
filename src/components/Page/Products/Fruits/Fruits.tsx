@@ -53,7 +53,7 @@ function Fruits({ logged, fruits }: FruitsProps) {
                 <Link to={`/fruits/${slugify(fruit.name)}`}>
                   <img
                     className="w-full h-48 object-cover mx-auto"
-                    src={`http://localhost:4000/${fruit.picture}`}
+                    src={`${import.meta.env.VITE_API_URL}/${fruit.picture}`}
                     alt={fruit.name}
                   />
                 </Link>

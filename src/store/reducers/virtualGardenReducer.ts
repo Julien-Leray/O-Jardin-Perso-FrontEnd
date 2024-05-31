@@ -1,44 +1,93 @@
-import { createReducer } from '@reduxjs/toolkit';
-import virtualGardenThunks from '../thunks/virtualGardenThunks';
-import { Product } from '../../@types/types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Product, ProductInVirtualGarden } from '../../types/types';
+import {
+  fetchAllProductsInVirtualGarden,
+  fetchProducts,
+  fetchMatchingProducts,
+  updateProductPosition as updateProductPositionThunk,
+} from '../thunks/virtualGardenThunks';
 
-interface VirtualGardenState {
+interface PotagerVirtuelState {
   products: Product[];
+  garden: Product[];
+  virtualGarden: ProductInVirtualGarden[];
+  matchingProducts: Product[];
   loading: boolean;
-  error: string | null | undefined;
+  error: string | null;
 }
 
-const initialState: VirtualGardenState = {
+const initialState: PotagerVirtuelState = {
   products: [],
+  garden: [],
+  virtualGarden: [],
+  matchingProducts: [],
   loading: false,
   error: null,
 };
 
-const virtualGardenReducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(virtualGardenThunks.updateProductPosition.pending, (state) => {
-      state.loading = true;
-    })
-    .addCase(
-      virtualGardenThunks.updateProductPosition.fulfilled,
-      (state, action) => {
+const potagerVirtuelSlice = createSlice({
+  name: 'potagerVirtuel',
+  initialState,
+  reducers: {
+    addToGarden(state, action: PayloadAction<Product>) {
+      console.log('Adding to garden:', action.payload);
+      state.garden.push(action.payload);
+      console.log('Updated garden state:', state.garden);
+    },
+    updateProductPosition: (
+      state,
+      action: PayloadAction<{ product_id: number; position: string }>
+    ) => {
+      console.log('Reducer - updateProductPosition:', action.payload);
+      const { product_id, position } = action.payload;
+      const product = state.garden.find((p) => p.id === product_id);
+      if (product) {
+        product.position = position;
+      }
+    },
+    addToVirtualGarden(state, action: PayloadAction<ProductInVirtualGarden>) {
+      state.virtualGarden.push(action.payload);
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
-        const updatedProduct = action.payload;
-        const index = state.products.findIndex(
-          (p) => p.id === updatedProduct.id
-        );
-        if (index !== -1) {
-          state.products[index] = updatedProduct;
+        state.products = action.payload;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch products';
+      })
+      .addCase(fetchAllProductsInVirtualGarden.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchAllProductsInVirtualGarden.fulfilled, (state, action) => {
+        state.loading = false;
+        state.virtualGarden = action.payload;
+      })
+      .addCase(fetchAllProductsInVirtualGarden.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.error.message || 'Failed to fetch virtual garden products';
+      })
+      .addCase(fetchMatchingProducts.fulfilled, (state, action) => {
+        state.matchingProducts = action.payload;
+      })
+      .addCase(updateProductPositionThunk.fulfilled, (state, action) => {
+        const { product_id, position } = action.payload;
+        const product = state.garden.find((p) => p.id === product_id);
+        if (product) {
+          product.position = position;
         }
-      }
-    )
-    .addCase(
-      virtualGardenThunks.updateProductPosition.rejected,
-      (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      }
-    );
+      });
+  },
 });
 
-export default virtualGardenReducer;
+export const { addToGarden, updateProductPosition, addToVirtualGarden } =
+  potagerVirtuelSlice.actions;
+
+export default potagerVirtuelSlice.reducer;

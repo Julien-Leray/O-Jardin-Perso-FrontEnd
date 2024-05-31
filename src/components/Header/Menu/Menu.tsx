@@ -88,7 +88,7 @@ function Menu({ isOpen, setIsOpen }: MenuProps) {
       {isAdmin && (
         <NavLink
           className="w-full md:w-auto text-center px-6 py-3 rounded-full bg-[#7AC808] text-white hover:font-[800] focus:outline-none focus:ring-2 focus:ring-[#7AC808] focus:ring-offset-2"
-          to="http://localhost:4000/api/products/admin/"
+          to={`${import.meta.env.VITE_API_URL}/api/products/admin/`}
           target="_blank"
           onClick={() => {
             setIsOpen(false);

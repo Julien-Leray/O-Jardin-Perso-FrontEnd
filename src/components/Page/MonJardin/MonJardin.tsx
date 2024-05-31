@@ -38,8 +38,26 @@ function MonJardin({ logged }: MonJardinProps) {
       >
         Gérez votre jardin virtuel ici.
       </Link>
-      <MaMeteo userData={userData} logged={logged} />
-      <MesFavoris userData={userData} logged={logged} />
+
+      {meteo && meteo.name ? (
+        <div className="bg-gray-200 rounded-lg p-4 my-2 ">
+          <h2 className="font-bold ">Météo à {meteo.name}</h2>
+          <div className="flex flex-wrap justify-around">
+            {meteo.weatherForecast.map((dailyWeather) => (
+              <div key={dailyWeather.date}>
+                <p>{dailyWeather.date}</p>
+                <p>{dailyWeather.temp}°C</p>
+                <img
+                  src={`http://openweathermap.org/img/w/${dailyWeather.icon}.png`}
+                  alt="weather icon"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <p>Chargement des données météo...</p>
+      )}
     </div>
   );
 }

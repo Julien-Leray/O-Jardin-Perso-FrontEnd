@@ -10,13 +10,31 @@ export interface Product {
   harvest_date: string;
   watering_frequency: string;
   isFav: boolean;
+  plantation_date: string;
+  harvest_date: string;
+  watering_frequency: string;
+  isFav: boolean;
 }
 
-export interface SquareMakerProps {
-  horizontal: number;
-  vertical: number;
+export interface ProductsState {
+  products: Product[];
+  fruits: Product[];
+  legumes: Product[];
+  selectedFruit?: Product | null;
+  selectedLegume?: Product | null;
+  loading: boolean;
+  error: string | null | undefined;
 }
 
+export interface ProductInVirtualGarden {
+  product_id: number;
+  position: string;
+  quantity: number;
+}
+
+export const ItemTypes = {
+  PRODUCT: 'product',
+};
 export interface Tutorial {
   id: number;
   picture: string;
@@ -62,18 +80,3 @@ export interface User {
   zip_code: string;
   password: string;
 }
-
-// export interface UserData {
-//   address: string;
-//   city: string;
-//   email: string;
-//   firstname: string;
-//   forecast_alert: boolean;
-//   id: null | number;
-//   lastname: string;
-//   watering_alert: boolean;
-//   zip_code: string;
-//   created_at: string;
-//   updated_at: null;
-//   is_admin: boolean;
-// }
