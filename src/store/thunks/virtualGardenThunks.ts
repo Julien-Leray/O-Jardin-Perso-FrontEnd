@@ -63,7 +63,7 @@ export const fetchMatchingProducts = createAsyncThunk(
   'potagerVirtuel/fetchMatchingProducts',
   async (_, { getState }) => {
     const state = getState() as RootState;
-    const products = state.products.products;
+    const products = state.products.allProducts;
     const virtualGardenProducts = state.virtualGarden.virtualGarden;
 
     function transformArrayToString(arr: string) {

@@ -3,16 +3,8 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
-import {
-  updateProductPosition,
-  fetchProducts,
-  fetchAllProductsInVirtualGarden,
-  fetchMatchingProducts,
-} from '../../../../store/thunks/virtualGardenThunks';
-import {
-  addToGarden,
-  addToVirtualGarden,
-} from '../../../../store/reducers/virtualGardenReducer';
+import {updateProductPosition, fetchProducts, fetchAllProductsInVirtualGarden, fetchMatchingProducts } from '../../../../store/thunks/virtualGardenThunks';
+import {addToGarden, addToVirtualGarden } from '../../../../store/reducers/virtualGardenReducer';
 import { Product } from '../../../../@types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
 
@@ -34,14 +26,10 @@ function PotagerVirtuel() {
 
   const handleDragStart = (product: Product) => {
     setDraggedProduct(product);
-    console.log('Dragged product:', product);
   };
 
   const handleDrop = async (position: string) => {
-    console.log(draggedProduct);
-    console.log('Drop position:', position);
     if (draggedProduct) {
-      console.log('Dropped product:', draggedProduct);
       await dispatch(
         updateProductPosition({ product_id: draggedProduct.id, position })
       );
