@@ -37,23 +37,23 @@ function PotagerVirtuel() {
     console.log('Dragged product:', product);
   };
 
-  const handleDrop = (position: string) => {
+  const handleDrop = async (position: string) => {
     console.log(draggedProduct);
     console.log('Drop position:', position);
     if (draggedProduct) {
       console.log('Dropped product:', draggedProduct);
-      dispatch(
+      await dispatch(
         updateProductPosition({ product_id: draggedProduct.id, position })
       );
-      dispatch(
+      await dispatch(
         addToVirtualGarden({
           product_id: draggedProduct.id,
           position,
           quantity: 1,
         })
       );
-      dispatch(fetchAllProductsInVirtualGarden());
-      dispatch(fetchMatchingProducts());
+      await dispatch(fetchAllProductsInVirtualGarden());
+      await dispatch(fetchMatchingProducts());
       setDraggedProduct(null);
     } else {
       console.log('No product is being dragged.');
