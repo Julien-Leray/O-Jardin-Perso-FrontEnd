@@ -1,4 +1,6 @@
 import { X } from 'react-feather';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { fetchDeleteFav } from '../../../../store/thunks/favoritesThunks';
 import { Product } from '../../../../@types/types';
 import { useAppDispatch } from '../../../../hooks/redux';
@@ -17,9 +19,9 @@ function BtnSupprFavoris({ product, allFavProducts }: BtnSupprFavorisProps) {
       <button
         type="button"
         className="mr-4 mt-4 text-white rounded-full bg-[#16A1AF]"
-        onClick={(event) => {
+        onClick={async (event) => {
           event.preventDefault();
-          dispatch(fetchDeleteFav(product.id));
+          await dispatch(fetchDeleteFav(product.id));
           dispatch(fetchUserData());
         }}
       >

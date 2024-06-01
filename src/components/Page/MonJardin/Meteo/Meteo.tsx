@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { fetchMeteo } from '../../../../store/thunks/meteoThunk';
+import fetchMeteo from '../../../../store/thunks/meteoThunk';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
-import { User, UserData } from '../../../../@types/types';
+import { User } from '../../../../@types/types';
 
 interface MeteoProps {
-  userData: UserData;
+  userData: User;
   logged: boolean;
 }
 function MaMeteo({ userData, logged }: MeteoProps) {
@@ -23,7 +23,7 @@ function MaMeteo({ userData, logged }: MeteoProps) {
     <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-3/4 bg-gray-200">
       {meteo && meteo.name ? (
         <div className=" ">
-          <h2 className="font-bold ">Météo à {meteo.name}</h2>
+          <h2 className="font-bold text-center	">Météo à {meteo.name}</h2>
           <div className="flex flex-wrap justify-around">
             {meteo.weatherForecast.map((dailyWeather) => (
               <div key={dailyWeather.date}>
@@ -38,7 +38,9 @@ function MaMeteo({ userData, logged }: MeteoProps) {
           </div>
         </div>
       ) : (
-        <p>Chargement des données météo...</p>
+        <p>
+          Veuillez renseigner un code postal pour afficher vos données météo !
+        </p>
       )}
     </div>
   );

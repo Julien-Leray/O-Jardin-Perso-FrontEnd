@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import findProduct from '../../../../store/selectors/products';
 import slugify from '../../../../utils/utils';
+import { Product } from '../../../../@types/types';
+import BtnFavoris from '../BtnFavoris';
 
 export const months = [
   'Janvier',
@@ -18,8 +20,12 @@ export const months = [
   'Novembre',
   'Décembre',
 ];
+interface LegumeDetailProps {
+  allFavProducts: Product[];
+  logged: boolean;
+}
 
-function LegumeDetail() {
+function LegumeDetail({ logged, allFavProducts }: LegumeDetailProps) {
   const params = useParams();
   const legume = useAppSelector((state) =>
     findProduct(state.products.allProducts, slugify(params.name))
@@ -51,6 +57,15 @@ function LegumeDetail() {
 
   return (
     <div className="mx-auto w-full mt-5 mb-5 p-5 rounded-lg shadow-lg ">
+      <div className="flex flex-row justify-end">
+        {logged && (
+          <BtnFavoris
+            logged={logged}
+            product={legume}
+            allFavProducts={allFavProducts}
+          />
+        )}
+      </div>
       <div className="text-center">
         <h1 className="text-3xl font-bold mb-1">{legume.name}</h1>
         <p className="italic mb-3">Nom Latin : {legume.latin_name}</p>

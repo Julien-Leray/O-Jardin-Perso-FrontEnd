@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { fetchMeteo } from '../thunks/meteoThunk';
+import fetchMeteo from '../thunks/meteoThunk';
 
 export interface MeteoState {
   name: string;

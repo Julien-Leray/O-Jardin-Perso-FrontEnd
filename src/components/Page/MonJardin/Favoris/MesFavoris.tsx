@@ -1,21 +1,15 @@
 import React from 'react';
-import { Heart, XCircle } from 'react-feather';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { Product, User } from '../../../../@types/types';
-import {
-  fetchAddProductToFav,
-  fetchDeleteFav,
-} from '../../../../store/thunks/favoritesThunks';
-import actionGetDataUser from '../../../../store/thunks/myGardenThunks';
+import { Product } from '../../../../@types/types';
 import BtnSupprFavoris from './BtnSupprFavoris';
+import slugify from '../../../../utils/utils';
 
 interface FavorisProps {
   allFavProducts: Product[];
 }
 function MesFavoris({ allFavProducts }: FavorisProps) {
-  const dispatch = useAppDispatch();
-
+  
+  
   const sortedFavProducts = {
     favFruits: [] as Product[],
     favLegumes: [] as Product[],
@@ -31,31 +25,33 @@ function MesFavoris({ allFavProducts }: FavorisProps) {
 
   return (
     <>
-      <div>
-        <h2 className="text-xl text-center font-bold p-2">Mes favoris</h2>
-      </div>
+      <h2 className="text-2xl text-center font-[800] p-2 pt-6">Mes favoris</h2>
       <div className="flex flex-col md:flex-row gap-2 md:gap-6">
         <div className="w-full py-4">
           <h2 className="text-xl text-center font-bold p-2">Fruits </h2>
           <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-2">
-            <ul className="flex flex-wrap justify-around rounded-lg">
+            <ul className="flex flex-wrap rounded-lg">
               {sortedFavProducts.favFruits.map((fruit) => (
                 <li
                   className="mx-auto w-5/6 md:w-1/2 p-4"
                   key={`fruit${fruit.id}`}
                 >
-                  <Link to={`/fruits/${fruit.id}`}>
-                    <div className="flex flex-col flex-grow">
-                      <img
-                        src={`http://localhost:4000${fruit.picture}`}
-                        alt={fruit.name}
-                        className="w-full h-32 object-cover mx-auto rounded-t-lg"
-                      />
-                      <div className="flex flex-row justify-end">
-                        <BtnSupprFavoris
-                          allFavProducts={allFavProducts}
-                          product={fruit}
+                  <Link to={`/fruits/${slugify(fruit.name)}`}>
+                    <div className="flex flex-col flex-grow ">
+                      <div className="relative">
+                        <img
+                          src={`${import.meta.env.VITE_API_URL}/${
+                            fruit.picture
+                          }`}
+                          alt={fruit.name}
+                          className="w-full h-32 object-cover mx-auto rounded-t-lg"
                         />
+                        <div className="flex flex-row justify-end absolute top-1 right-1">
+                          <BtnSupprFavoris
+                            product={fruit}
+                            allFavProducts={allFavProducts}
+                          />
+                        </div>
                       </div>
                       <h3 className="font-bold text-center my-2">
                         {fruit.name}
@@ -72,23 +68,23 @@ function MesFavoris({ allFavProducts }: FavorisProps) {
           <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-2">
             <ul className="flex flex-wrap justify-around rounded-lg">
               {sortedFavProducts.favLegumes.map((legume) => (
-                <li
-                  className="mx-auto w-5/6 md:w-1/2 p-4"
-                  key={`legume${legume.id}`}
-                >
-                  <Link to={`/legume/${legume.id}`}>
+                <li className="w-5/6 md:w-1/2 p-4" key={`legume${legume.id}`}>
+                  <Link to={`/legumes/${slugify(legume.name)}`}>
                     <div className="flex flex-col flex-grow">
-                      <img
-                        src={`http://localhost:4000${legume.picture}`}
-                        alt={legume.name}
-                        className="w-full h-32 object-cover mx-auto rounded-t-lg"
-                      />
-                      {legume.isFav}
-                      <div className="flex flex-row justify-end">
-                        <BtnSupprFavoris
-                          allFavProducts={allFavProducts}
-                          product={legume}
+                      <div className="relative">
+                        <img
+                          src={`${import.meta.env.VITE_API_URL}/${
+                            legume.picture
+                          }`}
+                          alt={legume.name}
+                          className="w-full h-32 object-cover mx-auto rounded-t-lg"
                         />
+                        <div className="flex flex-row justify-end absolute top-1 right-1">
+                          <BtnSupprFavoris
+                            allFavProducts={allFavProducts}
+                            product={legume}
+                          />
+                        </div>
                       </div>
                       <h3 className="font-bold text-center my-2">
                         {legume.name}

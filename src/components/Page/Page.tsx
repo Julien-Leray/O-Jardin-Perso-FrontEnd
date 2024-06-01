@@ -71,6 +71,8 @@ function Page() {
               tutorials={tutorials}
               legumes={sortedProducts.legumes}
               fruits={sortedProducts.fruits}
+              logged={logged}
+              allFavProducts={allFavProducts}
             />
           }
         />
@@ -84,7 +86,12 @@ function Page() {
             />
           }
         />
-        <Route path="/fruits/:name" element={<FruitDetail />} />
+        <Route
+          path="/fruits/:name"
+          element={
+            <FruitDetail allFavProducts={allFavProducts} logged={logged} />
+          }
+        />
         <Route
           path="/legumes"
           element={
@@ -95,7 +102,12 @@ function Page() {
             />
           }
         />
-        <Route path="/legumes/:name" element={<LegumeDetail />} />
+        <Route
+          path="/legumes/:name"
+          element={
+            <LegumeDetail allFavProducts={allFavProducts} logged={logged} />
+          }
+        />
         <Route path="/tutos" element={<Tutoriels tutorials={tutorials} />} />
         <Route
           path="/tutos/:title"

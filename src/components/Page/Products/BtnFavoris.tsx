@@ -35,7 +35,7 @@ function BtnFavoris({ logged, product, allFavProducts }: BtnFavorisProps) {
       {!isFav ? (
         <button
           type="button"
-          className="mr-4 mt-4 text-black"
+          className="mr-4 mt-4 text-black rounded-full bg-white"
           onClick={(event) => {
             event.preventDefault();
             dispatch(fetchAddProductToFav(product.id));
