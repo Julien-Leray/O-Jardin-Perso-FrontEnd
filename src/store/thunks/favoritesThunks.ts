@@ -3,8 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import axiosInstance from '../../axios/axios';
 
-export const actionAddProductToFav = createAsyncThunk(
-  'fav/ADD_FAV',
+export const fetchAddProductToFav = createAsyncThunk(
+  'fetch/ADD_FAV',
   async (id: number, thunkAPI) => {
     const response = await axiosInstance.post('/me/garden', {
       product_id: id,
@@ -14,8 +14,8 @@ export const actionAddProductToFav = createAsyncThunk(
   }
 );
 
-export const actionDeleteFav = createAsyncThunk(
-  'fav/DELETE_FAV',
+export const fetchDeleteFav = createAsyncThunk(
+  'fetch/DELETE_FAV',
   async (id: number, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const userId = state.myGarden.userData.id;

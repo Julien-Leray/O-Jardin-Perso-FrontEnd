@@ -21,8 +21,8 @@ function MenuBurger({ isOpen, setIsOpen }: MenuBurgerProps) {
         <XCircle size="40" />
       </button>
 
-      <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
-      <ConnexionBurger isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Menu setIsOpen={setIsOpen} />
+      <ConnexionBurger setIsOpen={setIsOpen} />
     </nav>
   );
 }

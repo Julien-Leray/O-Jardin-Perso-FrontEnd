@@ -6,12 +6,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import userAction from '../../store/thunks/userThunk';
 
 import Home from './Home/Home';
-import Fruits from './Products/Fruits/Fruits';
+import Fruits from './Products/Fruits/ListeFruits';
 import Connexion from './Connexion/Connexion';
 
 import SearchBar from '../SearchBar/SearchBar';
 import FruitDetail from './Products/Fruits/FruitDetail';
-import Legumes from './Products/Legumes/Legumes';
+import Legumes from './Products/Legumes/ListeLegumes';
 import LegumeDetail from './Products/Legumes/LegumeDetail';
 import Tutoriels from './Tutoriels/Tutoriels';
 import TutorielDetail from './Tutoriels/TutorielDetail';
@@ -42,6 +42,7 @@ function Page() {
 
   const { tutorials } = useAppSelector((state) => state.tutoriels);
   const allProducts = useAppSelector((state) => state.products.allProducts);
+  const allFavProducts = useAppSelector((state) => state.myGarden.favProducts);
 
   const sortedProducts = {
     fruits: [] as Product[],
@@ -70,19 +71,43 @@ function Page() {
               tutorials={tutorials}
               legumes={sortedProducts.legumes}
               fruits={sortedProducts.fruits}
+              logged={logged}
+              allFavProducts={allFavProducts}
             />
           }
         />
         <Route
           path="/fruits"
-          element={<Fruits fruits={sortedProducts.fruits} logged={logged} />}
+          element={
+            <Fruits
+              fruits={sortedProducts.fruits}
+              allFavProducts={allFavProducts}
+              logged={logged}
+            />
+          }
         />
-        <Route path="/fruits/:name" element={<FruitDetail />} />
+        <Route
+          path="/fruits/:name"
+          element={
+            <FruitDetail allFavProducts={allFavProducts} logged={logged} />
+          }
+        />
         <Route
           path="/legumes"
-          element={<Legumes legumes={sortedProducts.legumes} logged={logged} />}
+          element={
+            <Legumes
+              legumes={sortedProducts.legumes}
+              allFavProducts={allFavProducts}
+              logged={logged}
+            />
+          }
         />
-        <Route path="/legumes/:name" element={<LegumeDetail />} />
+        <Route
+          path="/legumes/:name"
+          element={
+            <LegumeDetail allFavProducts={allFavProducts} logged={logged} />
+          }
+        />
         <Route path="/tutos" element={<Tutoriels tutorials={tutorials} />} />
         <Route
           path="/tutos/:title"
@@ -124,7 +149,11 @@ function Page() {
         />
         <Route
           path="/mon_jardin"
-          element={logged && <MonJardin logged={logged} />}
+          element={
+            logged && (
+              <MonJardin logged={logged} allFavProducts={allFavProducts} />
+            )
+          }
         />
 
         <Route
