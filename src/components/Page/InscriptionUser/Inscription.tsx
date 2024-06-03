@@ -126,7 +126,7 @@ function Inscription({ handleSignup, handleVerifyEmail }: InscriptionProps) {
           >
             Votre prénom et nom :
           </label>
-          <div className="flex flex-col md:flex-row items-center mb-2 md:mb-4 my-2">
+          <div className="flex flex-col md:flex-row justify-between mb-2 gap-4 md:mb-8 md:gap-4">
             <input
               required
               name="firstname"
@@ -141,7 +141,7 @@ function Inscription({ handleSignup, handleVerifyEmail }: InscriptionProps) {
               value={formData.lastname}
               onChange={handleChange}
               placeholder="Nom"
-              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black ml-4"
+              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black"
             />
           </div>
           {errors.firstname && (
@@ -229,7 +229,7 @@ function Inscription({ handleSignup, handleVerifyEmail }: InscriptionProps) {
           >
             Votre adresse :
           </label>
-          <div className="flex items-center mb-2 md:mb-4">
+          <div className="flex items-center mb-2 md:mb-4 ">
             <input
               name="address"
               value={formData.address}
@@ -239,7 +239,7 @@ function Inscription({ handleSignup, handleVerifyEmail }: InscriptionProps) {
             />
           </div>
 
-          <div className="flex items-center mb-4 md:mb-8">
+          <div className="flex flex-col md:flex-row justify-between mb-2 gap-2 md:mb-8 md:gap-4">
             <input
               name="zip_code"
               value={formData.zip_code}
@@ -252,7 +252,7 @@ function Inscription({ handleSignup, handleVerifyEmail }: InscriptionProps) {
               value={formData.city}
               onChange={handleChange}
               placeholder="Ville"
-              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black ml-4"
+              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black"
             />
           </div>
           {errors.zip_code && (

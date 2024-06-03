@@ -31,21 +31,20 @@ interface ModificationProps {
 }
 
 function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
-
-const [formData, setFormData] = useState<FormData>({
-  firstname: '',
-  lastname: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  address: '',
-  zip_code: '',
-  city: '',
-});
-const navigate = useNavigate();
-const goBack = () => {
-  navigate(-1);
-
+  const [formData, setFormData] = useState<FormData>({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    address: '',
+    zip_code: '',
+    city: '',
+  });
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
   const [errors, setErrors] = useState<Errors>({});
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -94,7 +93,7 @@ const goBack = () => {
     }
 
     const emailExist = handleVerifyEmail(formData.email as string);
-    console.log(emailExist);
+
     if (emailExist.payload === 'Email déjà utilisé') {
       setErrors({ email: 'Cet email est déjà utilisé' });
     } else {
@@ -125,7 +124,7 @@ const goBack = () => {
           >
             Votre prénom et nom :
           </label>
-          <div className="flex items-center mb-2 md:mb-4">
+          <div className="flex flex-col md:flex-row justify-between mb-2 gap-4 md:mb-8 md:gap-4">
             <input
               required
               name="firstname"
@@ -140,7 +139,7 @@ const goBack = () => {
               value={formData.lastname}
               onChange={handleChange}
               placeholder="Nom"
-              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black ml-4"
+              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black"
             />
           </div>
           {errors.firstname && (
@@ -228,7 +227,7 @@ const goBack = () => {
           >
             Votre adresse :
           </label>
-          <div className="flex items-center mb-2 md:mb-4">
+          <div className="flex items-center mb-2 md:mb-4 ">
             <input
               name="address"
               value={formData.address}
@@ -238,7 +237,7 @@ const goBack = () => {
             />
           </div>
 
-          <div className="flex items-center mb-4 md:mb-8">
+          <div className="flex flex-col md:flex-row justify-between mb-2 gap-2 md:mb-8 md:gap-4">
             <input
               name="zip_code"
               value={formData.zip_code}
@@ -251,7 +250,7 @@ const goBack = () => {
               value={formData.city}
               onChange={handleChange}
               placeholder="Ville"
-              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black ml-4"
+              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black"
             />
           </div>
           {errors.zip_code && (
@@ -265,7 +264,7 @@ const goBack = () => {
             type="submit"
             className="w-full px-6 py-3 rounded-full text-white bg-[#16A1AF] hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2 mb-2 md:mb-4"
           >
-            Continuer
+            Enregistrer
           </button>
           <button
             type="button"
@@ -278,6 +277,6 @@ const goBack = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Modification;
