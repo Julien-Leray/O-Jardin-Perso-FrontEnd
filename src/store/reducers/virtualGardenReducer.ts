@@ -46,7 +46,7 @@ const potagerVirtuelSlice = createSlice({
     },
     removeFromVirtualGarden(state, action: PayloadAction<number>) {
       state.virtualGarden = state.virtualGarden.filter(
-        (item) => item.product_id !== action.payload
+        (vg) => vg.product_id !== action.payload
       );
     },
   },
