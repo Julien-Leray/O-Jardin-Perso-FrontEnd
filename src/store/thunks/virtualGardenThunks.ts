@@ -7,6 +7,7 @@ interface UpdateProductPositionPayload {
   product_id: number;
   position: string;
 }
+
 export const fetchAllProductsInVirtualGarden = createAsyncThunk(
   'me/virtual-garden/fetchVirtualGarden',
   async () => {
@@ -26,7 +27,7 @@ export const fetchAllProductsInVirtualGarden = createAsyncThunk(
 
 export const updateProductPosition = createAsyncThunk(
   'potagerVirtuel/updateProductPosition',
-  async (payload: UpdateProductPositionPayload, {}) => {
+  async (payload: UpdateProductPositionPayload) => {
     const { position, product_id } = payload;
     const token = localStorage.getItem('token');
 
@@ -81,5 +82,24 @@ export const fetchMatchingProducts = createAsyncThunk(
       .filter((product) => product !== undefined) as Product[];
 
     return matchingProducts;
+  }
+);
+
+export const removeProductFromVirtualGarden = createAsyncThunk(
+  'potagerVirtuel/removeProductFromVirtualGarden',
+  async (id: number, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const userId = state.myGarden.userData.id;
+
+    const response = await axiosInstance.delete(
+      `/me/virtual-garden/${userId}`,
+      {
+        data: {
+          product_id: id,
+        },
+      }
+    );
+
+    return response.data;
   }
 );
