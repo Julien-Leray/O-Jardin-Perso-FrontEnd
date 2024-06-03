@@ -11,6 +11,7 @@ import {
 import {
   addToGarden,
   addToVirtualGarden,
+  removeFromVirtualGarden,
 } from '../../../../store/reducers/virtualGardenReducer';
 import { Product } from '../../../../@types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
@@ -26,7 +27,6 @@ function PotagerVirtuel() {
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    console.log('Fetching products and garden data...');
     dispatch(fetchAllProductsInVirtualGarden()).then(() => {
       dispatch(fetchMatchingProducts());
     });
@@ -60,6 +60,11 @@ function PotagerVirtuel() {
     dispatch(addToGarden({ ...product, position: '' }));
   };
 
+  const handleRemoveFromGarden = (product_id: number) => {
+    dispatch(removeFromVirtualGarden(product_id));
+    dispatch(fetchMatchingProducts());
+  };
+
   const renderGrid = () => {
     const rows = [];
     for (let row = 0; row < vertical; row += 1) {
@@ -87,13 +92,21 @@ function PotagerVirtuel() {
             className="border border-gray-500 w-16 h-16 flex items-center justify-center"
           >
             {product && (
-              <img
-                src={`${import.meta.env.VITE_API_URL}${product.picture}`}
-                alt={product.name}
-                draggable
-                onDragStart={() => handleDragStart(product)}
-                className="w-12 h-12"
-              />
+              <>
+                <img
+                  src={`${import.meta.env.VITE_API_URL}${product.picture}`}
+                  alt={product.name}
+                  draggable
+                  onDragStart={() => handleDragStart(product)}
+                  className="w-12 h-12"
+                />
+                <button
+                  onClick={() => handleRemoveFromGarden(product.id)}
+                  className="ml-2 text-red-500"
+                >
+                  X
+                </button>
+              </>
             )}
           </div>
         );
@@ -152,6 +165,12 @@ function PotagerVirtuel() {
                     onDragStart={() => handleDragStart(product)}
                   />
                   <div className="text-center mt-2">{product.name}</div>
+                  <button
+                    onClick={() => handleRemoveFromGarden(product.id)}
+                    className="mt-2 text-red-500"
+                  >
+                    Supprimer
+                  </button>
                 </div>
               </li>
             ))}
