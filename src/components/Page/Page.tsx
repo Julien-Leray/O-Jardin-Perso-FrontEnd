@@ -26,6 +26,7 @@ import Contact from './Contact/Contact';
 
 import { actionChangeCredential } from '../../store/reducers/user';
 import { Product } from '../../@types/types';
+import Loader from '../Loader/Loader';
 
 function Page() {
   const location = useLocation();
@@ -59,8 +60,9 @@ function Page() {
   });
 
   return (
-    <div className="page">
+    <div>
       {location.pathname !== '/connexion' &&
+        location.pathname !== '/contact' &&
         location.pathname !== '/inscription' && <SearchBar />}
 
       <Routes>
