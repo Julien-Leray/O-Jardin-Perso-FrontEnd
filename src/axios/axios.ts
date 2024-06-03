@@ -4,7 +4,7 @@ const axiosInstance = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}/api/`,
 });
 
-export function addTokenJwtToAxiosInstance(token: string) {
+export function addTokenToAxiosInstance(token: string) {
   axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
 }
 

@@ -1,67 +1,61 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchMeteo } from '../../../store/thunks/meteoThunk';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
-import dayjs from 'dayjs';
-import 'dayjs/locale/fr';
+import MaMeteo from './Meteo/Meteo';
+import MesFavoris from './Favoris/MesFavoris';
+import { Product } from '../../../@types/types';
+import fetchUserData from '../../../store/thunks/myGardenThunks';
+import { Tab, Tabs } from './Tabs';
+import PotagerVirtuel from './PotagerVirtuel/PotagerVirtuel';
 
-function MonJardin() {
+interface MonJardinProps {
+  logged: boolean;
+  allFavProducts: Product[];
+}
+
+function MonJardin({ logged, allFavProducts }: MonJardinProps) {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.myGarden.user);
-  const { products } = useAppSelector((state) => state.myGarden);
-
-  const meteo = useAppSelector((state) => state.meteo);
-  const cityName = user.city;
 
   useEffect(() => {
-    if (cityName) {
-      dispatch(fetchMeteo(cityName));
-    }
-  }, [dispatch, cityName]);
+    dispatch(fetchUserData());
+  }, []);
 
-    // dayjs.locale('fr');
-    // const dateOfDay = dayjs().format('dddd DD MMMM')
+  const { userData } = useAppSelector((state) => state.myGarden);
+  const loading = useAppSelector((state) => state.myGarden.loading);
+  const error = useAppSelector((state) => state.myGarden.error);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div>
-      <h1 className='flex justify-center m-2'>Bienvenue {user.firstname}</h1>
+      <Tabs>
+        <Tab label="Mon tableau de bord">
+          <div className="w-full py-4">
+            <h1>Bienvenue {userData.firstname} !</h1>
 
-      <Link
-        to="/mon_jardin/potager-virtuel"
-        className="text-blue-500 hover:text-blue-700"
-      >
-        Gérez votre jardin virtuel ici.
-      </Link>
-
-      <div className='flex flex-wrap flex-col md:flex-row md:justify-around'>
-
-        <div className="rounded-lg shadow-lg border border-gray-200 m-1 p-4 md:my-2 md:w-1/4">
-
-            <h2 className="font-bold ">Mes alertes</h2>
-            {/* <p>{dateOfDay} </p> */}
-
-        </div>
-
-        {meteo && meteo.name ? (
-
-          <div className="rounded-lg m-1 shadow-lg border border-gray-200 md:w-5/5 md:p-2 md:my-2">
-            <h2 className="font-bold ml-2">Météo à {meteo.name}</h2>
-              <div className='flex flex-wrap justify-around'>
-              {meteo.weatherForecast.map((dailyWeather) => (
-                
-                <div className="rounded-lg p-1 flex flex-col items-center" key={dailyWeather.date}>
-                  <p>{dailyWeather.date}</p>
-                  <p>{dailyWeather.temp}°C</p>
-                  <img src={`http://openweathermap.org/img/w/${dailyWeather.icon}.png`} alt="weather icon" />
-                </div>
-                
-              ))}
+            <div className="flex flex-col md:flex-row md:justify-between gap-6 -m-4 my-4  ">
+              <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-1/4 bg-[#16A1AF]">
+                <h2 className="font-bold text-white text-center	">
+                  Mes alertes
+                </h2>
+                {/* <p>{dateOfDay} </p> */}
               </div>
+
+              <MaMeteo userData={userData} logged={logged} />
+            </div>
+            <MesFavoris allFavProducts={allFavProducts} />
           </div>
-        ) : (
-          <p>Chargement des données météo...</p>
-        )}
-      </div>
+        </Tab>
+        <Tab label="Mon jardin virtuel">
+          <PotagerVirtuel />
+        </Tab>
+      </Tabs>
     </div>
   );
 }

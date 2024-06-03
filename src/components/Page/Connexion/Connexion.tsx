@@ -1,10 +1,9 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, act } from 'react';
 import { User, Lock, XCircle, Info } from 'react-feather';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from './ConnexionInput';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import actionGetDataUser from '../../../store/thunks/myGardenThunks';
-import { actionLogIn } from '../../../store/reducers/user';
+
 
 interface LoginFormProps {
   logged: boolean;
@@ -36,8 +35,8 @@ function Connexion({
     event.preventDefault();
     handleLogin();
   };
+
   if (logged) {
-    dispatch(actionGetDataUser());
     navigate('/mon_jardin');
   }
   return (

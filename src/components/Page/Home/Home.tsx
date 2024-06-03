@@ -1,18 +1,22 @@
 import { Link } from 'react-router-dom';
-import { Tutorial } from '../../../types/types';
+import { Product, Tutorial } from '../../../@types/types';
+import slugify from '../../../utils/utils';
+import BtnFavoris from '../Products/BtnFavoris';
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  picture?: string;
-}
 interface HomeProps {
   tutorials: Tutorial[];
   legumes: Product[];
   fruits: Product[];
+  logged: boolean;
+  allFavProducts: Product[];
 }
-function Home({ tutorials, legumes, fruits }: HomeProps) {
+function Home({
+  tutorials,
+  legumes,
+  fruits,
+  logged,
+  allFavProducts,
+}: HomeProps) {
   const getRandomTutos = () => {
     if (tutorials.length <= 2) return tutorials;
     const twoTutoOnHome = [...tutorials].sort(() => 0.5 - Math.random());
@@ -46,13 +50,26 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
             <ul className="flex flex-wrap justify-around rounded-lg">
               {randomFruits.map((fruit) => (
                 <li className="mx-auto w-5/6 md:w-1/2 p-4" key={fruit.id}>
-                  <Link to={`/fruits/${fruit.id}`}>
+                  <Link to={`/fruits/${slugify(fruit.name)}`}>
                     <div className="flex flex-col flex-grow">
-                      <img
-                        src={`${import.meta.env.VITE_API_URL}${fruit.picture}`}
-                        alt={fruit.name}
-                        className="w-full h-48 object-cover mx-auto rounded-t-lg"
-                      />
+                      <div className="relative">
+                        <img
+                          src={`${import.meta.env.VITE_API_URL}${
+                            fruit.picture
+                          }`}
+                          alt={fruit.name}
+                          className="w-full h-48 object-cover mx-auto rounded-t-lg"
+                        />
+                        {/* <div className="flex flex-row justify-end absolute top-1 right-1">
+                          {logged && (
+                            <BtnFavoris
+                              logged={logged}
+                              product={fruit}
+                              allFavProducts={allFavProducts}
+                            />
+                          )}
+                        </div> */}
+                      </div>
                       <h3 className="font-bold text-center my-2">
                         {fruit.name}
                       </h3>
@@ -75,13 +92,26 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
             <ul className="flex flex-wrap justify-around rounded-lg">
               {randomLegumes.map((legume) => (
                 <li className="mx-auto w-5/6 md:w-1/2 p-4" key={legume.id}>
-                  <Link to={`/fruits/${legume.id}`}>
+                  <Link to={`/fruits/${slugify(legume.name)}`}>
                     <div className="flex flex-col flex-grow">
-                      <img
-                        src={`${import.meta.env.VITE_API_URL}${legume.picture}`}
-                        alt={legume.name}
-                        className="w-full h-48 object-cover mx-auto rounded-t-lg"
-                      />
+                      <div className="relative">
+                        <img
+                          src={`${import.meta.env.VITE_API_URL}${
+                            legume.picture
+                          }`}
+                          alt={legume.name}
+                          className="w-full h-48 object-cover mx-auto rounded-t-lg"
+                        />
+                        {/* <div className="flex flex-row justify-end absolute top-1 right-1">
+                          {logged && (
+                            <BtnFavoris
+                              logged={logged}
+                              product={legume}
+                              allFavProducts={allFavProducts}
+                            />
+                          )}
+                        </div> */}
+                      </div>
                       <h3 className="font-bold text-center my-2">
                         {legume.name}
                       </h3>
@@ -105,7 +135,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
           {randomTutos.map((tutoriel) => (
             <li className="mx-auto w-5/6 md:w-1/3 p-4" key={tutoriel.id}>
               <div className="flex flex-col flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
-                <Link to={`/tutos/${tutoriel.id}`}>
+                <Link to={`/tutos/${slugify(tutoriel.title)}`}>
                   <img
                     src={`${import.meta.env.VITE_API_URL}${tutoriel.picture}`}
                     alt={`Tuto de ${tutoriel.title}`}
@@ -118,7 +148,7 @@ function Home({ tutorials, legumes, fruits }: HomeProps) {
                   </h3>
 
                   <Link
-                    to={`/tutos/${tutoriel.id}`}
+                    to={`/tutos/${slugify(tutoriel.title)}`}
                     className="mx-auto py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
                   >
                     <button type="button">Lire la suite</button>

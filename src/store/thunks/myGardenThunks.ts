@@ -1,24 +1,28 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import axios from 'axios';
 import type { RootState } from '../store';
 import axiosInstance from '../../axios/axios';
+import { Product } from '../../@types/types';
 
-const actionGetDataUser = createAsyncThunk(
-  'user/GET_DATA',
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState() as RootState;
+const fetchUserData = createAsyncThunk('user/GET_DATA', async (_, thunkAPI) => {
+  try {
+    const response = await axiosInstance.get('/me/garden');
 
-    const response = await axiosInstance.get('/me/garden', {
-      data: state.user.token,
-    });
     const userData = response.data[0].result.user;
-    const { products } = response.data[1];
+    const allFavProducts = response.data[0].result.products;
 
-    // console.log('me:', userData);
-    // console.log('my products:', products);
+    const sortedFavProducts = {
+      favFruits: [] as Product[],
+      favLegumes: [] as Product[],
+    };
 
-    return { userData, products };
+    console.log(userData);
+
+    return { userData, allFavProducts };
+  } catch (error) {
+    return thunkAPI.rejectWithValue('Erreur de connexion');
   }
-);
+});
 
-export default actionGetDataUser;
+export default fetchUserData;

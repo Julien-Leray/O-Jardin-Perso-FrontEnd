@@ -1,4 +1,4 @@
-export function addTokenAndPseudoToLocalStorage(
+export function addTokenToLocalStorage(
   token: string
   // firstname: string
 ) {
@@ -6,9 +6,9 @@ export function addTokenAndPseudoToLocalStorage(
   // localStorage.setItem('firstname', firstname);
 }
 
-export function getTokenAndPseudoFromLocalStorage() {
-  const jwt = localStorage.getItem('jwt');
+export function getTokenFromLocalStorage() {
+  const token = localStorage.getItem('token');
   // const firstname = localStorage.getItem('firstname');
 
-  return { jwt };
+  return { token };
 }

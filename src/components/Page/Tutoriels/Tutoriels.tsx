@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks/redux';
-import { Tutorial } from '../../../types/types';
+import { Tutorial } from '../../../@types/types';
+import slugify from '../../../utils/utils';
 
 interface Tutoprops {
   tutorials: Tutorial[];
@@ -18,9 +19,9 @@ function Tutoriels({ tutorials }: Tutoprops) {
       <div>
         <ul className="flex flex-wrap md:flex-row -m-4">
           {tutorials.map((tutoriel) => (
-            <li key={tutoriel.id} className=" w-5/6 md:w-1/3 p-4">
+            <li key={tutoriel.id} className=" w-5/6 md:w-1/3 p-4 mx-auto">
               <div className="flex flex-col justify-normal flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
-                <Link to={`/tutos/${tutoriel.id}`}>
+                <Link to={`/tutos/${slugify(tutoriel.title)}`}>
                   <img
                     src={`${import.meta.env.VITE_API_URL}${tutoriel.picture}`}
                     alt={tutoriel.title}
@@ -37,7 +38,7 @@ function Tutoriels({ tutorials }: Tutoprops) {
                     ...
                   </p>
                   <Link
-                    to={`/tutos/${tutoriel.id}`}
+                    to={`/tutos/${slugify(tutoriel.title)}`}
                     className="mx-auto py-4 px-6 text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
                   >
                     <button type="button">En savoir plus</button>

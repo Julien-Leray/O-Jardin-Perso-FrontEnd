@@ -5,11 +5,10 @@ import { actionLogOut } from '../../../store/reducers/user';
 import { removeTokenJwtFromAxiosInstance } from '../../../axios/axios';
 
 interface ConnexionBtnProps {
-  isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function ConnexionBtn({ isOpen, setIsOpen }: ConnexionBtnProps) {
+function ConnexionBtn({ setIsOpen }: ConnexionBtnProps) {
   const isLogged = useAppSelector((state) => state.user.logged);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -40,6 +39,7 @@ function ConnexionBtn({ isOpen, setIsOpen }: ConnexionBtnProps) {
             setIsOpen(false);
             dispatch(actionLogOut());
             removeTokenJwtFromAxiosInstance();
+            localStorage.removeItem('token');
             navigate('/');
           }}
         >

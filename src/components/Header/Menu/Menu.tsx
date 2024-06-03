@@ -4,13 +4,12 @@ import { ChevronDown } from 'react-feather';
 import { useAppSelector } from '../../../hooks/redux';
 
 interface MenuProps {
-  isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Menu({ isOpen, setIsOpen }: MenuProps) {
+function Menu({ setIsOpen }: MenuProps) {
   const logged = useAppSelector((state) => state.user.logged);
-  const isAdmin = useAppSelector((state) => state.user.isAdmin);
+  // const isAdmin = useAppSelector((state) => state.myGarden.userData.is_admin);
 
   return (
     <>
@@ -85,18 +84,16 @@ function Menu({ isOpen, setIsOpen }: MenuProps) {
         </NavLink>
       )}
 
-      {isAdmin && (
-        <NavLink
-          className="w-full md:w-auto text-center px-6 py-3 rounded-full bg-[#7AC808] text-white hover:font-[800] focus:outline-none focus:ring-2 focus:ring-[#7AC808] focus:ring-offset-2"
-          to={`${import.meta.env.VITE_API_URL}/api/products/admin/`}
-          target="_blank"
-          onClick={() => {
-            setIsOpen(false);
-          }}
-        >
-          Admin
-        </NavLink>
-      )}
+      {/* // <NavLink
+        //   className="w-full md:w-auto text-center px-6 py-3 rounded-full bg-[#7AC808] text-white hover:font-[800] focus:outline-none focus:ring-2 focus:ring-[#7AC808] focus:ring-offset-2"
+        //   to={`${import.meta.env.VITE_API_URL}/`}
+        //   target="_blank"
+        //   onClick={() => {
+        //     setIsOpen(false);
+        //   }}
+        // >
+        //   Admin
+        // </NavLink> */}
     </>
   );
 }

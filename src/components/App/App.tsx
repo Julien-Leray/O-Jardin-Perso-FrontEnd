@@ -5,28 +5,34 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Page from '../Page/Page';
 
-import { getTokenAndPseudoFromLocalStorage } from '../../localStorage/localstorage';
+import { getTokenFromLocalStorage } from '../../localStorage/localstorage';
 import { actionLogIn } from '../../store/reducers/user';
-import { addTokenJwtToAxiosInstance } from '../../axios/axios';
+import { addTokenToAxiosInstance } from '../../axios/axios';
+import fetchAllProducts from '../../store/thunks/productThunks';
+import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
 import actionGetDataUser from '../../store/thunks/myGardenThunks';
 
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const { jwt } = getTokenAndPseudoFromLocalStorage();
+    const { token } = getTokenFromLocalStorage();
 
-    if (jwt) {
-      dispatch(actionLogIn({ jwt }));
-      addTokenJwtToAxiosInstance(jwt);
-      dispatch(actionGetDataUser(jwt));
+    if (token) {
+      dispatch(actionLogIn({ token }));
+      addTokenToAxiosInstance(token);
     } else {
       console.log('empty localstorage');
     }
   }, []);
 
+  useEffect(() => {
+    dispatch(actionGetDataUser());
+    dispatch(fetchAllProducts());
+    dispatch(fetchAllTutorials());
+  }, []);
   return (
-    <div className="flex flex-col justify-between min-h-screen">
+    <div className="flex flex-col justify-between min-h-screen bg-[#f9f9f9]">
       <Header />
 
       <div className="w-full md:w-5/6 md:mx-auto flex-1">
