@@ -74,7 +74,7 @@ function Menu({ setIsOpen }: MenuProps) {
 
       {logged && (
         <NavLink
-          className="w-full md:w-auto text-center hover:font-[800] px-6 py-3 rounded-full bg-[#16A1AF] text-white focus:outline-none focus:ring-2 focus:ring-[#F6D50E] focus:ring-offset-2"
+          className="w-full md:w-auto text-center hover:font-[800] px-6 py-3 rounded-full bg-[#16A1AF] text-white focus:outline-none focus:ring-2 focus:ring-[#16A1AF] focus:ring-offset-2"
           to="/mon_jardin"
           onClick={() => {
             setIsOpen(false);

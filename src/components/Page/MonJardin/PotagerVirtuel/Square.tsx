@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
-import { ItemTypes } from '../../../../types/types';
+import { ItemTypes } from '../../../../@types/types';
 
 interface SquareProps {
   position: string;

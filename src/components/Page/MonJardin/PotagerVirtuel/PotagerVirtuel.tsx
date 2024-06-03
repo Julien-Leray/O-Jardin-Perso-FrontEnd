@@ -5,15 +5,15 @@ import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
 import {
   updateProductPosition,
-  fetchProducts,
   fetchAllProductsInVirtualGarden,
   fetchMatchingProducts,
 } from '../../../../store/thunks/virtualGardenThunks';
 import {
   addToGarden,
   addToVirtualGarden,
+  removeFromVirtualGarden,
 } from '../../../../store/reducers/virtualGardenReducer';
-import { Product } from '../../../../types/types';
+import { Product } from '../../../../@types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
 
 function PotagerVirtuel() {
@@ -27,33 +27,29 @@ function PotagerVirtuel() {
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    dispatch(fetchProducts());
-    dispatch(fetchAllProductsInVirtualGarden());
-    dispatch(fetchMatchingProducts());
+    dispatch(fetchAllProductsInVirtualGarden()).then(() => {
+      dispatch(fetchMatchingProducts());
+    });
   }, [dispatch]);
 
   const handleDragStart = (product: Product) => {
     setDraggedProduct(product);
-    console.log('Dragged product:', product);
   };
 
-  const handleDrop = (position: string) => {
-    console.log(draggedProduct);
-    console.log('Drop position:', position);
+  const handleDrop = async (position: string) => {
     if (draggedProduct) {
-      console.log('Dropped product:', draggedProduct);
-      dispatch(
+      await dispatch(
         updateProductPosition({ product_id: draggedProduct.id, position })
       );
-      dispatch(
+      await dispatch(
         addToVirtualGarden({
           product_id: draggedProduct.id,
           position,
           quantity: 1,
         })
       );
-      dispatch(fetchAllProductsInVirtualGarden());
-      dispatch(fetchMatchingProducts());
+      await dispatch(fetchAllProductsInVirtualGarden());
+      await dispatch(fetchMatchingProducts());
       setDraggedProduct(null);
     } else {
       console.log('No product is being dragged.');
@@ -62,6 +58,11 @@ function PotagerVirtuel() {
 
   const handleAddToGarden = (product: Product) => {
     dispatch(addToGarden({ ...product, position: '' }));
+  };
+
+  const handleRemoveFromGarden = (product_id: number) => {
+    dispatch(removeFromVirtualGarden(product_id));
+    dispatch(fetchMatchingProducts());
   };
 
   const renderGrid = () => {
@@ -85,19 +86,27 @@ function PotagerVirtuel() {
 
         cols.push(
           <div
-            key={position}
+            key={`${row}-${col}`}
             onDrop={() => handleDrop(position)}
             onDragOver={(e) => e.preventDefault()}
-            className="border border-gray-500 w-16 h-16 flex items-center justify-center"
+            className="border border-gray-300 w-24 h-24 flex items-center justify-center bg-green-100"
           >
             {product && (
-              <img
-                src={`http://localhost:4000/${product.picture}`}
-                alt={product.name}
-                draggable
-                onDragStart={() => handleDragStart(product)}
-                className="w-12 h-12"
-              />
+              <div className="relative flex flex-col items-center">
+                <img
+                  src={`${import.meta.env.VITE_API_URL}${product.picture}`}
+                  alt={product.name}
+                  draggable
+                  onDragStart={() => handleDragStart(product)}
+                  className="w-16 h-16"
+                />
+                <button
+                  onClick={() => handleRemoveFromGarden(product.id)}
+                  className="absolute top-0 right-0 bg-blue-500 text-white p-1 rounded-full"
+                >
+                  &times;
+                </button>
+              </div>
             )}
           </div>
         );
@@ -115,9 +124,9 @@ function PotagerVirtuel() {
     <DndProvider backend={HTML5Backend}>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <div className="p-4 bg-white shadow-xl rounded-lg text-center">
-          <h1 className="text-xl font-bold mb-2">Potager Virtuel</h1>
-          <p>Planifiez et visualisez votre potager virtuel.</p>
-          <div className="flex justify-center my-4">
+          <h1 className="text-2xl font-bold mb-4">Potager Virtuel</h1>
+          <p className="mb-4">Planifiez et visualisez votre potager virtuel.</p>
+          <div className="flex justify-center mb-4">
             <label className="mr-4">
               Horizontal:
               <input
@@ -139,15 +148,15 @@ function PotagerVirtuel() {
               />
             </label>
           </div>
-          <div className="grid">{renderGrid()}</div>
+          <div className="grid gap-1">{renderGrid()}</div>
         </div>
         <PotagerSearchBar products={products} addToGarden={handleAddToGarden} />
         <div className="mt-6 w-full">
-          <h2 className="text-center font-bold mb-4">Mon Jardin</h2>
+          <h2 className="text-center text-xl font-bold mb-4">Mon Jardin</h2>
           <ul className="flex flex-wrap justify-center">
             {garden.map((product) => (
               <li key={product.id} className="w-1/4 p-2">
-                <div className="border p-4 rounded">
+                <div className="border p-4 rounded bg-white shadow">
                   <img
                     src={`${import.meta.env.VITE_API_URL}${product.picture}`}
                     alt={product.name}
@@ -155,7 +164,9 @@ function PotagerVirtuel() {
                     draggable
                     onDragStart={() => handleDragStart(product)}
                   />
-                  <div className="text-center mt-2">{product.name}</div>
+                  <div className="text-center mt-2 font-semibold">
+                    {product.name}
+                  </div>
                 </div>
               </li>
             ))}

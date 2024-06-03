@@ -22,6 +22,7 @@ const tutoReducer = createReducer(initialState, (builder) => {
     .addCase(fetchAllTutorials.fulfilled, (state, action) => {
       state.tutorials = action.payload;
       state.loading = false;
+      state.error = null;
     })
     .addCase(fetchAllTutorials.rejected, (state, action) => {
       state.error = action.error.message;

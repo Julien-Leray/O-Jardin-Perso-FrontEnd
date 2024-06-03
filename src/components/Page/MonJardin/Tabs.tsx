@@ -22,7 +22,7 @@ function Tabs({ children }: TabsProps) {
 
   return (
     <div className="w-full mx-auto">
-      <div className="flex border-b-2 border-[#16A1AF]">
+      <div className="flex flex-col md:flex-row border-b-2 border-[#16A1AF]">
         {children.map((child) => (
           <button
             key={child.props.label}

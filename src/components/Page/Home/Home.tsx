@@ -1,22 +1,17 @@
 import { Link } from 'react-router-dom';
+import { boolean } from 'joi';
 import { Product, Tutorial } from '../../../@types/types';
 import slugify from '../../../utils/utils';
 import BtnFavoris from '../Products/BtnFavoris';
+import Loader from '../../Loader/Loader';
 
 interface HomeProps {
   tutorials: Tutorial[];
   legumes: Product[];
   fruits: Product[];
   logged: boolean;
-  allFavProducts: Product[];
 }
-function Home({
-  tutorials,
-  legumes,
-  fruits,
-  logged,
-  allFavProducts,
-}: HomeProps) {
+function Home({ tutorials, legumes, fruits, logged }: HomeProps) {
   const getRandomTutos = () => {
     if (tutorials.length <= 2) return tutorials;
     const twoTutoOnHome = [...tutorials].sort(() => 0.5 - Math.random());
@@ -39,7 +34,7 @@ function Home({
   const randomFruits = getRandomFruits();
 
   return (
-    <>
+    <div>
       <div className="bg-white text-center py-2 text-sm italic">
         <p>Bienvenue sur notre site web dédié au jardinage!</p>
       </div>
@@ -60,15 +55,6 @@ function Home({
                           alt={fruit.name}
                           className="w-full h-48 object-cover mx-auto rounded-t-lg"
                         />
-                        {/* <div className="flex flex-row justify-end absolute top-1 right-1">
-                          {logged && (
-                            <BtnFavoris
-                              logged={logged}
-                              product={fruit}
-                              allFavProducts={allFavProducts}
-                            />
-                          )}
-                        </div> */}
                       </div>
                       <h3 className="font-bold text-center my-2">
                         {fruit.name}
@@ -92,7 +78,7 @@ function Home({
             <ul className="flex flex-wrap justify-around rounded-lg">
               {randomLegumes.map((legume) => (
                 <li className="mx-auto w-5/6 md:w-1/2 p-4" key={legume.id}>
-                  <Link to={`/fruits/${slugify(legume.name)}`}>
+                  <Link to={`/legumes/${slugify(legume.name)}`}>
                     <div className="flex flex-col flex-grow">
                       <div className="relative">
                         <img
@@ -159,7 +145,7 @@ function Home({
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 }
 export default Home;

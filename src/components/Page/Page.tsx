@@ -7,7 +7,7 @@ import userAction from '../../store/thunks/userThunk';
 
 import Home from './Home/Home';
 import Fruits from './Products/Fruits/ListeFruits';
-import Connexion from './Connexion/Connexion';
+import Connexion from './ConnexionUser/Connexion';
 
 import SearchBar from '../SearchBar/SearchBar';
 import FruitDetail from './Products/Fruits/FruitDetail';
@@ -15,10 +15,9 @@ import Legumes from './Products/Legumes/ListeLegumes';
 import LegumeDetail from './Products/Legumes/LegumeDetail';
 import Tutoriels from './Tutoriels/Tutoriels';
 import TutorielDetail from './Tutoriels/TutorielDetail';
-import Inscription from './Inscription/Inscription';
+import Inscription from './InscriptionUser/Inscription';
 import MonJardin from './MonJardin/MonJardin';
 import PotagerVirtuel from './MonJardin/PotagerVirtuel/PotagerVirtuel';
-import GestionProfil from './MonJardin/GestionProfil/GestionProfil';
 import GestionAlertes from './MonJardin/GestionAlertes/GestionAlertes';
 import MentionsLegales from './MentionsLegales/MentionLegales';
 import PolitiqueConfidentialite from './PolitiqueConfidentialite/PolitiqueConfidentialite';
@@ -26,6 +25,7 @@ import Contact from './Contact/Contact';
 
 import { actionChangeCredential } from '../../store/reducers/user';
 import { Product } from '../../@types/types';
+import Modification from './ModificationUser/Modification';
 
 function Page() {
   const location = useLocation();
@@ -59,8 +59,10 @@ function Page() {
   });
 
   return (
-    <div className="page">
+    <div>
       {location.pathname !== '/connexion' &&
+        location.pathname !== '/contact' &&
+        location.pathname !== '/gestion_profil' &&
         location.pathname !== '/inscription' && <SearchBar />}
 
       <Routes>
@@ -160,7 +162,19 @@ function Page() {
           path="/mon_jardin/potager-virtuel"
           element={<PotagerVirtuel />}
         />
-        <Route path="/gestion_profil" element={<GestionProfil />} />
+        <Route
+          path="/gestion_profil"
+          element={
+            <Modification
+              handleVerifyEmail={(email) =>
+                dispatch(userAction.actionVerifyEmailExist(email))
+              }
+              handleSignup={(newUser) =>
+                dispatch(userAction.actionNewUser(newUser))
+              }
+            />
+          }
+        />
         <Route path="/gestion_profil/alertes" element={<GestionAlertes />} />
         <Route path="/mentions_legales" element={<MentionsLegales />} />
         <Route path="/confidentialite" element={<PolitiqueConfidentialite />} />

@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Product, ProductInVirtualGarden } from '../../types/types';
+import { Product, ProductInVirtualGarden } from '../../@types/types';
 import {
   fetchAllProductsInVirtualGarden,
-  fetchProducts,
   fetchMatchingProducts,
   updateProductPosition as updateProductPositionThunk,
 } from '../thunks/virtualGardenThunks';
@@ -30,15 +29,12 @@ const potagerVirtuelSlice = createSlice({
   initialState,
   reducers: {
     addToGarden(state, action: PayloadAction<Product>) {
-      console.log('Adding to garden:', action.payload);
       state.garden.push(action.payload);
-      console.log('Updated garden state:', state.garden);
     },
     updateProductPosition: (
       state,
       action: PayloadAction<{ product_id: number; position: string }>
     ) => {
-      console.log('Reducer - updateProductPosition:', action.payload);
       const { product_id, position } = action.payload;
       const product = state.garden.find((p) => p.id === product_id);
       if (product) {
@@ -48,20 +44,14 @@ const potagerVirtuelSlice = createSlice({
     addToVirtualGarden(state, action: PayloadAction<ProductInVirtualGarden>) {
       state.virtualGarden.push(action.payload);
     },
+    removeFromVirtualGarden(state, action: PayloadAction<number>) {
+      state.virtualGarden = state.virtualGarden.filter(
+        (vg) => vg.product_id !== action.payload
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.products = action.payload;
-      })
-      .addCase(fetchProducts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'Failed to fetch products';
-      })
       .addCase(fetchAllProductsInVirtualGarden.pending, (state) => {
         state.loading = true;
       })
@@ -87,7 +77,11 @@ const potagerVirtuelSlice = createSlice({
   },
 });
 
-export const { addToGarden, updateProductPosition, addToVirtualGarden } =
-  potagerVirtuelSlice.actions;
+export const {
+  addToGarden,
+  updateProductPosition,
+  addToVirtualGarden,
+  removeFromVirtualGarden,
+} = potagerVirtuelSlice.actions;
 
 export default potagerVirtuelSlice.reducer;

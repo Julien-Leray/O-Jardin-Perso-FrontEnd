@@ -36,6 +36,9 @@ const productReducer = createReducer(initialState, (builder) => {
       state.error = action.error.message;
       state.loading = false;
     })
+    .addCase(fetchAddProductToFav.pending, (state, action) => {
+      state.loading = true;
+    })
     .addCase(fetchAddProductToFav.fulfilled, (state, action) => {
       state.allProducts.push({
         id: action.payload,
@@ -48,38 +51,17 @@ const productReducer = createReducer(initialState, (builder) => {
         harvest_date: '',
         watering_frequency: '',
       });
+      state.loading = false;
+    })
+    .addCase(fetchDeleteFav.pending, (state, action) => {
+      state.loading = true;
     })
     .addCase(fetchDeleteFav.fulfilled, (state, action) => {
       state.allProducts = state.allProducts.filter(
         (product) => product.id !== action.payload
       );
+      state.loading = false;
     });
-
-  // .addCase(setAsFav, (state, action) => {
-  //   state.allProducts.filter((product) =>
-  //     product.id !== action.payload ? { ...product, isFav: false } : product
-  //   );
-  // .addCase(actionAddProductToFav.fulfilled, (state, action) => {
-  //   console.log('add', action.payload);
-  //   state.allProducts.push(action.payload.product_id);
-  // })
-  // .addCase(actionDeleteFav.fulfilled, (state, action) => {
-  //   state.allProducts.filter(
-  //     (product) => product.id !== action.payload.product_id
-  //   );
-  // .addCase(actionAddProductToFav.fulfilled, (state, action) => {
-  //   console.log('add', state.allProducts[0].name);
-  //   state.allProducts.id = action.payload;
-  //   state.allProducts[0].isFav = true;
-  // })
-  // .addCase(actionDeleteFav.fulfilled, (state, action) => {
-  //   console.log('delete', state.allProducts[0].name);
-  //   state.allProducts[0].id = action.payload;
-  //   state.allProducts[0].isFav = false;
-  //   state.error = null;
-  // });
-  // },
-  // });
 });
 
 export default productReducer;
