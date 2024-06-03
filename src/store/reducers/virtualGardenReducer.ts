@@ -4,6 +4,7 @@ import {
   fetchAllProductsInVirtualGarden,
   fetchMatchingProducts,
   updateProductPosition as updateProductPositionThunk,
+  removeProductFromVirtualGarden as removeProductFromVirtualGardenThunk,
 } from '../thunks/virtualGardenThunks';
 
 interface PotagerVirtuelState {
@@ -73,7 +74,15 @@ const potagerVirtuelSlice = createSlice({
         if (product) {
           product.position = position;
         }
-      });
+      })
+      .addCase(
+        removeProductFromVirtualGardenThunk.fulfilled,
+        (state, action) => {
+          state.virtualGarden = state.virtualGarden.filter(
+            (vg) => vg.product_id !== action.payload
+          );
+        }
+      );
   },
 });
 
