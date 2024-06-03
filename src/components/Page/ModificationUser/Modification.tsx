@@ -25,30 +25,26 @@ interface Errors {
   apiError?: string;
 }
 
-interface InscriptionProps {
+interface ModificationProps {
   handleSignup: (newUser: FormData) => void;
   handleVerifyEmail: (email: string) => string;
 }
 
-const Inscription: React.FC<InscriptionProps> = ({
-  handleSignup,
-  handleVerifyEmail,
-}) => {
-  const navigate = useNavigate();
-  const goBack = () => {
-    navigate(-1);
-  };
+function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
 
-  const [formData, setFormData] = useState<FormData>({
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    address: '',
-    zip_code: '',
-    city: '',
-  });
+const [formData, setFormData] = useState<FormData>({
+  firstname: '',
+  lastname: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  address: '',
+  zip_code: '',
+  city: '',
+});
+const navigate = useNavigate();
+const goBack = () => {
+  navigate(-1);
 
   const [errors, setErrors] = useState<Errors>({});
 
@@ -119,7 +115,7 @@ const Inscription: React.FC<InscriptionProps> = ({
       </button>
       <div className="w-5/6 md:w-3/5 shadow-3xl ">
         <div className="text-center font-bold text-3xl mb-2">
-          Créer un compte
+          Mdifier mes coordonnées
         </div>
 
         <form className="p-8 md:p-8" autoComplete="off" onSubmit={handleSubmit}>
@@ -284,4 +280,4 @@ const Inscription: React.FC<InscriptionProps> = ({
   );
 };
 
-export default Inscription;
+export default Modification;

@@ -7,7 +7,7 @@ import userAction from '../../store/thunks/userThunk';
 
 import Home from './Home/Home';
 import Fruits from './Products/Fruits/ListeFruits';
-import Connexion from './Connexion/Connexion';
+import Connexion from './ConnexionUser/Connexion';
 
 import SearchBar from '../SearchBar/SearchBar';
 import FruitDetail from './Products/Fruits/FruitDetail';
@@ -15,7 +15,7 @@ import Legumes from './Products/Legumes/ListeLegumes';
 import LegumeDetail from './Products/Legumes/LegumeDetail';
 import Tutoriels from './Tutoriels/Tutoriels';
 import TutorielDetail from './Tutoriels/TutorielDetail';
-import Inscription from './Inscription/Inscription';
+import Inscription from './InscriptionUser/Inscription';
 import MonJardin from './MonJardin/MonJardin';
 import PotagerVirtuel from './MonJardin/PotagerVirtuel/PotagerVirtuel';
 import GestionProfil from './MonJardin/GestionProfil/GestionProfil';
