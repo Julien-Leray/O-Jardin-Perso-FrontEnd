@@ -15,7 +15,8 @@ import Loader from '../Loader/Loader';
 
 function App() {
   const dispatch = useAppDispatch();
-  const loading = useAppSelector((state) => state.products.loading);
+  const loadingProducts = useAppSelector((state) => state.products.loading);
+  const loadingTutos = useAppSelector((state) => state.tutoriels.loading);
 
   useEffect(() => {
     const { token } = getTokenFromLocalStorage();
@@ -36,10 +37,10 @@ function App() {
 
   return (
     <>
-      {loading && <Loader />}
+      {loadingTutos && loadingProducts && <Loader />}
       <div
         className={`flex flex-col justify-between min-h-screen bg-[#f9f9f9] ${
-          loading ? 'opacity-20' : ''
+          loadingTutos && loadingProducts ? 'opacity-20' : ''
         }`}
       >
         <Header />

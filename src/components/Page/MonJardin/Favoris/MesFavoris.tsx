@@ -8,8 +8,6 @@ interface FavorisProps {
   allFavProducts: Product[];
 }
 function MesFavoris({ allFavProducts }: FavorisProps) {
-  
-  
   const sortedFavProducts = {
     favFruits: [] as Product[],
     favLegumes: [] as Product[],
@@ -29,11 +27,11 @@ function MesFavoris({ allFavProducts }: FavorisProps) {
       <div className="flex flex-col md:flex-row gap-2 md:gap-6">
         <div className="w-full py-4">
           <h2 className="text-xl text-center font-bold p-2">Fruits </h2>
-          <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-2">
-            <ul className="flex flex-wrap rounded-lg">
+          <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 px-2">
+            <ul className="flex flex-wrap justify-start rounded-lg min-h-40">
               {sortedFavProducts.favFruits.map((fruit) => (
                 <li
-                  className="mx-auto w-5/6 md:w-1/2 p-4"
+                  className="mx-auto md:mx-0 w-5/6 md:w-1/3 px-2 pt-4"
                   key={`fruit${fruit.id}`}
                 >
                   <Link to={`/fruits/${slugify(fruit.name)}`}>
@@ -65,10 +63,13 @@ function MesFavoris({ allFavProducts }: FavorisProps) {
         </div>
         <div className="w-full py-4">
           <h2 className="text-xl text-center font-bold p-2">Légumes </h2>
-          <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-2">
-            <ul className="flex flex-wrap justify-around rounded-lg">
+          <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 px-2">
+            <ul className="flex flex-wrap justify-start rounded-lg min-h-40">
               {sortedFavProducts.favLegumes.map((legume) => (
-                <li className="w-5/6 md:w-1/2 p-4" key={`legume${legume.id}`}>
+                <li
+                  className="mx-auto md:mx-0 w-5/6 md:w-1/3 p-2 pt-4"
+                  key={`legume${legume.id}`}
+                >
                   <Link to={`/legumes/${slugify(legume.name)}`}>
                     <div className="flex flex-col flex-grow">
                       <div className="relative">

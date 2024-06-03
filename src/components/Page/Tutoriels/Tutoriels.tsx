@@ -8,13 +8,11 @@ interface Tutoprops {
 }
 
 function Tutoriels({ tutorials }: Tutoprops) {
-  const loading = useAppSelector((state) => state.tutoriels.loading);
   const error = useAppSelector((state) => state.tutoriels.error);
 
   return (
     <div className="flex mx-auto flex-col my-6">
       <h2 className="text-xl text-center font-bold p-2">Tutoriels</h2>
-      {loading && <p>Chargement...</p>}
       {error && <p>Erreur : {error}</p>}
       <div>
         <ul className="flex flex-wrap md:flex-row -m-4">

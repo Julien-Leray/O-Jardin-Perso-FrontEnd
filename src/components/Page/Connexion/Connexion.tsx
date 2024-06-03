@@ -25,7 +25,6 @@ function Connexion({
   };
 
   const loginError = useAppSelector((state) => state.user.error);
-  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const goBack = () => {

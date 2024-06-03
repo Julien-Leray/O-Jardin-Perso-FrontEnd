@@ -26,7 +26,6 @@ import Contact from './Contact/Contact';
 
 import { actionChangeCredential } from '../../store/reducers/user';
 import { Product } from '../../@types/types';
-import Loader from '../Loader/Loader';
 
 function Page() {
   const location = useLocation();
