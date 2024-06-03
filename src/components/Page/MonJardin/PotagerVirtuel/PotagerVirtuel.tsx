@@ -1,3 +1,5 @@
+// src/components/Page/MonJardin/PotagerVirtuel/PotagerVirtuel.tsx
+
 import React, { useState, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -7,11 +9,11 @@ import {
   updateProductPosition,
   fetchAllProductsInVirtualGarden,
   fetchMatchingProducts,
+  removeProductFromVirtualGarden,
 } from '../../../../store/thunks/virtualGardenThunks';
 import {
   addToGarden,
   addToVirtualGarden,
-  removeFromVirtualGarden,
 } from '../../../../store/reducers/virtualGardenReducer';
 import { Product } from '../../../../@types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
@@ -60,9 +62,10 @@ function PotagerVirtuel() {
     dispatch(addToGarden({ ...product, position: '' }));
   };
 
-  const handleRemoveFromGarden = (product_id: number) => {
-    dispatch(removeFromVirtualGarden(product_id));
-    dispatch(fetchMatchingProducts());
+  const handleRemoveFromGarden = async (product_id: number) => {
+    await dispatch(removeProductFromVirtualGarden(product_id));
+    await dispatch(fetchAllProductsInVirtualGarden());
+    await dispatch(fetchMatchingProducts());
   };
 
   const renderGrid = () => {
