@@ -5,6 +5,7 @@ import findProduct from '../../../../store/selectors/products';
 import slugify from '../../../../utils/utils';
 import BtnFavoris from '../BtnFavoris';
 import { Product } from '../../../../@types/types';
+import Loader from '../../../Loader/Loader';
 
 export const months = [
   'Janvier',
@@ -33,9 +34,8 @@ function FruitDetail({ logged, allFavProducts }: FruitDetailProps) {
     findProduct(state.products.allProducts, slugify(params.name))
   );
 
-  const { loading, error } = useAppSelector((state) => state.products);
+  const { error } = useAppSelector((state) => state.products);
 
-  if (loading) return <div className="text-center text-lg">Chargement...</div>;
   if (error)
     return (
       <div className="text-center text-red-600 text-lg">Erreur : {error}</div>
@@ -85,7 +85,10 @@ function FruitDetail({ logged, allFavProducts }: FruitDetailProps) {
 
         <div className=" grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-2 bg-white rounded p-2 text-black">
           {months.map((month, index) => (
-            <div key={month} className="text-center text-xs font-semibold">
+            <div
+              key={`plantationFruit${month}`}
+              className="text-center text-xs font-semibold"
+            >
               {month}
               <div
                 className={`h-8 ${
@@ -100,7 +103,10 @@ function FruitDetail({ logged, allFavProducts }: FruitDetailProps) {
 
         <div className="grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-2 bg-white rounded p-2 text-black">
           {months.map((month, index) => (
-            <div key={month} className="text-center text-xs font-semibold">
+            <div
+              key={`harvestlegume${month}`}
+              className="text-center text-xs font-semibold"
+            >
               {month}
               <div
                 className={`h-8 ${

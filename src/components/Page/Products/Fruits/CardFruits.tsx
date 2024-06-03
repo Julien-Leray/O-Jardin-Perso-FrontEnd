@@ -16,7 +16,7 @@ function CardFruits({ logged, fruit, allFavProducts }: CardFruitsProps) {
 
   return (
     <li
-      key={`fruits${fruit.id}`}
+      key={`fruitDetail${fruit.id}`}
       className="mx-auto md:mx-0 w-5/6 md:w-1/3 p-4 mx-auto"
     >
       <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200">

@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom';
 import { Tutorial } from '../../../@types/types';
 import findTuto from '../../../store/selectors/tutos';
 import slugify from '../../../utils/utils';
+import { useAppSelector } from '../../../hooks/redux';
+import Loader from '../../Loader/Loader';
 
 interface TutoDetailProps {
   tutorials: Tutorial[];
@@ -10,6 +12,8 @@ interface TutoDetailProps {
 function TutorielDetail({ tutorials }: TutoDetailProps) {
   const params = useParams();
   const tutorial = findTuto(tutorials, slugify(params.title));
+
+  const { error } = useAppSelector((state) => state.tutoriels);
 
   if (!tutorial) {
     return (
@@ -23,7 +27,7 @@ function TutorielDetail({ tutorials }: TutoDetailProps) {
         {tutorial.title}
       </div>
       <img
-        src={`${import.meta.env.VITE_APP_API_URL}${tutorial.picture}`}
+        src={`${import.meta.env.VITE_API_URL}${tutorial.picture}`}
         alt={tutorial.title}
         className="mx-auto w-full max-w-xl h-auto object-cover rounded-lg shadow-lg"
       />

@@ -17,7 +17,10 @@ function Tutoriels({ tutorials }: Tutoprops) {
       <div>
         <ul className="flex flex-wrap md:flex-row -m-4">
           {tutorials.map((tutoriel) => (
-            <li key={tutoriel.id} className=" w-5/6 md:w-1/3 p-4 mx-auto">
+            <li
+              key={`tuto${tutoriel.id}`}
+              className=" w-5/6 md:w-1/3 p-4 mx-auto"
+            >
               <div className="flex flex-col justify-normal flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
                 <Link to={`/tutos/${slugify(tutoriel.title)}`}>
                   <img
