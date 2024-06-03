@@ -14,7 +14,6 @@ const actionCheckLogin = createAsyncThunk(
       password: state.user.credentials.password,
     });
     const { token } = response.data;
-
     addTokenToAxiosInstance(token);
     addTokenToLocalStorage(token);
     return { token };
