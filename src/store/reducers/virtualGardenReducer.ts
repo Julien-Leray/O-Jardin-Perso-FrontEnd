@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Product, ProductInVirtualGarden } from '../../types/types';
+import { Product, ProductInVirtualGarden } from '../../@types/types';
 import {
   fetchAllProductsInVirtualGarden,
-  fetchProducts,
   fetchMatchingProducts,
   updateProductPosition as updateProductPositionThunk,
 } from '../thunks/virtualGardenThunks';
@@ -51,17 +50,7 @@ const potagerVirtuelSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.products = action.payload;
-      })
-      .addCase(fetchProducts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'Failed to fetch products';
-      })
+  
       .addCase(fetchAllProductsInVirtualGarden.pending, (state) => {
         state.loading = true;
       })

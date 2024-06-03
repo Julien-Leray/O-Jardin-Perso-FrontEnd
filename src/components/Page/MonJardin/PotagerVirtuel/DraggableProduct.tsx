@@ -1,10 +1,6 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { Product } from '../../../../@types/types';
-
-const ItemTypes = {
-  PRODUCT: 'product',
-};
+import { ItemTypes, Product } from '../../../../@types/types';
 
 interface DraggableProductProps {
   product: Product;
@@ -26,6 +22,11 @@ function DraggableProduct({ product }: DraggableProductProps) {
         isDragging ? 'opacity-50' : ''
       }`}
     >
+      <img
+        src={`${import.meta.env.VITE_API_URL}${product.picture}`}
+        alt={product.name}
+        className="w-12 h-12"
+      />
       {product.name}
     </div>
   );

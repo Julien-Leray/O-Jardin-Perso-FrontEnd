@@ -5,7 +5,6 @@ import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
 import {
   updateProductPosition,
-  fetchProducts,
   fetchAllProductsInVirtualGarden,
   fetchMatchingProducts,
 } from '../../../../store/thunks/virtualGardenThunks';
@@ -13,7 +12,7 @@ import {
   addToGarden,
   addToVirtualGarden,
 } from '../../../../store/reducers/virtualGardenReducer';
-import { Product } from '../../../../types/types';
+import { Product } from '../../../../@types/types';
 import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
 
 function PotagerVirtuel() {
@@ -27,33 +26,30 @@ function PotagerVirtuel() {
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    dispatch(fetchProducts());
-    dispatch(fetchAllProductsInVirtualGarden());
-    dispatch(fetchMatchingProducts());
+    console.log('Fetching products and garden data...');
+    dispatch(fetchAllProductsInVirtualGarden()).then(() => {
+      dispatch(fetchMatchingProducts());
+    });
   }, [dispatch]);
 
   const handleDragStart = (product: Product) => {
     setDraggedProduct(product);
-    console.log('Dragged product:', product);
   };
 
-  const handleDrop = (position: string) => {
-    console.log(draggedProduct);
-    console.log('Drop position:', position);
+  const handleDrop = async (position: string) => {
     if (draggedProduct) {
-      console.log('Dropped product:', draggedProduct);
-      dispatch(
+      await dispatch(
         updateProductPosition({ product_id: draggedProduct.id, position })
       );
-      dispatch(
+      await dispatch(
         addToVirtualGarden({
           product_id: draggedProduct.id,
           position,
           quantity: 1,
         })
       );
-      dispatch(fetchAllProductsInVirtualGarden());
-      dispatch(fetchMatchingProducts());
+      await dispatch(fetchAllProductsInVirtualGarden());
+      await dispatch(fetchMatchingProducts());
       setDraggedProduct(null);
     } else {
       console.log('No product is being dragged.');
@@ -85,14 +81,14 @@ function PotagerVirtuel() {
 
         cols.push(
           <div
-            key={position}
+            key={`${row}-${col}`}
             onDrop={() => handleDrop(position)}
             onDragOver={(e) => e.preventDefault()}
             className="border border-gray-500 w-16 h-16 flex items-center justify-center"
           >
             {product && (
               <img
-                src={`http://localhost:4000/${product.picture}`}
+                src={`${import.meta.env.VITE_API_URL}${product.picture}`}
                 alt={product.name}
                 draggable
                 onDragStart={() => handleDragStart(product)}
