@@ -3,25 +3,20 @@ import { User, Lock, XCircle, Info } from 'react-feather';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from './ConnexionInput';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import userAction from '../../../store/thunks/userThunk';
 
 interface LoginFormProps {
   logged: boolean;
   email: string;
   password: string;
   changeField: (value: string, name: 'email' | 'password') => void;
-  handleLogin: () => void;
 }
 
-function Connexion({
-  logged,
-  email,
-  password,
-  changeField,
-  handleLogin,
-}: LoginFormProps) {
+function Connexion({ logged, email, password, changeField }: LoginFormProps) {
   const handleChangeField = (name: 'email' | 'password') => (value: string) => {
     changeField(value, name);
   };
+  const dispatch = useAppDispatch();
 
   const loginError = useAppSelector((state) => state.user.error);
 
@@ -29,14 +24,15 @@ function Connexion({
   const goBack = () => {
     navigate(-1); // Navigue à l'emplacement précédent
   };
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleLogin();
+    dispatch(userAction.actionCheckLogin());
   };
-
   if (logged) {
     navigate('/mon_jardin');
   }
+
   return (
     <div className="flex flex-col justify-center rounded-lg items-center">
       <button type="button" className="self-end pr-10" onClick={goBack}>

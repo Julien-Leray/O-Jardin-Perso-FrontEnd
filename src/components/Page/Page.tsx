@@ -120,8 +120,6 @@ function Page() {
           element={
             <Connexion
               logged={logged}
-              email={emailFormState}
-              password={passFromState}
               changeField={(value, name) => {
                 dispatch(
                   actionChangeCredential({
@@ -129,9 +127,6 @@ function Page() {
                     value,
                   })
                 );
-              }}
-              handleLogin={() => {
-                dispatch(userAction.actionCheckLogin());
               }}
             />
           }
