@@ -114,7 +114,7 @@ function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
       </button>
       <div className="w-5/6 md:w-3/5 shadow-3xl ">
         <div className="text-center font-bold text-3xl mb-2">
-          Mdifier mes coordonnées
+          Modifier mes coordonnées
         </div>
 
         <form className="p-8 md:p-8" autoComplete="off" onSubmit={handleSubmit}>

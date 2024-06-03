@@ -33,13 +33,6 @@ function Page() {
 
   const logged = useAppSelector((state) => state.user.logged);
 
-  const emailFormState = useAppSelector(
-    (state) => state.user.credentials.email
-  );
-  const passFromState = useAppSelector(
-    (state) => state.user.credentials.password
-  );
-
   const { tutorials } = useAppSelector((state) => state.tutoriels);
   const allProducts = useAppSelector((state) => state.products.allProducts);
   const allFavProducts = useAppSelector((state) => state.myGarden.favProducts);
@@ -74,7 +67,6 @@ function Page() {
               legumes={sortedProducts.legumes}
               fruits={sortedProducts.fruits}
               logged={logged}
-              allFavProducts={allFavProducts}
             />
           }
         />
@@ -115,22 +107,7 @@ function Page() {
           path="/tutos/:title"
           element={<TutorielDetail tutorials={tutorials} />}
         />
-        <Route
-          path="/connexion"
-          element={
-            <Connexion
-              logged={logged}
-              changeField={(value, name) => {
-                dispatch(
-                  actionChangeCredential({
-                    name,
-                    value,
-                  })
-                );
-              }}
-            />
-          }
-        />
+        <Route path="/connexion" element={<Connexion logged={logged} />} />
         <Route
           path="/inscription"
           element={

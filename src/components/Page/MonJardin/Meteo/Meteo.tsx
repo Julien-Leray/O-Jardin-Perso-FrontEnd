@@ -38,9 +38,7 @@ function MaMeteo({ userData, logged }: MeteoProps) {
           </div>
         </div>
       ) : (
-        <p>
-          Veuillez renseigner un code postal pour afficher vos données météo !
-        </p>
+        <p>Veuillez renseigner une ville pour afficher vos données météo !</p>
       )}
     </div>
   );

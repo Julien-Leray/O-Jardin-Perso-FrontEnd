@@ -6,16 +6,17 @@ import {
 } from '../../../store/thunks/favoritesThunks';
 import { Product } from '../../../@types/types';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import fetchAllProducts from '../../../store/thunks/productThunks';
 
 interface BtnFavorisProps {
   allFavProducts: Product[];
   product: Product;
   logged: boolean;
+  
 }
 
 function BtnFavoris({ logged, product, allFavProducts }: BtnFavorisProps) {
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector((state) => state.products);
 
   const [isFav, setIsFav] = useState(false);
 
