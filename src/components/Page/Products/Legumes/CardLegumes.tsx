@@ -12,10 +12,13 @@ interface CardLegumesProps {
 }
 
 function CardLegumes({ logged, legume, allFavProducts }: CardLegumesProps) {
-  const { loading, error } = useAppSelector((state) => state.products);
+  const { error } = useAppSelector((state) => state.products);
 
   return (
-    <li key={`fruits${legume.id}`} className="w-5/6 md:w-1/3 p-4 mx-auto">
+    <li
+      key={`fruits${legume.id}`}
+      className="mx-auto md:mx-0 w-5/6 md:w-1/3 p-4 mx-auto"
+    >
       <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200">
         <Link to={`/fruits/${slugify(legume.name)}`}>
           <img

@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Input from './ConnexionInput';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 
-
 interface LoginFormProps {
   logged: boolean;
   email: string;
@@ -25,7 +24,6 @@ function Connexion({
   };
 
   const loginError = useAppSelector((state) => state.user.error);
-  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const goBack = () => {

@@ -40,18 +40,6 @@ const myGardenReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.payload as string;
     });
-
-  // .addCase(fetchAddProductToFav.fulfilled, (state, action) => {
-  //   state.favProducts = state.favProducts.map((product) =>
-  //     product.id === action.payload ? { ...product, isFav: true } : product
-  //   );
-  //   console.log(state.favProducts);
-  // })
-  // .addCase(fetchDeleteFav.fulfilled, (state, action) => {
-  //   state.favProducts.filter((product) =>
-  //     product.id !== action.payload ? { ...product, isFav: false } : product
-  //   );
-  // });
 });
 
 export default myGardenReducer;

@@ -1,25 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Search } from 'react-feather';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import fetchAllProducts from '../../store/thunks/productThunks';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux';
+import slugify from '../../utils/utils';
 
 function SearchBar() {
   const refSubmitSearchbar = useRef<null | HTMLFormElement>(null);
   const refInputSearchbar = useRef<null | HTMLInputElement>(null);
   const refListeSearchbar = useRef<null | HTMLDivElement>(null);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchAllProducts());
-  // }, []);
 
   const [inputValue, setInputValue] = useState('');
   const [isFilterVisible, setIsFilterVisible] = useState(true);
 
   const products = useAppSelector((state) => state.products.allProducts);
 
-  const handleBlur = () => {
+  const handleClicOut = () => {
     setTimeout(() => {
       if (
         refInputSearchbar.current &&
@@ -72,7 +68,7 @@ function SearchBar() {
             className="bg-white text-gray-900 text-sm rounded-full focus:ring-[#F6D50E] block w-full ps-10 py-4"
             placeholder="Rechercher un fruit ou un légume..."
             value={inputValue}
-            onBlur={handleBlur}
+            onBlur={handleClicOut}
             onFocus={() => {
               setIsFilterVisible(true);
             }}
@@ -93,14 +89,21 @@ function SearchBar() {
         ref={refListeSearchbar}
       >
         {isFilterVisible && (
-          <ul className="mt-1 bg-white z-10 divide-y divide-[#F6D50E]">
+          <ul className="mt-1 bg-white z-10 divide-y divide-[#F6D50E] flex flex-col ">
             {inputValue &&
               filteredProducts.map((product) => (
-                <Link
-                  to={`/${product.category_id === 1 ? 'fruits' : 'legumes'}/${
-                    product.id
-                  }`}
+                <button
                   key={product.id}
+                  type="button"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigate(
+                      `/${
+                        product.category_id === 1 ? 'fruits' : 'legumes'
+                      }/${slugify(product.name)}`
+                    );
+                    setInputValue('');
+                  }}
                 >
                   <li
                     className="hover:bg-[#F5780A] text-black hover:text-white py-2 px-4 flex w-full "
@@ -108,7 +111,8 @@ function SearchBar() {
                   >
                     {product.name}
                   </li>
-                </Link>
+                </button>
+                // </Link>
               ))}
           </ul>
         )}
