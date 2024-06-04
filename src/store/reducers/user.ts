@@ -14,6 +14,7 @@ interface UserState {
     password: string;
   };
   user: User;
+  emailExist: Boolean;
 }
 
 export const initialState: UserState = {
@@ -25,6 +26,7 @@ export const initialState: UserState = {
     password: '',
   },
   user: {} as User,
+  emailExist: false,
 };
 
 export const actionChangeCredential = createAction<{
@@ -38,19 +40,6 @@ export const actionLogIn = createAction<{
   token: string;
 }>('user/LOGIN');
 
-export const actionNewUser = createAction<{
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  address: string;
-  zip_code: string;
-  city: string;
-}>('user/NEW_USER');
-
-export const actionVerifyEmailExist = createAction<string>(
-  'user/VERIFY_EMAIL_EXIST'
-);
 
 const userReducer = createReducer(initialState, (builder) => {
   builder
@@ -73,23 +62,25 @@ const userReducer = createReducer(initialState, (builder) => {
       state.token = action.payload.token;
     })
     .addCase(userActions.actionNewUser.fulfilled, (state, action) => {
-      state.user.firstname = action.payload.firstname;
-      state.user.lastname = action.payload.lastname;
-      state.user.address = action.payload.address;
-      state.user.zip_code = action.payload.zip_code;
-      state.user.city = action.payload.city;
-      state.user.email = action.payload.email;
-      state.user.password = action.payload.password;
+      state.user= action.payload;
       state.error = null;
     })
     .addCase(userActions.actionNewUser.rejected, (state, action) => {
       state.error = (action.payload as string) || 'Erreur de connexion';
     })
     .addCase(userActions.actionVerifyEmailExist.fulfilled, (state, action) => {
+      console.log(action.payload);
       state.error = null;
     })
     .addCase(userActions.actionVerifyEmailExist.rejected, (state, action) => {
       state.error = 'Email déjà utilisé';
+    })
+    .addCase(userActions.actionUpdateUser.fulfilled, (state, action) => {
+      state.user= action.payload;
+      state.error = null;
+    })
+    .addCase(userActions.actionUpdateUser.rejected, (state, action) => {
+      state.error = 'Erreur lors de la mise à jour de l\'utilisateur';
     });
 });
 

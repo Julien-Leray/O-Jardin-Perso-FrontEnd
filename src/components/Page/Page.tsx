@@ -1,9 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { boolean } from 'joi';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import userAction from '../../store/thunks/userThunk';
 
 import Home from './Home/Home';
 import Fruits from './Products/Fruits/ListeFruits';
@@ -33,6 +31,18 @@ function Page() {
 
   const logged = useAppSelector((state) => state.user.logged);
 
+<<<<<<< HEAD
+  const emailFormState = useAppSelector(
+    (state) => state.user.credentials.email
+  );
+  const passFromState = useAppSelector(
+    (state) => state.user.credentials.password
+  );
+
+
+
+=======
+>>>>>>> dev
   const { tutorials } = useAppSelector((state) => state.tutoriels);
   const allProducts = useAppSelector((state) => state.products.allProducts);
   const allFavProducts = useAppSelector((state) => state.myGarden.favProducts);
@@ -110,16 +120,7 @@ function Page() {
         <Route path="/connexion" element={<Connexion logged={logged} />} />
         <Route
           path="/inscription"
-          element={
-            <Inscription
-              handleVerifyEmail={(email) =>
-                dispatch(userAction.actionVerifyEmailExist(email))
-              }
-              handleSignup={(newUser) =>
-                dispatch(userAction.actionNewUser(newUser))
-              }
-            />
-          }
+          element={<Inscription/>}
         />
         <Route
           path="/mon_jardin"
@@ -136,16 +137,7 @@ function Page() {
         />
         <Route
           path="/gestion_profil"
-          element={
-            <Modification
-              handleVerifyEmail={(email) =>
-                dispatch(userAction.actionVerifyEmailExist(email))
-              }
-              handleSignup={(newUser) =>
-                dispatch(userAction.actionNewUser(newUser))
-              }
-            />
-          }
+          element={<Modification/>}
         />
         <Route path="/gestion_profil/alertes" element={<GestionAlertes />} />
         <Route path="/mentions_legales" element={<MentionsLegales />} />

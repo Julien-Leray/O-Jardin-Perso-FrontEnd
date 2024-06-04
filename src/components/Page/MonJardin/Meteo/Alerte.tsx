@@ -6,7 +6,6 @@ interface AlerteProps{
     hot:boolean;
 
 }
-
 function Alerte ({rain,hot}:AlerteProps){
 
         return(
