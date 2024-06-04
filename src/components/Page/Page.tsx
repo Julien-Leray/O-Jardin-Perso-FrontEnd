@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-
+import { useAppSelector } from '../../hooks/redux';
 import Home from './Home/Home';
 import Fruits from './Products/Fruits/ListeFruits';
 import Connexion from './ConnexionUser/Connexion';
@@ -20,7 +20,6 @@ import Contact from './Contact/Contact';
 import { Product } from '../../@types/types';
 import Modification from './ModificationUser/Modification';
 import PageNotFound from '../PageNotFound/PageNotFound';
-import { useAppSelector } from '../../hooks/redux';
 
 function Page() {
   const logged = useAppSelector((state) => state.user.logged);
