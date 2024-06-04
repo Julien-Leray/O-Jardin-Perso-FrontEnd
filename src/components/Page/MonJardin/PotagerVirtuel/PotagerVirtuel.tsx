@@ -21,11 +21,9 @@ function PotagerVirtuel() {
   const garden = useAppSelector((state) => state.virtualGarden.garden);
   const favProducts = useAppSelector((state) => state.myGarden.favProducts);
   const productsToDisplay = garden.concat(favProducts);
-  console.log('productsToDisplay', productsToDisplay);
   const matchingProducts = useAppSelector(
     (state) => state.virtualGarden.matchingProducts
   );
-  const favorites = useAppSelector((state) => state.myGarden.favProducts);
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -33,15 +31,6 @@ function PotagerVirtuel() {
       dispatch(fetchMatchingProducts());
     });
   }, [dispatch]);
-
-  useEffect(() => {
-    const favoriteIds = new Set(garden.map((product) => product.id));
-    favorites.forEach((product) => {
-      if (!favoriteIds.has(product.id)) {
-        dispatch(addToGarden({ ...product, position: '' }));
-      }
-    });
-  }, [favorites, garden, dispatch]);
 
   const handleDragStart = (product: Product) => {
     setDraggedProduct(product);
