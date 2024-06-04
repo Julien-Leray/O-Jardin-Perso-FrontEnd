@@ -8,6 +8,7 @@ import fetchUserData from '../../../store/thunks/myGardenThunks';
 import { Tab, Tabs } from './Tabs';
 import PotagerVirtuel from './PotagerVirtuel/PotagerVirtuel';
 import Loader from '../../Loader/Loader';
+import Alerte from './Meteo/Alerte';
 
 interface MonJardinProps {
   logged: boolean;
@@ -23,8 +24,12 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
   }, []);
 
   const { userData } = useAppSelector((state) => state.myGarden);
+  const meteo = useAppSelector((state) => state.meteo);
   const loading = useAppSelector((state) => state.myGarden.loading);
   const error = useAppSelector((state) => state.myGarden.error);
+
+  const rain= meteo.weatherForecast.some((forecast) => forecast.rain);
+  const hot = meteo.weatherForecast.some((forecast) => forecast.temp > 30);
 
   if (error) {
     return <div>{error}</div>;
@@ -47,6 +52,7 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
                   <h2 className="font-bold text-white text-center	">
                     Mes alertes
                   </h2>
+                  <Alerte rain={rain} hot={hot} />
                   {/* <p>{dateOfDay} </p> */}
                 </div>
 

@@ -12,6 +12,7 @@ function MaMeteo({ userData, logged }: MeteoProps) {
 
   const meteo = useAppSelector((state) => state.meteo);
   const cityName = userData.city;
+console.log(meteo)
 
   useEffect(() => {
     if (cityName) {

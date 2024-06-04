@@ -6,6 +6,8 @@ import 'dayjs/locale/fr';
 const fetchMeteo = createAsyncThunk('FETCH_METEO', async (cityName: string) => {
   const response = await axios.get(
     `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=218f32cd39f9bdde590c689d89e8d6e4`
+        // `http://api.openweathermap.org/geo/1.0/zip?zip=${zipCode}&appid=218f32cd39f9bdde590c689d89e8d6e4`
+    // `http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode}&appid=218f32cd39f9bdde590c689d89e8d6e4`
   );
 
   // day's date
@@ -45,6 +47,7 @@ const fetchMeteo = createAsyncThunk('FETCH_METEO', async (cityName: string) => {
     ? [forecastForToday, ...forecastsForFourDays]
     : forecastsForFourDays;
 
+  
   return {
     name: response.data.city.name,
     weatherForecast: forecasts.map((weatherForecast: any) => ({
@@ -52,6 +55,8 @@ const fetchMeteo = createAsyncThunk('FETCH_METEO', async (cityName: string) => {
       date: dayjs(weatherForecast.dt_txt).locale('fr').format('dddd DD MMMM'),
       temp: Math.round(weatherForecast.main.temp),
       icon: weatherForecast.weather[0].icon,
+      rain: weatherForecast.weather[0].main.toLowerCase() === 'rain',
+      hot: Math.round(weatherForecast.main.temp) > 30,
     })),
   };
 });
