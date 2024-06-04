@@ -21,21 +21,23 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
 
   useEffect(() => {
     dispatch(fetchUserData());
-  }, []);
+  }, [dispatch]);
 
   const { userData } = useAppSelector((state) => state.myGarden);
-  const meteo = useAppSelector((state) => state.meteo);
-  const loading = useAppSelector((state) => state.myGarden.loading);
-  const error = useAppSelector((state) => state.myGarden.error);
+  const { weatherForecast } = useAppSelector((state) => state.meteo);
+  const { loading, error } = useAppSelector((state) => state.myGarden);
 
-  const rain= meteo.weatherForecast.some((forecast) => forecast.rain);
-  const hot = meteo.weatherForecast.some((forecast) => forecast.temp > 30);
+  const rain = weatherForecast.some((forecast) => forecast.rain);
+  const hot = weatherForecast.some((forecast) => forecast.temp > 30);
+  const thunderstorm = weatherForecast.some((forecast) => forecast.thunderstorm);
 
   if (error) {
     return <div>{error}</div>;
   }
+
   if (!logged) {
     navigate('/');
+    return null;
   }
 
   return (
@@ -47,13 +49,10 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
             <div className="w-full p-4">
               <h1>Bienvenue {userData.firstname} !</h1>
 
-              <div className="flex flex-col md:flex-row md:justify-between rounded-lg  gap-6 -m-4 my-4 py-4 px-4">
+              <div className="flex flex-col md:flex-row md:justify-between rounded-lg gap-6 -m-4 my-4 py-4 px-4">
                 <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-1/4 bg-[#16A1AF]">
-                  <h2 className="font-bold text-white text-center	">
-                    Mes alertes
-                  </h2>
-                  <Alerte rain={rain} hot={hot} />
-                  {/* <p>{dateOfDay} </p> */}
+                  <h2 className="font-bold text-white text-center">Mes alertes</h2>
+                  <Alerte rain={rain} hot={hot} thunderstorm={thunderstorm} />
                 </div>
 
                 <MaMeteo userData={userData} logged={logged} />

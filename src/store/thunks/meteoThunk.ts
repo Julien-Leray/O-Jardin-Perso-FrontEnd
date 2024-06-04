@@ -3,14 +3,18 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 
-const fetchMeteo = createAsyncThunk('FETCH_METEO', async (cityName: string) => {
-  const response = await axios.get(
-    `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=218f32cd39f9bdde590c689d89e8d6e4`
-        // `http://api.openweathermap.org/geo/1.0/zip?zip=${zipCode}&appid=218f32cd39f9bdde590c689d89e8d6e4`
-    // `http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode}&appid=218f32cd39f9bdde590c689d89e8d6e4`
-  );
+const fetchMeteo = createAsyncThunk('FETCH_METEO', async ({ zipCode, cityName }: { zipCode?: string, cityName?: string }) => {
+  let url = '';
+  if (zipCode) {
+    url = `http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},fr&units=metric&appid=218f32cd39f9bdde590c689d89e8d6e4`;
+  } else if (cityName) {
+    url = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=218f32cd39f9bdde590c689d89e8d6e4`;
+  } else {
+    throw new Error('Veuillez fournir un code postal ou un nom de ville pour obtenir les prévisions météorologiques.');
+  }
 
-  // day's date
+  const response = await axios.get(url);
+
   const currentMoment = dayjs();
 
   const weatherDay = response.data.list.filter((weatherForecast: any) => {
@@ -47,7 +51,6 @@ const fetchMeteo = createAsyncThunk('FETCH_METEO', async (cityName: string) => {
     ? [forecastForToday, ...forecastsForFourDays]
     : forecastsForFourDays;
 
-  
   return {
     name: response.data.city.name,
     weatherForecast: forecasts.map((weatherForecast: any) => ({
@@ -60,4 +63,5 @@ const fetchMeteo = createAsyncThunk('FETCH_METEO', async (cityName: string) => {
     })),
   };
 });
+
 export default fetchMeteo;

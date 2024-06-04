@@ -7,24 +7,32 @@ interface MeteoProps {
   userData: User;
   logged: boolean;
 }
+
 function MaMeteo({ userData, logged }: MeteoProps) {
   const dispatch = useAppDispatch();
-
   const meteo = useAppSelector((state) => state.meteo);
-  const cityName = userData.city;
-console.log(meteo)
+  const { zip_code, city } = userData;
+
+  const location: { zipCode?: string; cityName?: string } = {};
+  if (zip_code) {
+    location.zipCode = zip_code;
+  } else if (city) {
+    location.cityName = city;
+  }
 
   useEffect(() => {
-    if (cityName) {
-      dispatch(fetchMeteo(cityName));
+    if (location.zipCode || location.cityName) {
+      dispatch(fetchMeteo(location));
     }
-  }, [dispatch, cityName]);
+  }, [dispatch, location]);
+
+
 
   return (
     <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-3/4 bg-gray-200">
       {meteo && meteo.name ? (
-        <div className=" ">
-          <h2 className="font-bold text-center	">Météo à {meteo.name}</h2>
+        <div>
+          <h2 className="font-bold text-center">Météo à {meteo.name}</h2>
           <div className="flex flex-wrap justify-around">
             {meteo.weatherForecast.map((dailyWeather) => (
               <div key={dailyWeather.date}>
@@ -39,7 +47,7 @@ console.log(meteo)
           </div>
         </div>
       ) : (
-        <p>Veuillez renseigner une ville pour afficher vos données météo !</p>
+        <p>Veuillez renseigner un code postal ou une ville pour afficher les prévisions météorologiques !</p>
       )}
     </div>
   );

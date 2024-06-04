@@ -31,7 +31,6 @@ function Page() {
 
   const logged = useAppSelector((state) => state.user.logged);
 
-<<<<<<< HEAD
   const emailFormState = useAppSelector(
     (state) => state.user.credentials.email
   );
@@ -40,9 +39,6 @@ function Page() {
   );
 
 
-
-=======
->>>>>>> dev
   const { tutorials } = useAppSelector((state) => state.tutoriels);
   const allProducts = useAppSelector((state) => state.products.allProducts);
   const allFavProducts = useAppSelector((state) => state.myGarden.favProducts);
