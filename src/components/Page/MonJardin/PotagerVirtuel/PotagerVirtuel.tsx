@@ -22,6 +22,7 @@ function PotagerVirtuel() {
   const matchingProducts = useAppSelector(
     (state) => state.virtualGarden.matchingProducts
   );
+  const favorites = useAppSelector((state) => state.myGarden.favProducts);
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -29,6 +30,15 @@ function PotagerVirtuel() {
       dispatch(fetchMatchingProducts());
     });
   }, [dispatch]);
+
+  useEffect(() => {
+    const favoriteIds = new Set(garden.map((product) => product.id));
+    favorites.forEach((product) => {
+      if (!favoriteIds.has(product.id)) {
+        dispatch(addToGarden({ ...product, position: '' }));
+      }
+    });
+  }, [favorites, garden, dispatch]);
 
   const handleDragStart = (product: Product) => {
     setDraggedProduct(product);
@@ -49,13 +59,14 @@ function PotagerVirtuel() {
       await dispatch(fetchAllProductsInVirtualGarden());
       await dispatch(fetchMatchingProducts());
       setDraggedProduct(null);
-    } else {
-      console.log('No product is being dragged.');
     }
   };
 
   const handleAddToGarden = (product: Product) => {
-    dispatch(addToGarden({ ...product, position: '' }));
+    const productExists = garden.some((p) => p.id === product.id);
+    if (!productExists) {
+      dispatch(addToGarden({ ...product, position: '' }));
+    }
   };
 
   const handleRemoveFromGarden = async (product_id: number) => {
@@ -106,6 +117,7 @@ function PotagerVirtuel() {
                   className="w-16 h-16"
                 />
                 <button
+                  type="button"
                   onClick={() => handleRemoveFromGarden(product.id)}
                   className="absolute top-0 right-0 bg-blue-500 text-white p-1 rounded-full"
                 >
@@ -157,7 +169,7 @@ function PotagerVirtuel() {
         <h2 className="text-center text-xl font-bold mb-4">Mon Jardin</h2>
         <ul className="flex flex-wrap justify-center">
           {garden.map((product) => (
-            <li key={product.id} className="w-1/4 p-2">
+            <li key={`garden-${product.id}`} className="w-1/4 p-2">
               <div className="border p-4 rounded bg-white shadow">
                 <img
                   src={`${import.meta.env.VITE_API_URL}${product.picture}`}
