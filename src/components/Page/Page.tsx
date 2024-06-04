@@ -27,22 +27,9 @@ import Modification from './ModificationUser/Modification';
 
 function Page() {
   const location = useLocation();
-  const dispatch = useAppDispatch();
 
   const logged = useAppSelector((state) => state.user.logged);
 
-<<<<<<< HEAD
-  const emailFormState = useAppSelector(
-    (state) => state.user.credentials.email
-  );
-  const passFromState = useAppSelector(
-    (state) => state.user.credentials.password
-  );
-
-
-
-=======
->>>>>>> dev
   const { tutorials } = useAppSelector((state) => state.tutoriels);
   const allProducts = useAppSelector((state) => state.products.allProducts);
   const allFavProducts = useAppSelector((state) => state.myGarden.favProducts);
@@ -118,10 +105,7 @@ function Page() {
           element={<TutorielDetail tutorials={tutorials} />}
         />
         <Route path="/connexion" element={<Connexion logged={logged} />} />
-        <Route
-          path="/inscription"
-          element={<Inscription/>}
-        />
+        <Route path="/inscription" element={<Inscription />} />
         <Route
           path="/mon_jardin"
           element={
@@ -135,10 +119,7 @@ function Page() {
           path="/mon_jardin/potager-virtuel"
           element={<PotagerVirtuel />}
         />
-        <Route
-          path="/gestion_profil"
-          element={<Modification/>}
-        />
+        <Route path="/gestion_profil" element={<Modification />} />
         <Route path="/gestion_profil/alertes" element={<GestionAlertes />} />
         <Route path="/mentions_legales" element={<MentionsLegales />} />
         <Route path="/confidentialite" element={<PolitiqueConfidentialite />} />
