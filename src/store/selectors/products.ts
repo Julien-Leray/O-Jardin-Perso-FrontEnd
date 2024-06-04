@@ -3,7 +3,7 @@ import slugify from '../../utils/utils';
 
 export default function findProduct(
   products: Product[],
-  searchedProduct: string
+  searchedProduct: string | undefined
 ) {
   const foundProduct = products.find((product) => {
     return slugify(product.name) === searchedProduct;

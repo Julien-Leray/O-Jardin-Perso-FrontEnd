@@ -12,7 +12,7 @@ function Header() {
 
   return (
     <header className="relative mb-6 md:mb-2">
-      <ConnexionDesktop isOpen={isOpen} setIsOpen={setIsOpen} />
+      <ConnexionDesktop setIsOpen={setIsOpen} />
       <div className="md:hidden absolute w-full">
         <button
           className="rounded-full w-5/6"
@@ -47,7 +47,7 @@ function Header() {
       </NavLink>
 
       {isOpen ? <MenuBurger isOpen={isOpen} setIsOpen={setIsOpen} /> : ''}
-      <MenuNav isOpen={isOpen} setIsOpen={setIsOpen} />
+      <MenuNav setIsOpen={setIsOpen} />
     </header>
   );
 }
