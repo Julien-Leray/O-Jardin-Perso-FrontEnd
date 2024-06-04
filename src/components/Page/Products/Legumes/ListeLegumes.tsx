@@ -1,5 +1,6 @@
 import { Product } from '../../../../@types/types';
 import { useAppSelector } from '../../../../hooks/redux';
+import ErrorNotif from '../../../ErrorNotif/ErrorNotif';
 import CardLegumes from './CardLegumes';
 
 interface LegumesProps {
@@ -10,6 +11,7 @@ interface LegumesProps {
 
 function Legumes({ logged, legumes, allFavProducts }: LegumesProps) {
   const { error } = useAppSelector((state) => state.products);
+  if (error) return <ErrorNotif error={error} />;
 
   return (
     <div className="flex mx-auto flex-col my-6">

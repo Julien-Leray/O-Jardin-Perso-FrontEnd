@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Product, Tutorial } from '../../../@types/types';
 import slugify from '../../../utils/utils';
+import ErrorNotif from '../../ErrorNotif/ErrorNotif';
+import { useAppSelector } from '../../../hooks/redux';
 
 interface HomeProps {
   tutorials: Tutorial[];
@@ -8,7 +10,7 @@ interface HomeProps {
   fruits: Product[];
   logged: boolean;
 }
-function Home({ tutorials, legumes, fruits, logged }: HomeProps) {
+function Home({ tutorials, legumes, fruits }: HomeProps) {
   const getRandomTutos = () => {
     if (tutorials.length <= 2) return tutorials;
     const twoTutoOnHome = [...tutorials].sort(() => 0.5 - Math.random());
@@ -30,11 +32,15 @@ function Home({ tutorials, legumes, fruits, logged }: HomeProps) {
   const randomLegumes = getRandomLegumes();
   const randomFruits = getRandomFruits();
 
+  const error = useAppSelector((state) => state.products.error);
+
   return (
     <div>
       <div className="bg-white text-center py-2 text-sm italic">
         <p>Bienvenue sur notre site web dédié au jardinage!</p>
       </div>
+      {error && <ErrorNotif error={error} />}
+
       <div className="flex flex-col md:flex-row gap-2 md:gap-6">
         <div className="w-full py-4">
           <h2 className="text-xl text-center font-bold p-2">Fruits </h2>

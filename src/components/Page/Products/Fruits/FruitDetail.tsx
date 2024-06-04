@@ -6,6 +6,8 @@ import slugify from '../../../../utils/utils';
 import BtnFavoris from '../BtnFavoris';
 import { Product } from '../../../../@types/types';
 import Loader from '../../../Loader/Loader';
+import ErrorNotif from '../../../ErrorNotif/ErrorNotif';
+import PageNotFound from '../../../PageNotFound/PageNotFound';
 
 export const months = [
   'Janvier',
@@ -35,13 +37,9 @@ function FruitDetail({ logged, allFavProducts }: FruitDetailProps) {
   );
 
   const { error } = useAppSelector((state) => state.products);
+  if (error) return <ErrorNotif error={error} />;
 
-  if (error)
-    return (
-      <div className="text-center text-red-600 text-lg">Erreur : {error}</div>
-    );
-  if (!fruit)
-    return <div className="text-center text-lg">Aucun fruit sélectionné.</div>;
+  if (!fruit) return <PageNotFound />;
 
   const imageUrl = `${import.meta.env.VITE_API_URL}/${fruit.picture}`;
 

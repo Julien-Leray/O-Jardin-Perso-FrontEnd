@@ -1,13 +1,9 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-
+import { Routes, Route } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux';
 import Home from './Home/Home';
 import Fruits from './Products/Fruits/ListeFruits';
 import Connexion from './ConnexionUser/Connexion';
 
-import SearchBar from '../SearchBar/SearchBar';
 import FruitDetail from './Products/Fruits/FruitDetail';
 import Legumes from './Products/Legumes/ListeLegumes';
 import LegumeDetail from './Products/Legumes/LegumeDetail';
@@ -21,13 +17,11 @@ import MentionsLegales from './MentionsLegales/MentionLegales';
 import PolitiqueConfidentialite from './PolitiqueConfidentialite/PolitiqueConfidentialite';
 import Contact from './Contact/Contact';
 
-import { actionChangeCredential } from '../../store/reducers/user';
 import { Product } from '../../@types/types';
 import Modification from './ModificationUser/Modification';
+import PageNotFound from '../PageNotFound/PageNotFound';
 
 function Page() {
-  const location = useLocation();
-
   const logged = useAppSelector((state) => state.user.logged);
 
   const { tutorials } = useAppSelector((state) => state.tutoriels);
@@ -50,12 +44,9 @@ function Page() {
 
   return (
     <div>
-      {location.pathname !== '/connexion' &&
-        location.pathname !== '/contact' &&
-        location.pathname !== '/gestion_profil' &&
-        location.pathname !== '/inscription' && <SearchBar />}
-
       <Routes>
+        <Route path="*" element={<PageNotFound />} />
+
         <Route
           path="/"
           element={
@@ -124,7 +115,6 @@ function Page() {
         <Route path="/mentions_legales" element={<MentionsLegales />} />
         <Route path="/confidentialite" element={<PolitiqueConfidentialite />} />
         <Route path="/contact" element={<Contact />} />
-        {/* <Route path="*" element={<Error />} /> */}
       </Routes>
     </div>
   );
