@@ -18,7 +18,7 @@ function BtnSupprFavoris({ product, allFavProducts }: BtnSupprFavorisProps) {
     <div>
       <button
         type="button"
-        className="mr-4 mt-4 text-white rounded-full bg-[#16A1AF]"
+        className="mr-2 mt-2 text-white rounded-full bg-[#16A1AF]"
         onClick={async (event) => {
           event.preventDefault();
           await dispatch(fetchDeleteFav(product.id));

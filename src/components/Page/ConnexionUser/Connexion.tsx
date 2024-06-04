@@ -4,23 +4,32 @@ import { Link, useNavigate } from 'react-router-dom';
 import Input from './ConnexionInput';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import userAction from '../../../store/thunks/userThunk';
+import { actionChangeCredential } from '../../../store/reducers/user';
 
 interface LoginFormProps {
   logged: boolean;
-  email: string;
-  password: string;
-  changeField: (value: string, name: 'email' | 'password') => void;
 }
 
-function Connexion({ logged, email, password, changeField }: LoginFormProps) {
+function Connexion({ logged }: LoginFormProps) {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const email = useAppSelector((state) => state.user.credentials.email);
+  const password = useAppSelector((state) => state.user.credentials.password);
+  const loginError = useAppSelector((state) => state.user.error);
+
+  const changeField = (value: string, name: 'email' | 'password') => {
+    dispatch(
+      actionChangeCredential({
+        name,
+        value,
+      })
+    );
+  };
+
   const handleChangeField = (name: 'email' | 'password') => (value: string) => {
     changeField(value, name);
   };
-  const dispatch = useAppDispatch();
 
-  const loginError = useAppSelector((state) => state.user.error);
-
-  const navigate = useNavigate();
   const goBack = () => {
     navigate(-1); // Navigue à l'emplacement précédent
   };

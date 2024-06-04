@@ -93,7 +93,7 @@ function SearchBar() {
             {inputValue &&
               filteredProducts.map((product) => (
                 <button
-                  key={product.id}
+                  key={`searchInput${product.id}`}
                   type="button"
                   onClick={(event) => {
                     event.preventDefault();
