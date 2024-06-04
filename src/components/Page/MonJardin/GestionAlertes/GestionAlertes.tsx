@@ -40,29 +40,28 @@ function GestionAlertes() {
   };
 
   return (
-    <div>
-      <h1>Gestion des Alertes</h1>
-      <br />
+    <div className="p-4">
       <div className="flex justify-between text-white">
         Météo :
         <button
+          type="button"
           onClick={() => changeForecastAlert()}
-          className="bg-white text-black p-1 rounded-full"
+          className="bg-white text-xs text-black p-1 rounded-full"
         >
           {forecast_alert}
         </button>
       </div>
       <br />
-      <div className="flex justify-between text-white">
+      <div className="flex justify-between text-white ">
         Arrosage :
         <button
+          type="button"
           onClick={() => changeWateringAlert()}
-          className="bg-white text-black p-1 rounded-full"
+          className="bg-white text-xs  text-black p-1 rounded-full"
         >
           {watering_alert}
         </button>
       </div>
-      <p>Configurez et gérez vos alertes pour le jardinage ici.</p>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 import Footer from '../Footer/Footer';
@@ -13,6 +13,7 @@ import fetchAllProducts from '../../store/thunks/productThunks';
 import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
 import Loader from '../Loader/Loader';
 import SearchBar from '../SearchBar/SearchBar';
+import { fetchUserData } from '../../store/thunks/myGardenThunks';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -69,4 +70,3 @@ export default App;
 function actionGetDataUser(): any {
   throw new Error('Function not implemented.');
 }
-
