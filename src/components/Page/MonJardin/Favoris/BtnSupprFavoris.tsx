@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { fetchDeleteFav } from '../../../../store/thunks/favoritesThunks';
 import { Product } from '../../../../@types/types';
 import { useAppDispatch } from '../../../../hooks/redux';
-import fetchUserData from '../../../../store/thunks/myGardenThunks';
+import {fetchUserData} from '../../../../store/thunks/myGardenThunks';
 
 interface BtnSupprFavorisProps {
   allFavProducts: Product[];

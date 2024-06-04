@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Settings, Tool } from 'react-feather';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import MaMeteo from './Meteo/Meteo';
 import MesFavoris from './Favoris/MesFavoris';
 import { Product } from '../../../@types/types';
-import fetchUserData from '../../../store/thunks/myGardenThunks';
+import { fetchUserData } from '../../../store/thunks/myGardenThunks';
 import { Tab, Tabs } from './Tabs';
 import PotagerVirtuel from './PotagerVirtuel/PotagerVirtuel';
 import Loader from '../../Loader/Loader';

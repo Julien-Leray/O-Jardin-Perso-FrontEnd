@@ -11,7 +11,6 @@ import { actionLogIn } from '../../store/reducers/user';
 import { addTokenToAxiosInstance } from '../../axios/axios';
 import fetchAllProducts from '../../store/thunks/productThunks';
 import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
-import actionGetDataUser from '../../store/thunks/myGardenThunks';
 import Loader from '../Loader/Loader';
 import SearchBar from '../SearchBar/SearchBar';
 
@@ -30,13 +29,14 @@ function App() {
     if (token) {
       dispatch(actionLogIn({ token }));
       addTokenToAxiosInstance(token);
-      dispatch(actionGetDataUser());
+      dispatch(fetchUserData());
     } else {
       // console.log('empty localstorage');
     }
   }, []);
 
   useEffect(() => {
+    dispatch(fetchUserData());
     dispatch(fetchAllProducts());
     dispatch(fetchAllTutorials());
   }, []);
@@ -66,3 +66,7 @@ function App() {
 }
 
 export default App;
+function actionGetDataUser(): any {
+  throw new Error('Function not implemented.');
+}
+
