@@ -1,11 +1,6 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { Product, User } from '../../@types/types';
-import actionGetDataUser from '../thunks/myGardenThunks';
-import {
-  fetchAddProductToFav,
-  fetchDeleteFav,
-} from '../thunks/favoritesThunks';
-import fetchUserData from '../thunks/myGardenThunks';
+import {fetchUserData, updateAlert} from '../thunks/myGardenThunks';
 
 interface MyGardenState {
   loading: boolean;
@@ -24,6 +19,7 @@ const initialState: MyGardenState = {
 export const actionAddProductToFav = createAction<number>('fav/ADD_FAV');
 export const actionFetchDeleteFav = createAction<number>('fav/DELETE_FAV');
 
+
 const myGardenReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(fetchUserData.pending, (state) => {
@@ -39,7 +35,18 @@ const myGardenReducer = createReducer(initialState, (builder) => {
     .addCase(fetchUserData.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
+    })
+    .addCase(updateAlert.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(updateAlert.fulfilled, (state, action) => {
+      state.userData.forecast_alert = action.payload.userData.forecast_alert;
+      state.userData.watering_alert = action.payload.userData.watering_alert;
+      state.loading = false;
+      state.error = null;
     });
+
 });
 
 export default myGardenReducer;

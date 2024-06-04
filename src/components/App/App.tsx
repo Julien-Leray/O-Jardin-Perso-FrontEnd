@@ -10,7 +10,7 @@ import { actionLogIn } from '../../store/reducers/user';
 import { addTokenToAxiosInstance } from '../../axios/axios';
 import fetchAllProducts from '../../store/thunks/productThunks';
 import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
-import actionGetDataUser from '../../store/thunks/myGardenThunks';
+import {fetchUserData} from '../../store/thunks/myGardenThunks';
 import Loader from '../Loader/Loader';
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    dispatch(actionGetDataUser());
+    dispatch(fetchUserData());
     dispatch(fetchAllProducts());
     dispatch(fetchAllTutorials());
   }, []);
