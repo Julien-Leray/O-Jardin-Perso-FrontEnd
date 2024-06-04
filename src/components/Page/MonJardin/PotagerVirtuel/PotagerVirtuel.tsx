@@ -1,8 +1,4 @@
-// src/components/Page/MonJardin/PotagerVirtuel/PotagerVirtuel.tsx
-
 import React, { useState, useEffect } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
 import {
@@ -68,6 +64,10 @@ function PotagerVirtuel() {
     await dispatch(fetchMatchingProducts());
   };
 
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
   const renderGrid = () => {
     const rows = [];
     for (let row = 0; row < vertical; row += 1) {
@@ -91,16 +91,18 @@ function PotagerVirtuel() {
           <div
             key={`${row}-${col}`}
             onDrop={() => handleDrop(position)}
-            onDragOver={(e) => e.preventDefault()}
+            onDragOver={handleDragOver}
             className="border border-gray-300 w-24 h-24 flex items-center justify-center bg-green-100"
           >
             {product && (
-              <div className="relative flex flex-col items-center">
+              <div
+                className="relative flex flex-col items-center"
+                draggable
+                onDragStart={() => handleDragStart(product)}
+              >
                 <img
                   src={`${import.meta.env.VITE_API_URL}${product.picture}`}
                   alt={product.name}
-                  draggable
-                  onDragStart={() => handleDragStart(product)}
                   className="w-16 h-16"
                 />
                 <button
@@ -124,59 +126,55 @@ function PotagerVirtuel() {
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        <div className="p-4 bg-white shadow-xl rounded-lg text-center">
-          <h1 className="text-2xl font-bold mb-4">Potager Virtuel</h1>
-          <p className="mb-4">Planifiez et visualisez votre potager virtuel.</p>
-          <div className="flex justify-center mb-4">
-            <label className="mr-4">
-              Horizontal:
-              <input
-                type="number"
-                value={horizontal}
-                onChange={(e) =>
-                  dispatch(setHorizontal(Number(e.target.value)))
-                }
-                className="ml-2 border rounded px-2 py-1 w-16 text-center"
-              />
-            </label>
-            <label>
-              Vertical:
-              <input
-                type="number"
-                value={vertical}
-                onChange={(e) => dispatch(setVertical(Number(e.target.value)))}
-                className="ml-2 border rounded px-2 py-1 w-16 text-center"
-              />
-            </label>
-          </div>
-          <div className="grid gap-1">{renderGrid()}</div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="p-4 bg-white shadow-xl rounded-lg text-center">
+        <h1 className="text-2xl font-bold mb-4">Potager Virtuel</h1>
+        <p className="mb-4">Planifiez et visualisez votre potager virtuel.</p>
+        <div className="flex justify-center mb-4">
+          <label className="mr-4">
+            Horizontal:
+            <input
+              type="number"
+              value={horizontal}
+              onChange={(e) => dispatch(setHorizontal(Number(e.target.value)))}
+              className="ml-2 border rounded px-2 py-1 w-16 text-center"
+            />
+          </label>
+          <label>
+            Vertical:
+            <input
+              type="number"
+              value={vertical}
+              onChange={(e) => dispatch(setVertical(Number(e.target.value)))}
+              className="ml-2 border rounded px-2 py-1 w-16 text-center"
+            />
+          </label>
         </div>
-        <PotagerSearchBar products={products} addToGarden={handleAddToGarden} />
-        <div className="mt-6 w-full">
-          <h2 className="text-center text-xl font-bold mb-4">Mon Jardin</h2>
-          <ul className="flex flex-wrap justify-center">
-            {garden.map((product) => (
-              <li key={product.id} className="w-1/4 p-2">
-                <div className="border p-4 rounded bg-white shadow">
-                  <img
-                    src={`${import.meta.env.VITE_API_URL}${product.picture}`}
-                    alt={product.name}
-                    className="w-full h-32 object-cover"
-                    draggable
-                    onDragStart={() => handleDragStart(product)}
-                  />
-                  <div className="text-center mt-2 font-semibold">
-                    {product.name}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <div className="grid gap-1">{renderGrid()}</div>
       </div>
-    </DndProvider>
+      <PotagerSearchBar products={products} addToGarden={handleAddToGarden} />
+      <div className="mt-6 w-full">
+        <h2 className="text-center text-xl font-bold mb-4">Mon Jardin</h2>
+        <ul className="flex flex-wrap justify-center">
+          {garden.map((product) => (
+            <li key={product.id} className="w-1/4 p-2">
+              <div className="border p-4 rounded bg-white shadow">
+                <img
+                  src={`${import.meta.env.VITE_API_URL}${product.picture}`}
+                  alt={product.name}
+                  className="w-full h-32 object-cover"
+                  draggable
+                  onDragStart={() => handleDragStart(product)}
+                />
+                <div className="text-center mt-2 font-semibold">
+                  {product.name}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
 
