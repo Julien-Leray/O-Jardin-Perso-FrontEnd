@@ -4,6 +4,7 @@ import { Product } from '../../../../@types/types';
 import slugify from '../../../../utils/utils';
 import BtnFavoris from '../BtnFavoris';
 import { useAppSelector } from '../../../../hooks/redux';
+import ErrorNotif from '../../../ErrorNotif/ErrorNotif';
 
 interface CardLegumesProps {
   allFavProducts: Product[];
@@ -13,6 +14,7 @@ interface CardLegumesProps {
 
 function CardLegumes({ logged, legume, allFavProducts }: CardLegumesProps) {
   const { error } = useAppSelector((state) => state.products);
+  if (error) return <ErrorNotif error={error} />;
 
   return (
     <li

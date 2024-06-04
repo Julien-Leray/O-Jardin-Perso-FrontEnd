@@ -1,15 +1,9 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-
-import { boolean } from 'joi';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import userAction from '../../store/thunks/userThunk';
+import { Routes, Route } from 'react-router-dom';
 
 import Home from './Home/Home';
 import Fruits from './Products/Fruits/ListeFruits';
 import Connexion from './ConnexionUser/Connexion';
 
-import SearchBar from '../SearchBar/SearchBar';
 import FruitDetail from './Products/Fruits/FruitDetail';
 import Legumes from './Products/Legumes/ListeLegumes';
 import LegumeDetail from './Products/Legumes/LegumeDetail';
@@ -23,14 +17,12 @@ import MentionsLegales from './MentionsLegales/MentionLegales';
 import PolitiqueConfidentialite from './PolitiqueConfidentialite/PolitiqueConfidentialite';
 import Contact from './Contact/Contact';
 
-import { actionChangeCredential } from '../../store/reducers/user';
 import { Product } from '../../@types/types';
 import Modification from './ModificationUser/Modification';
+import PageNotFound from '../PageNotFound/PageNotFound';
+import { useAppSelector } from '../../hooks/redux';
 
 function Page() {
-  const location = useLocation();
-  const dispatch = useAppDispatch();
-
   const logged = useAppSelector((state) => state.user.logged);
 
   const { tutorials } = useAppSelector((state) => state.tutoriels);
@@ -53,12 +45,9 @@ function Page() {
 
   return (
     <div>
-      {location.pathname !== '/connexion' &&
-        location.pathname !== '/contact' &&
-        location.pathname !== '/gestion_profil' &&
-        location.pathname !== '/inscription' && <SearchBar />}
-
       <Routes>
+        <Route path="*" element={<PageNotFound />} />
+
         <Route
           path="/"
           element={
@@ -108,19 +97,7 @@ function Page() {
           element={<TutorielDetail tutorials={tutorials} />}
         />
         <Route path="/connexion" element={<Connexion logged={logged} />} />
-        <Route
-          path="/inscription"
-          element={
-            <Inscription
-              handleVerifyEmail={(email) =>
-                dispatch(userAction.actionVerifyEmailExist(email))
-              }
-              handleSignup={(newUser) =>
-                dispatch(userAction.actionNewUser(newUser))
-              }
-            />
-          }
-        />
+        <Route path="/inscription" element={<Inscription />} />
         <Route
           path="/mon_jardin"
           element={
@@ -134,24 +111,11 @@ function Page() {
           path="/mon_jardin/potager-virtuel"
           element={<PotagerVirtuel />}
         />
-        <Route
-          path="/gestion_profil"
-          element={
-            <Modification
-              handleVerifyEmail={(email) =>
-                dispatch(userAction.actionVerifyEmailExist(email))
-              }
-              handleSignup={(newUser) =>
-                dispatch(userAction.actionNewUser(newUser))
-              }
-            />
-          }
-        />
+        <Route path="/gestion_profil" element={<Modification />} />
         <Route path="/gestion_profil/alertes" element={<GestionAlertes />} />
         <Route path="/mentions_legales" element={<MentionsLegales />} />
         <Route path="/confidentialite" element={<PolitiqueConfidentialite />} />
         <Route path="/contact" element={<Contact />} />
-        {/* <Route path="*" element={<Error />} /> */}
       </Routes>
     </div>
   );

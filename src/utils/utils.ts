@@ -1,4 +1,4 @@
-export default function slugify(text: string): string {
+export default function slugify(text: string): string | undefined {
   return text
     .toString()
     .normalize('NFD')

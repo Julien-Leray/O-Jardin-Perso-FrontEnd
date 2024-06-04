@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks/redux';
 import { Tutorial } from '../../../@types/types';
 import slugify from '../../../utils/utils';
+import ErrorNotif from '../../ErrorNotif/ErrorNotif';
 
 interface Tutoprops {
   tutorials: Tutorial[];
@@ -9,17 +10,17 @@ interface Tutoprops {
 
 function Tutoriels({ tutorials }: Tutoprops) {
   const error = useAppSelector((state) => state.tutoriels.error);
+  if (error) return <ErrorNotif error={error} />;
 
   return (
     <div className="flex mx-auto flex-col my-6">
       <h2 className="text-xl text-center font-bold p-2">Tutoriels</h2>
-      {error && <p>Erreur : {error}</p>}
       <div>
         <ul className="flex flex-wrap md:flex-row -m-4">
           {tutorials.map((tutoriel) => (
             <li
               key={`tuto${tutoriel.id}`}
-              className=" w-5/6 md:w-1/3 p-4 mx-auto"
+              className="mx-auto md:mx-0 w-5/6 md:w-1/3 p-4 mx-auto"
             >
               <div className="flex flex-col justify-normal flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
                 <Link to={`/tutos/${slugify(tutoriel.title)}`}>

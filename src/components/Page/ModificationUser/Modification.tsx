@@ -3,13 +3,14 @@ import { User, Lock, XCircle } from 'react-feather';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import userAction from '../../../store/thunks/userThunk';
+import { useAppSelector } from '../../../hooks/redux';
 
-interface FormData {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
+interface UpdateFormData {
+  firstname?: string;
+  lastname?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
   address?: string;
   zip_code?: string;
   city?: string;
@@ -25,13 +26,9 @@ interface Errors {
   apiError?: string;
 }
 
-interface ModificationProps {
-  handleSignup: (newUser: FormData) => void;
-  handleVerifyEmail: (email: string) => string;
-}
 
-function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
-  const [formData, setFormData] = useState<FormData>({
+function Modification() {
+  const [formData, setFormData] = useState<UpdateFormData>({
     firstname: '',
     lastname: '',
     email: '',
@@ -42,6 +39,7 @@ function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
     city: '',
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const goBack = () => {
     navigate(-1);
   };
@@ -57,17 +55,19 @@ function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
 
   const validateForm = (): Errors => {
     const newErrors: Errors = {};
-    if (!formData.firstname) newErrors.firstname = 'Prénom est requis';
-    if (!formData.lastname) newErrors.lastname = 'Nom est requis';
-    if (!formData.email) {
-      newErrors.email = 'Email est requis';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    const hasAtLeastOneFieldFilled = Object.values(formData).some(
+      (value) => value !== ''
+    );
+
+    if (!hasAtLeastOneFieldFilled) {
+      newErrors.apiError = 'Veuillez remplir au moins un champ';
+    }
+    
+    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email invalide';
     }
-    if (!formData.password) {
-      newErrors.password = 'Mot de passe est requis';
-    } else if (formData.password.length < 8) {
-      newErrors.password = 'Mot de passe doit contenir au moins 8 caractères';
+    if (formData.password && formData.password.length < 8) {
+      newErrors.password = 'Le mot de passe doit contenir au moins 8 caractères';
     }
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Les mots de passe doivent correspondre';
@@ -85,27 +85,35 @@ function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+  
 
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
+    try {
+      const emailExist = await dispatch(userAction.actionVerifyEmailExist(formData.email as string) as any);
 
-    const emailExist = handleVerifyEmail(formData.email as string);
+      if ((emailExist.payload) === true) {
+        setErrors({ email: 'Cet email est déjà utilisé' });
+        return;
+      }
 
-    if (emailExist.payload === 'Email déjà utilisé') {
-      setErrors({ email: 'Cet email est déjà utilisé' });
-    } else {
       const { confirmPassword, ...dataToSend } = formData;
       const filteredDataToSend = Object.fromEntries(
         Object.entries(dataToSend).filter(([_, value]) => value)
       );
 
-      handleSignup(filteredDataToSend as unknown as FormData);
-      navigate('/connexion');
+      dispatch(userAction.actionUpdateUser(filteredDataToSend as UpdateFormData) as any);
+      navigate('/mon_jardin');
+
+    } catch (error) {
+      console.error('Erreur lors de la modification de l\'utilisateur :', error);
     }
   };
+
+  const { userData } = useAppSelector((state) => state.myGarden);
 
   return (
     <div className="flex flex-col justify-center rounded-lg items-center ">
@@ -125,20 +133,18 @@ function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
             Votre prénom et nom :
           </label>
           <div className="flex flex-col md:flex-row justify-between mb-2 gap-4 md:mb-8 md:gap-4">
-            <input
-              required
+            <input 
               name="firstname"
               value={formData.firstname}
               onChange={handleChange}
-              placeholder="Prénom"
+              placeholder={userData.firstname}
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black "
             />
-            <input
-              required
+            <input             
               name="lastname"
               value={formData.lastname}
               onChange={handleChange}
-              placeholder="Nom"
+              placeholder={userData.lastname}
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black"
             />
           </div>
@@ -158,60 +164,15 @@ function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
           <div className="flex items-center mb-4 md:mb-8">
             <User className="absolute ml-3 " />
             <input
-              required
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Email"
+              placeholder={userData.email}
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border border-black "
             />
           </div>
           {errors.email && (
             <p className="text-red-500 text-xs">{errors.email}</p>
-          )}
-
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Votre mot de passe :
-          </label>
-          <div className="flex items-center mb-2 md:mb-4">
-            <Lock className="absolute ml-3" />
-            <input
-              required
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Mot de passe"
-              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border border-black"
-            />
-          </div>
-          {errors.password && (
-            <p className="text-red-500 text-xs">{errors.password}</p>
-          )}
-
-          <label
-            htmlFor="confirmPassword"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Confirmer votre mot de passe :
-          </label>
-          <div className="flex items-center mb-4 md:mb-8">
-            <Lock className="absolute ml-3" />
-            <input
-              required
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Confirmer le mot de passe"
-              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border border-black"
-            />
-          </div>
-          {errors.confirmPassword && (
-            <p className="text-red-500 text-xs">{errors.confirmPassword}</p>
           )}
 
           <div className="items-center text-center md:rounded-full  font-bold text-lg mb-2">
@@ -232,7 +193,7 @@ function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              placeholder="Adresse - Champ 1"
+              placeholder={userData.address}
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black "
             />
           </div>
@@ -242,14 +203,14 @@ function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
               name="zip_code"
               value={formData.zip_code}
               onChange={handleChange}
-              placeholder="Code postal"
+              placeholder={userData.zip_code}
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black "
             />
             <input
               name="city"
               value={formData.city}
               onChange={handleChange}
-              placeholder="Ville"
+              placeholder={userData.city}
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black"
             />
           </div>
@@ -258,6 +219,52 @@ function Modification({ handleSignup, handleVerifyEmail }: ModificationProps) {
           )}
           {errors.apiError && (
             <p className="text-red-500 text-xs">{errors.apiError}</p>
+          )}
+
+            <div className="items-center text-center md:rounded-full  font-bold text-lg mb-2">
+            <span className="mr-2 self-center">Modifier votre mot de passe</span>
+          </div>
+
+          <label
+            htmlFor="password"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Votre mot de passe :
+          </label>
+          <div className="flex items-center mb-2 md:mb-4">
+            <Lock className="absolute ml-3" />
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Nouveau mot de passe"
+              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border border-black"
+            />
+          </div>
+          {errors.password && (
+            <p className="text-red-500 text-xs">{errors.password}</p>
+          )}
+
+          <label
+            htmlFor="confirmPassword"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Confirmer votre mot de passe :
+          </label>
+          <div className="flex items-center mb-4 md:mb-8">
+            <Lock className="absolute ml-3" />
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirmer le nouveau mot de passe"
+              className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border border-black"
+            />
+          </div>
+          {errors.confirmPassword && (
+            <p className="text-red-500 text-xs">{errors.confirmPassword}</p>
           )}
 
           <button

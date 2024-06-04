@@ -2,9 +2,9 @@ import React from 'react';
 
 function GestionAlertes() {
   return (
-    <div>
-      <h1>Gestion des Alertes</h1>
-      <p>Configurez et gérez vos alertes pour le jardinage ici.</p>
+    <div className="bg-white p-2 my-2">
+      <p className="text-xs">Activer mon alerte météo</p>
+      <p className="text-xs">Activer mon alerte arrosage</p>
     </div>
   );
 }
