@@ -23,6 +23,9 @@ function PotagerVirtuel() {
   const { horizontal, vertical } = useAppSelector((state) => state.potager);
   const products = useAppSelector((state) => state.virtualGarden.products);
   const garden = useAppSelector((state) => state.virtualGarden.garden);
+  const favProducts = useAppSelector((state) => state.myGarden.favProducts);
+  const productsToDisplay = garden.concat(favProducts);
+  console.log('productsToDisplay', productsToDisplay);
   const matchingProducts = useAppSelector(
     (state) => state.virtualGarden.matchingProducts
   );
@@ -59,6 +62,10 @@ function PotagerVirtuel() {
   };
 
   const handleAddToGarden = (product: Product) => {
+    const productInGarden = productsToDisplay.find((p) => p.id === product.id);
+    if (productInGarden) {
+      return;
+    }
     dispatch(addToGarden({ ...product, position: '' }));
   };
 
@@ -123,6 +130,8 @@ function PotagerVirtuel() {
     return rows;
   };
 
+  console.log('garden', garden);
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -157,7 +166,7 @@ function PotagerVirtuel() {
         <div className="mt-6 w-full">
           <h2 className="text-center text-xl font-bold mb-4">Mon Jardin</h2>
           <ul className="flex flex-wrap justify-center">
-            {garden.map((product) => (
+            {productsToDisplay.map((product) => (
               <li key={product.id} className="w-1/4 p-2">
                 <div className="border p-4 rounded bg-white shadow">
                   <img
