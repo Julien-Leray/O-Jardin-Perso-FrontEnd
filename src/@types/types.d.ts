@@ -59,6 +59,7 @@ export interface MeteoState {
   loading: boolean;
   error: string | null | undefined;
   name: string;
+  zip_code: string;
 }
 
 // Users
