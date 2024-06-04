@@ -1,7 +1,6 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
-import { boolean } from 'joi';
 import userActions from '../thunks/userThunk';
-import actionCheckLogin from '../thunks/userThunk';
+// import actionCheckLogin from '../thunks/userThunk';
 import { User } from '../../@types/types';
 
 // -- STATE intial et son interface --

@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
-import { boolean } from 'joi';
 import { Product, Tutorial } from '../../../@types/types';
 import slugify from '../../../utils/utils';
-import BtnFavoris from '../Products/BtnFavoris';
-import Loader from '../../Loader/Loader';
 
 interface HomeProps {
   tutorials: Tutorial[];
@@ -44,7 +41,10 @@ function Home({ tutorials, legumes, fruits, logged }: HomeProps) {
           <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-2">
             <ul className="flex flex-wrap justify-around rounded-lg">
               {randomFruits.map((fruit) => (
-                <li className="mx-auto w-5/6 md:w-1/2 p-4" key={fruit.id}>
+                <li
+                  className="mx-auto w-5/6 md:w-1/2 p-4"
+                  key={`{fruit${fruit.id}`}
+                >
                   <Link to={`/fruits/${slugify(fruit.name)}`}>
                     <div className="flex flex-col flex-grow">
                       <div className="relative">
@@ -77,7 +77,10 @@ function Home({ tutorials, legumes, fruits, logged }: HomeProps) {
           <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-2">
             <ul className="flex flex-wrap justify-around rounded-lg">
               {randomLegumes.map((legume) => (
-                <li className="mx-auto w-5/6 md:w-1/2 p-4" key={legume.id}>
+                <li
+                  className="mx-auto w-5/6 md:w-1/2 p-4"
+                  key={`{legume${legume.id}`}
+                >
                   <Link to={`/legumes/${slugify(legume.name)}`}>
                     <div className="flex flex-col flex-grow">
                       <div className="relative">
@@ -119,7 +122,10 @@ function Home({ tutorials, legumes, fruits, logged }: HomeProps) {
         <h2 className="text-xl text-center font-bold p-4">Tutos jardinage</h2>
         <ul className="flex flex-wrap md:flex-row -m-4">
           {randomTutos.map((tutoriel) => (
-            <li className="mx-auto w-5/6 md:w-1/3 p-4" key={tutoriel.id}>
+            <li
+              className="mx-auto w-5/6 md:w-1/3 p-4"
+              key={`{tutoriel${tutoriel.id}`}
+            >
               <div className="flex flex-col flex-grow rounded-lg overflow-hidden shadow-lg border border-gray-200">
                 <Link to={`/tutos/${slugify(tutoriel.title)}`}>
                   <img

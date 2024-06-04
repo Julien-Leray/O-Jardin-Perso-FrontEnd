@@ -20,7 +20,6 @@ function MesFavoris({ allFavProducts }: FavorisProps) {
       sortedFavProducts.favLegumes.push(favProduct);
     }
   });
-
   return (
     <>
       <h2 className="text-2xl text-center font-[800] p-2 pt-6">Mes favoris</h2>
@@ -32,7 +31,7 @@ function MesFavoris({ allFavProducts }: FavorisProps) {
               {sortedFavProducts.favFruits.map((fruit) => (
                 <li
                   className="mx-auto md:mx-0 w-5/6 md:w-1/3 px-2 pt-4"
-                  key={`fruit${fruit.id}`}
+                  key={`favFruit-${fruit.name}`}
                 >
                   <Link to={`/fruits/${slugify(fruit.name)}`}>
                     <div className="flex flex-col flex-grow ">
@@ -68,7 +67,7 @@ function MesFavoris({ allFavProducts }: FavorisProps) {
               {sortedFavProducts.favLegumes.map((legume) => (
                 <li
                   className="mx-auto md:mx-0 w-5/6 md:w-1/3 p-2 pt-4"
-                  key={`legume${legume.id}`}
+                  key={`favLegume-${legume.name}`}
                 >
                   <Link to={`/legumes/${slugify(legume.name)}`}>
                     <div className="flex flex-col flex-grow">

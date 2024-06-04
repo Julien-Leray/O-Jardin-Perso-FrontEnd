@@ -16,11 +16,11 @@ function CardLegumes({ logged, legume, allFavProducts }: CardLegumesProps) {
 
   return (
     <li
-      key={`fruits${legume.id}`}
+      key={`legumes${legume.id}`}
       className="mx-auto md:mx-0 w-5/6 md:w-1/3 p-4 mx-auto"
     >
       <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200">
-        <Link to={`/fruits/${slugify(legume.name)}`}>
+        <Link to={`/legumes/${slugify(legume.name)}`}>
           <img
             className="w-full h-48 object-cover mx-auto"
             src={`${import.meta.env.VITE_API_URL}/${legume.picture}`}

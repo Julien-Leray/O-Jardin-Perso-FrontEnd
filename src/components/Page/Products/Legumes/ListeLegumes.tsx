@@ -19,7 +19,7 @@ function Legumes({ logged, legumes, allFavProducts }: LegumesProps) {
         <ul className="flex flex-wrap md:flex-row -m-4 justify-stretch">
           {legumes.map((legume) => (
             <CardLegumes
-              key={legume.id}
+              key={`cardFruit${legume.id}`}
               legume={legume}
               allFavProducts={allFavProducts}
               logged={logged}

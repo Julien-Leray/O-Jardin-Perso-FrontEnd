@@ -22,12 +22,12 @@ function Header() {
           }}
         >
           {isOpen ? (
-            <span className="absolute py-2 px-4 top-4 right-4 rounded-lg text-white bg-[#F6D50E]">
-              <Burger size="60" />
+            <span className="absolute py-2 px-2 top-6 right-6 rounded-lg text-white bg-[#F6D50E]">
+              <Burger size="40" />
             </span>
           ) : (
-            <span className="absolute py-2 px-4 top-4 right-4">
-              <Burger size="60" />
+            <span className="absolute py-2 px-2 top-6 right-6">
+              <Burger size="40" />
             </span>
           )}
         </button>

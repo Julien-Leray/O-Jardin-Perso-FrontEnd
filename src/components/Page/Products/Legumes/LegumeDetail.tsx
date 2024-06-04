@@ -5,6 +5,7 @@ import findProduct from '../../../../store/selectors/products';
 import slugify from '../../../../utils/utils';
 import { Product } from '../../../../@types/types';
 import BtnFavoris from '../BtnFavoris';
+import Loader from '../../../Loader/Loader';
 
 export const months = [
   'Janvier',
@@ -31,9 +32,8 @@ function LegumeDetail({ logged, allFavProducts }: LegumeDetailProps) {
     findProduct(state.products.allProducts, slugify(params.name))
   );
 
-  const { loading, error } = useAppSelector((state) => state.products);
+  const { error } = useAppSelector((state) => state.products);
 
-  if (loading) return <div className="text-center text-lg">Chargement...</div>;
   if (error)
     return (
       <div className="text-center text-red-600 text-lg">Erreur : {error}</div>
@@ -56,64 +56,77 @@ function LegumeDetail({ logged, allFavProducts }: LegumeDetailProps) {
   const harvestMonth = (index: number) => monthHarvest.includes(index + 1);
 
   return (
-    <div className="mx-auto w-full mt-5 mb-5 p-5 rounded-lg shadow-lg ">
-      <div className="flex flex-row justify-end">
-        {logged && (
-          <BtnFavoris
-            logged={logged}
-            product={legume}
-            allFavProducts={allFavProducts}
+    <>
+      <div className="mx-auto w-full mt-5 mb-5 p-5 rounded-lg shadow-lg">
+        <div className="flex flex-row justify-end">
+          {logged && (
+            <BtnFavoris
+              logged={logged}
+              product={legume}
+              allFavProducts={allFavProducts}
+            />
+          )}
+        </div>
+        <div className="text-center">
+          <h1 className="text-3xl font-bold mb-1">{legume.name}</h1>
+          <p className="italic mb-3">Nom Latin : {legume.latin_name}</p>
+        </div>
+        <div className="flex flex-col md:flex-row md:gap-4 items-start">
+          <img
+            src={imageUrl}
+            alt={legume.name}
+            className="w-full md:w-1/2 mx-auto rounded-lg shadow-lg md:my-4 mt-4"
           />
-        )}
-      </div>
-      <div className="text-center">
-        <h1 className="text-3xl font-bold mb-1">{legume.name}</h1>
-        <p className="italic mb-3">Nom Latin : {legume.latin_name}</p>
-      </div>
-      <div className="flex flex-col md:flex-row md:gap-4 items-start">
-        <img
-          src={imageUrl}
-          alt={legume.name}
-          className="w-full md:w-1/2 mx-auto rounded-lg shadow-lg md:my-4 mt-4"
-        />
-        <p className="w-full md:w-1/2 my-4">{legume.description}</p>
-      </div>
-      <div className="bg-[#16A1AF] rounded-lg p-4 pb-6">
-        <h2 className="pb-2 font-bold text-center">Périodes de plantation </h2>
-
-        <div className=" grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-2 bg-white rounded p-2 text-black">
-          {months.map((month, index) => (
-            <div key={month} className="text-center text-xs font-semibold">
-              {month}
-              <div
-                className={`h-8 ${
-                  plantationMonths(index) ? 'bg-[#F6D50E]' : 'bg-gray-300'
-                }`}
-              />
-            </div>
-          ))}
+          <p className="w-full md:w-1/2 my-4">{legume.description}</p>
         </div>
+        <div className="bg-[#16A1AF] rounded-lg p-4 pb-6">
+          <h2 className="pb-2 font-bold text-center">
+            Périodes de plantation{' '}
+          </h2>
 
-        <h2 className="pt-3 pb-2 font-bold text-center"> Période de récolte</h2>
-
-        <div className="grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-2 bg-white rounded p-2 text-black">
-          {months.map((month, index) => (
-            <div key={month} className="text-center text-xs font-semibold">
-              {month}
+          <div className=" grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-2 bg-white rounded p-2 text-black">
+            {months.map((month, index) => (
               <div
-                className={`h-8 ${
-                  harvestMonth(index) ? 'bg-[#F6D50E]' : 'bg-gray-300'
-                }`}
-              />
-            </div>
-          ))}
+                key={`plantationLegume${month}`}
+                className="text-center text-xs font-semibold"
+              >
+                {month}
+                <div
+                  className={`h-8 ${
+                    plantationMonths(index) ? 'bg-[#F6D50E]' : 'bg-gray-300'
+                  }`}
+                />
+              </div>
+            ))}
+          </div>
+
+          <h2 className="pt-3 pb-2 font-bold text-center">
+            {' '}
+            Période de récolte
+          </h2>
+
+          <div className="grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-2 bg-white rounded p-2 text-black">
+            {months.map((month, index) => (
+              <div
+                key={`harvestLegume${month}`}
+                className="text-center text-xs font-semibold"
+              >
+                {month}
+                <div
+                  className={`h-8 ${
+                    harvestMonth(index) ? 'bg-[#F6D50E]' : 'bg-gray-300'
+                  }`}
+                />
+              </div>
+            ))}
+          </div>
+
+          <h2 className="pt-2 font-bold text-center">Conseils d'arrosage</h2>
+
+          <p className="pt-2 text-center"> {legume.watering_frequency}</p>
         </div>
-
-        <h2 className="pt-2 font-bold text-center">Conseils d'arrosage</h2>
-
-        <p className="pt-2 text-center"> {legume.watering_frequency}</p>
-      </div>
-    </div>
+      </div>{' '}
+    </>
   );
 }
 
