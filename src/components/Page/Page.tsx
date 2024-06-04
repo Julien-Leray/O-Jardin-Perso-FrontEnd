@@ -1,9 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { boolean } from 'joi';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import userAction from '../../store/thunks/userThunk';
 
 import Home from './Home/Home';
 import Fruits from './Products/Fruits/ListeFruits';
@@ -39,6 +37,8 @@ function Page() {
   const passFromState = useAppSelector(
     (state) => state.user.credentials.password
   );
+
+
 
   const { tutorials } = useAppSelector((state) => state.tutoriels);
   const allProducts = useAppSelector((state) => state.products.allProducts);
@@ -133,16 +133,7 @@ function Page() {
         />
         <Route
           path="/inscription"
-          element={
-            <Inscription
-              handleVerifyEmail={(email) =>
-                dispatch(userAction.actionVerifyEmailExist(email))
-              }
-              handleSignup={(newUser) =>
-                dispatch(userAction.actionNewUser(newUser))
-              }
-            />
-          }
+          element={<Inscription/>}
         />
         <Route
           path="/mon_jardin"
@@ -159,16 +150,7 @@ function Page() {
         />
         <Route
           path="/gestion_profil"
-          element={
-            <Modification
-              handleVerifyEmail={(email) =>
-                dispatch(userAction.actionVerifyEmailExist(email))
-              }
-              handleSignup={(newUser) =>
-                dispatch(userAction.actionNewUser(newUser))
-              }
-            />
-          }
+          element={<Modification/>}
         />
         <Route path="/gestion_profil/alertes" element={<GestionAlertes />} />
         <Route path="/mentions_legales" element={<MentionsLegales />} />

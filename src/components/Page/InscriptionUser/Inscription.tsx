@@ -25,13 +25,9 @@ interface Errors {
   apiError?: string;
 }
 
-interface InscriptionProps {
-  handleSignup: (newUser: FormData) => void;
-  handleVerifyEmail: (email: string) => string;
-}
-
-function Inscription({ handleSignup, handleVerifyEmail }: InscriptionProps) {
+function Inscription() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const goBack = () => {
     navigate(-1);
   };
@@ -93,19 +89,24 @@ function Inscription({ handleSignup, handleVerifyEmail }: InscriptionProps) {
       setErrors(validationErrors);
       return;
     }
+    try {
+      const emailExist = await dispatch(userAction.actionVerifyEmailExist(formData.email as string) as any);
 
-    const emailExist = handleVerifyEmail(formData.email as string);
-    console.log(emailExist);
-    if (emailExist.payload === 'Email déjà utilisé') {
-      setErrors({ email: 'Cet email est déjà utilisé' });
-    } else {
+      if ((emailExist.payload) === true) {
+        setErrors({ email: 'Cet email est déjà utilisé' });
+        return;
+      }
+
       const { confirmPassword, ...dataToSend } = formData;
       const filteredDataToSend = Object.fromEntries(
         Object.entries(dataToSend).filter(([_, value]) => value)
       );
 
-      handleSignup(filteredDataToSend as unknown as FormData);
+      dispatch(userAction.actionNewUser(filteredDataToSend as unknown as FormData) as any);
       navigate('/connexion');
+
+    } catch (error) {
+      console.error('Erreur lors de la modification de l\'utilisateur :', error);
     }
   };
 
