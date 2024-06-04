@@ -1,9 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Search } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import fetchAllProducts, {
-  fetchAllProductsbyCategory,
-} from '../../store/thunks/productThunks';
+import fetchAllProducts from '../../store/thunks/productThunks';
 import { Product } from '../../@types/types';
 
 interface PotagerSearchBarProps {
@@ -11,10 +9,7 @@ interface PotagerSearchBarProps {
   addToGarden: (product: Product) => void;
 }
 
-function PotagerSearchBar({
-  // /products
-  addToGarden,
-}: PotagerSearchBarProps) {
+function PotagerSearchBar({ addToGarden }: PotagerSearchBarProps) {
   const refSubmitSearchbar = useRef<null | HTMLFormElement>(null);
   const refInputSearchbar = useRef<null | HTMLInputElement>(null);
   const refListeSearchbar = useRef<null | HTMLDivElement>(null);
@@ -36,6 +31,7 @@ function PotagerSearchBar({
         !refSubmitSearchbar.current.contains(document.activeElement)
       ) {
         setIsFilterVisible(false);
+        setInputValue('');
       }
     }, 0);
   };
@@ -53,7 +49,6 @@ function PotagerSearchBar({
         className="flex w-full md:w-2/3 items-center mx-auto pl-8"
         onSubmit={(event) => {
           event.preventDefault();
-          setInputValue(inputValue);
           setInputValue('');
         }}
       >
@@ -66,16 +61,14 @@ function PotagerSearchBar({
             type="text"
             className="bg-white text-gray-900 text-sm rounded-full focus:ring-[#F6D50E] block w-full ps-10 py-4"
             placeholder="Rechercher un fruit ou un légume..."
-            required
             value={inputValue}
-            onChange={(event) => {
-              setInputValue(event.target.value);
-              dispatch(fetchAllProducts());
-              setIsFilterVisible(true);
-            }}
             onBlur={handleBlur}
             onFocus={() => {
               setIsFilterVisible(true);
+            }}
+            onChange={(event) => {
+              setInputValue(event.target.value);
+              dispatch(fetchAllProducts());
             }}
           />
         </div>
@@ -101,7 +94,10 @@ function PotagerSearchBar({
                   <button
                     type="button"
                     className="w-full text-left"
-                    onClick={() => addToGarden(product)}
+                    onClick={() => {
+                      addToGarden(product);
+                      setInputValue('');
+                    }}
                   >
                     {product.name}
                   </button>
