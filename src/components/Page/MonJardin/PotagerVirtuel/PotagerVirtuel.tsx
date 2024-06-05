@@ -32,10 +32,6 @@ function PotagerVirtuel() {
     dispatch(fetchAllProductsInVirtualGarden()).then(() => {
       dispatch(fetchMatchingProducts());
     });
-
-    // Set initial grid size
-    dispatch(setHorizontal(8));
-    dispatch(setVertical(5));
   }, [dispatch]);
 
   const handleDragStart = (product: Product) => {
@@ -89,7 +85,7 @@ function PotagerVirtuel() {
       for (let col = 0; col < horizontal; col += 1) {
         const position = `{${row},${col}}`;
         const product = matchingProducts.find((p) => {
-          const regex = /\{(\d+),(\d+)\}/;
+          const regex = /\{(\d+), (\d+)\}/;
           const match = p.position && p.position.match(regex);
           if (match) {
             const positionObj = {
@@ -140,30 +136,20 @@ function PotagerVirtuel() {
     return rows;
   };
 
-  const handleHorizontalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(0, Math.min(15, Number(e.target.value)));
-    dispatch(setHorizontal(value));
-  };
-
-  const handleVerticalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(0, Math.min(20, Number(e.target.value)));
-    dispatch(setVertical(value));
-  };
-
   return (
-    <div className="flex flex-col items-center bg-[#7AC808] bg-opacity-30 p-6 my-4 rounded-lg">
+    <div className="flex flex-col items-center bg-[#7AC808] bg-opacity-30 p-6 my-4 rounded-lg ">
       <h2 className="text-center text-xl font-bold">Mon potager virtuel</h2>
 
       <PotagerSearchBar products={products} addToGarden={handleAddToGarden} />
-      <div className="w-full rounded-lg">
-        <ul className="flex flex-col w-full rounded-lg py-4">
+      <div className="w-full rounded-lg ">
+        <ul className="flex flex-col w-full rounded-lg  py-4">
           <div className="flex flex-wrap justify-center rounded-lg gap-4">
             {productsToDisplay.map((product) => (
               <li
                 key={`garden-${product.id}`}
                 className="bg-white rounded-lg mx-auto md:mx-0 w-1/3 md:w-1/6"
               >
-                <div className="rounded-lg overflow-hidden shadow-lg">
+                <div className="rounded-lg overflow-hidden shadow-lg ">
                   <img
                     src={`${import.meta.env.VITE_API_URL}${product.picture}`}
                     alt={product.name}
@@ -171,7 +157,7 @@ function PotagerVirtuel() {
                     draggable
                     onDragStart={() => handleDragStart(product)}
                   />
-                  <div className="text-center my-2 font-semibold">
+                  <div className="text-center my-2  font-semibold">
                     {product.name}
                   </div>
                 </div>
@@ -189,7 +175,7 @@ function PotagerVirtuel() {
             <input
               type="number"
               value={horizontal}
-              onChange={handleHorizontalChange}
+              onChange={(e) => dispatch(setHorizontal(Number(e.target.value)))}
               className="ml-2 border rounded px-2 py-1 w-16 text-center"
             />
           </label>
@@ -198,7 +184,7 @@ function PotagerVirtuel() {
             <input
               type="number"
               value={vertical}
-              onChange={handleVerticalChange}
+              onChange={(e) => dispatch(setVertical(Number(e.target.value)))}
               className="ml-2 border rounded px-2 py-1 w-16 text-center"
             />
           </label>
