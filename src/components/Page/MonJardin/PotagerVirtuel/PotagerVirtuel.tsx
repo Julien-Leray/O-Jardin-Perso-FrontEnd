@@ -20,10 +20,9 @@ function PotagerVirtuel() {
   const products = useAppSelector((state) => state.virtualGarden.products);
   const garden = useAppSelector((state) => state.virtualGarden.garden);
   const favProducts = useAppSelector((state) => state.myGarden.favProducts);
-  const productsToDisplay = garden.concat(favProducts);
-  const matchingProducts = useAppSelector(
-    (state) => state.virtualGarden.matchingProducts
-  );
+  let productsToDisplay = garden.concat(favProducts);
+  const matchingProducts = useAppSelector((state) => state.virtualGarden.matchingProducts);
+
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -48,8 +47,10 @@ function PotagerVirtuel() {
           quantity: 1,
         })
       );
+      productsToDisplay = productsToDisplay.filter((p) => p.id !== draggedProduct.id);
       await dispatch(fetchAllProductsInVirtualGarden());
       await dispatch(fetchMatchingProducts());
+
       setDraggedProduct(null);
     }
   };
@@ -129,8 +130,6 @@ function PotagerVirtuel() {
     }
     return rows;
   };
-
-  console.log('garden', garden);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
