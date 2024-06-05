@@ -19,9 +19,10 @@ function PotagerVirtuel() {
   const { horizontal, vertical } = useAppSelector((state) => state.potager);
   const products = useAppSelector((state) => state.virtualGarden.products);
   const garden = useAppSelector((state) => state.virtualGarden.garden);
-  const matchingProducts = useAppSelector(
-    (state) => state.virtualGarden.matchingProducts
-  );
+  const favProducts = useAppSelector((state) => state.myGarden.favProducts);
+  let productsToDisplay = garden.concat(favProducts);
+  const matchingProducts = useAppSelector((state) => state.virtualGarden.matchingProducts);
+
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -46,15 +47,19 @@ function PotagerVirtuel() {
           quantity: 1,
         })
       );
+      productsToDisplay = productsToDisplay.filter((p) => p.id !== draggedProduct.id);
       await dispatch(fetchAllProductsInVirtualGarden());
       await dispatch(fetchMatchingProducts());
+
       setDraggedProduct(null);
-    } else {
-      console.log('No product is being dragged.');
     }
   };
 
   const handleAddToGarden = (product: Product) => {
+    const productInGarden = productsToDisplay.find((p) => p.id === product.id);
+    if (productInGarden) {
+      return;
+    }
     dispatch(addToGarden({ ...product, position: '' }));
   };
 
@@ -106,6 +111,7 @@ function PotagerVirtuel() {
                   className="w-16 h-16"
                 />
                 <button
+                  type="button"
                   onClick={() => handleRemoveFromGarden(product.id)}
                   className="absolute top-0 right-0 bg-blue-500 text-white p-1 rounded-full"
                 >
@@ -156,8 +162,8 @@ function PotagerVirtuel() {
       <div className="mt-6 w-full">
         <h2 className="text-center text-xl font-bold mb-4">Mon Jardin</h2>
         <ul className="flex flex-wrap justify-center">
-          {garden.map((product) => (
-            <li key={product.id} className="w-1/4 p-2">
+          {productsToDisplay.map((product) => (
+            <li key={`garden-${product.id}`} className="w-1/4 p-2">
               <div className="border p-4 rounded bg-white shadow">
                 <img
                   src={`${import.meta.env.VITE_API_URL}${product.picture}`}

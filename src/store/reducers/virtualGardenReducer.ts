@@ -3,6 +3,7 @@ import { Product, ProductInVirtualGarden } from '../../@types/types';
 import {
   fetchAllProductsInVirtualGarden,
   fetchMatchingProducts,
+  
   updateProductPosition as updateProductPositionThunk,
   removeProductFromVirtualGarden as removeProductFromVirtualGardenThunk,
 } from '../thunks/virtualGardenThunks';
@@ -10,6 +11,7 @@ import {
 interface PotagerVirtuelState {
   products: Product[];
   garden: Product[];
+  favoriteProducts: Product[];
   virtualGarden: ProductInVirtualGarden[];
   matchingProducts: Product[];
   loading: boolean;
@@ -19,6 +21,7 @@ interface PotagerVirtuelState {
 const initialState: PotagerVirtuelState = {
   products: [],
   garden: [],
+  favoriteProducts: [],
   virtualGarden: [],
   matchingProducts: [],
   loading: false,
