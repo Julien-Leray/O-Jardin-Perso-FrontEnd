@@ -43,7 +43,7 @@ function PotagerSearchBar({ addToGarden }: PotagerSearchBarProps) {
   });
 
   return (
-    <div className="w-full bg-green-700 py-8">
+    <div className="w-full  py-8">
       <form
         ref={refSubmitSearchbar}
         className="flex w-full md:w-2/3 items-center mx-auto pl-8"
@@ -59,7 +59,7 @@ function PotagerSearchBar({ addToGarden }: PotagerSearchBarProps) {
           <input
             ref={refInputSearchbar}
             type="text"
-            className="bg-white text-gray-900 text-sm rounded-full focus:ring-[#F6D50E] block w-full ps-10 py-4"
+            className="bg-white text-gray-900 text-sm rounded-full focus:ring-[#7AC808] block w-full ps-10 py-4  shadow-lg border border-gray-200"
             placeholder="Rechercher un fruit ou un légume..."
             value={inputValue}
             onBlur={handleBlur}
@@ -74,7 +74,7 @@ function PotagerSearchBar({ addToGarden }: PotagerSearchBarProps) {
         </div>
         <button
           type="submit"
-          className="py-4 px-6 -translate-x-10 text-sm font-medium text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
+          className="py-4 px-6 -translate-x-10 text-sm font-medium text-white bg-[#7AC808] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
         >
           Rechercher
         </button>

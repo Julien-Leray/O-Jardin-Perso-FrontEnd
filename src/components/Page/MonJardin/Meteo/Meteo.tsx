@@ -7,7 +7,6 @@ interface MeteoProps {
   userData: User;
 }
 function MaMeteo({ userData }: MeteoProps) {
-
   const dispatch = useAppDispatch();
   const meteo = useAppSelector((state) => state.meteo);
   const { zip_code, city } = userData;
@@ -21,10 +20,9 @@ function MaMeteo({ userData }: MeteoProps) {
 
   useEffect(() => {
     if (location.zipCode || location.cityName) {
-      dispatch(fetchMeteo(location));
+      // dispatch(fetchMeteo(location));
     }
   }, [dispatch, location]);
-
 
   return (
     <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-3/4 bg-gray-200">
@@ -45,7 +43,10 @@ function MaMeteo({ userData }: MeteoProps) {
           </div>
         </div>
       ) : (
-        <p>Veuillez renseigner un code postal ou une ville pour afficher les prévisions météorologiques !</p>
+        <p>
+          Veuillez renseigner un code postal ou une ville pour afficher les
+          prévisions météorologiques !
+        </p>
       )}
     </div>
   );
