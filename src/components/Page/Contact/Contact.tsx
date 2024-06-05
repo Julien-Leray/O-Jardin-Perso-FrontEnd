@@ -50,7 +50,7 @@ function Contact() {
       >
         <label
           htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900  "
         >
           Votre email :
         </label>
@@ -74,7 +74,7 @@ function Contact() {
 
         <label
           htmlFor="contact"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900  "
         >
           Votre demande
         </label>

@@ -18,8 +18,6 @@ function App() {
 
   const loadingProducts = useAppSelector((state) => state.products.loading);
   const loadingTutos = useAppSelector((state) => state.tutoriels.loading);
-  const errorProducts = useAppSelector((state) => state.products.error);
-  const errorTutos = useAppSelector((state) => state.tutoriels.error);
 
   useEffect(() => {
     const { token } = getTokenFromLocalStorage();

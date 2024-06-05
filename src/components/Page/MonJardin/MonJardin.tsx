@@ -55,7 +55,7 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
   return (
     <div className={`${loading ? 'opacity-20' : ''}`}>
       <div className="w-full p-4">
-        <div className="flex flex-row justify-around py-4 gap-4 ">
+        <div className="flex flex-col md:flex-row justify-around py-4 gap-4 ">
           <button
             type="button"
             className={`w-full md:w-auto text-center hover:font-[800] px-16 py-3 rounded-full border border-2 border-[#16A1AF]  focus:outline-none focus:ring-2 focus:ring-[#16A1AF] focus:ring-offset-2 ${
@@ -91,11 +91,17 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
                     Mes alertes
                   </h2>
                   <button
-                    className="rounded-full text-white"
+                    className={`rounded-full text-white ${
+                      isSettingsOpen && 'bg-white text-[#16A1AF] p-1'
+                    }`}
                     type="button"
                     onClick={() => setIsSettingsOpen(!isSettingsOpen)}
                   >
-                    <Tool />
+                    <Tool
+                      className={`rounded-full ${
+                        isSettingsOpen && 'text-[#16A1AF] p-0.5'
+                      }`}
+                    />
                   </button>
                 </div>
 

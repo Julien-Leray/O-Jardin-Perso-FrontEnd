@@ -26,7 +26,6 @@ interface Errors {
   apiError?: string;
 }
 
-
 function Modification() {
   const [formData, setFormData] = useState<UpdateFormData>({
     firstname: '',
@@ -62,12 +61,13 @@ function Modification() {
     if (!hasAtLeastOneFieldFilled) {
       newErrors.apiError = 'Veuillez remplir au moins un champ';
     }
-    
+
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email invalide';
     }
     if (formData.password && formData.password.length < 8) {
-      newErrors.password = 'Le mot de passe doit contenir au moins 8 caractères';
+      newErrors.password =
+        'Le mot de passe doit contenir au moins 8 caractères';
     }
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Les mots de passe doivent correspondre';
@@ -85,7 +85,6 @@ function Modification() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-  
 
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
@@ -93,9 +92,11 @@ function Modification() {
       return;
     }
     try {
-      const emailExist = await dispatch(userAction.actionVerifyEmailExist(formData.email as string) as any);
+      const emailExist = await dispatch(
+        userAction.actionVerifyEmailExist(formData.email as string) as any
+      );
 
-      if ((emailExist.payload) === true) {
+      if (emailExist.payload === true) {
         setErrors({ email: 'Cet email est déjà utilisé' });
         return;
       }
@@ -105,11 +106,12 @@ function Modification() {
         Object.entries(dataToSend).filter(([_, value]) => value)
       );
 
-      dispatch(userAction.actionUpdateUser(filteredDataToSend as UpdateFormData) as any);
+      dispatch(
+        userAction.actionUpdateUser(filteredDataToSend as UpdateFormData) as any
+      );
       navigate('/mon_jardin');
-
     } catch (error) {
-      console.error('Erreur lors de la modification de l\'utilisateur :', error);
+      console.error("Erreur lors de la modification de l'utilisateur :", error);
     }
   };
 
@@ -128,19 +130,19 @@ function Modification() {
         <form className="p-8 md:p-8" autoComplete="off" onSubmit={handleSubmit}>
           <label
             htmlFor="firstname"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-gray-900  "
           >
             Votre prénom et nom :
           </label>
           <div className="flex flex-col md:flex-row justify-between mb-2 gap-4 md:mb-8 md:gap-4">
-            <input 
+            <input
               name="firstname"
               value={formData.firstname}
               onChange={handleChange}
               placeholder={userData.firstname}
               className="bg-white text-gray-900 border-1 border-black text-sm rounded-full focus:ring-[#F6D50E] w-full ps-6 p-4 border border-black "
             />
-            <input             
+            <input
               name="lastname"
               value={formData.lastname}
               onChange={handleChange}
@@ -157,7 +159,7 @@ function Modification() {
 
           <label
             htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-gray-900  "
           >
             Votre email :
           </label>
@@ -184,7 +186,7 @@ function Modification() {
 
           <label
             htmlFor="address1"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-gray-900  "
           >
             Votre adresse :
           </label>
@@ -221,13 +223,15 @@ function Modification() {
             <p className="text-red-500 text-xs">{errors.apiError}</p>
           )}
 
-            <div className="items-center text-center md:rounded-full  font-bold text-lg mb-2">
-            <span className="mr-2 self-center">Modifier votre mot de passe</span>
+          <div className="items-center text-center md:rounded-full  font-bold text-lg mb-2">
+            <span className="mr-2 self-center">
+              Modifier votre mot de passe
+            </span>
           </div>
 
           <label
             htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-gray-900 "
           >
             Votre mot de passe :
           </label>
@@ -248,7 +252,7 @@ function Modification() {
 
           <label
             htmlFor="confirmPassword"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-gray-900 "
           >
             Confirmer votre mot de passe :
           </label>
