@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'react-feather';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
 import {
@@ -17,8 +16,7 @@ import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
 
 function PotagerVirtuel() {
   const dispatch = useAppDispatch();
-  const potagerState = useAppSelector((state) => state.potager);
-  const { horizontal, vertical } = potagerState;
+  const { horizontal, vertical } = useAppSelector((state) => state.potager);
   const products = useAppSelector((state) => state.virtualGarden.products);
   const garden = useAppSelector((state) => state.virtualGarden.garden);
   const favProducts = useAppSelector((state) => state.myGarden.favProducts);
@@ -53,9 +51,6 @@ function PotagerVirtuel() {
           quantity: 1,
         })
       );
-      productsToDisplay = productsToDisplay.filter(
-        (p) => p.id !== draggedProduct.id
-      );
       await dispatch(fetchAllProductsInVirtualGarden());
       await dispatch(fetchMatchingProducts());
 
@@ -64,14 +59,16 @@ function PotagerVirtuel() {
   };
 
   const handleAddToGarden = (product: Product) => {
-    const productInGarden = productsToDisplay.find((p) => p.id === product.id);
-    if (productInGarden) {
-      return;
-    }
-    dispatch(addToGarden({ ...product, position: '' }));
+    dispatch(
+      addToGarden({
+        ...product,
+        position: '',
+        id: product.id + '-' + new Date().getTime(),
+      })
+    );
   };
 
-  const handleRemoveFromGarden = async (product_id: number) => {
+  const handleRemoveFromGarden = async (product_id: string) => {
     await dispatch(removeProductFromVirtualGarden(product_id));
     await dispatch(fetchAllProductsInVirtualGarden());
     await dispatch(fetchMatchingProducts());
@@ -97,8 +94,8 @@ function PotagerVirtuel() {
       const cols = [];
       for (let col = 0; col < horizontal; col += 1) {
         const position = `{${row},${col}}`;
-        const product = matchingProducts.find((p) => {
-          const regex = /\{(\d+),(\d+)\}/;
+        const productsAtPosition = matchingProducts.filter((p) => {
+          const regex = /\{(\d+), (\d+)\}/;
           const match = p.position && p.position.match(regex);
           if (match) {
             const positionObj = {
@@ -115,28 +112,29 @@ function PotagerVirtuel() {
             key={`${row}-${col}`}
             onDrop={() => handleDrop(position)}
             onDragOver={handleDragOver}
-            className="rounded-lg w-24 h-24 flex items-center justify-center bg-[#7AC808] bg-opacity-30 mx-0.5"
+            className="border border-gray-300 w-24 h-24 flex items-center justify-center bg-green-100"
           >
-            {product && (
+            {productsAtPosition.map((product) => (
               <div
-                className="relative flex flex-col items-center rounded-lg overflow-hidden shadow-lg"
+                key={product.id}
+                className="relative flex flex-col items-center"
                 draggable
                 onDragStart={() => handleDragStart(product)}
               >
                 <img
                   src={`${import.meta.env.VITE_API_URL}${product.picture}`}
                   alt={product.name}
-                  className="w-24 h-24 object-cover mx-auto"
+                  className="w-16 h-16"
                 />
                 <button
                   type="button"
                   onClick={() => handleRemoveFromGarden(product.id)}
-                  className="absolute text-white top-1 right-1 bg-[#16A1AF] text-white rounded-full"
+                  className="absolute top-0 right-0 bg-blue-500 text-white p-1 rounded-full"
                 >
-                  <X size="28" className="rounded-full p-1" />
+                  &times;
                 </button>
               </div>
-            )}
+            ))}
           </div>
         );
       }
@@ -150,36 +148,8 @@ function PotagerVirtuel() {
   };
 
   return (
-    <div className="flex flex-col items-center bg-[#7AC808] bg-opacity-30 p-6 my-4 rounded-lg ">
-      <h2 className="text-center text-xl font-bold">Mon potager virtuel</h2>
-
-      <PotagerSearchBar products={products} addToGarden={handleAddToGarden} />
-      <div className="w-full rounded-lg ">
-        <ul className="flex flex-col w-full rounded-lg  py-4">
-          <div className="flex flex-wrap justify-center rounded-lg gap-4">
-            {productsToDisplay.map((product) => (
-              <li
-                key={`garden-${product.id}`}
-                className="bg-white rounded-lg mx-auto md:mx-0 w-1/3 md:w-1/6"
-              >
-                <div className="rounded-lg overflow-hidden shadow-lg ">
-                  <img
-                    src={`${import.meta.env.VITE_API_URL}${product.picture}`}
-                    alt={product.name}
-                    className="w-full h-32 object-cover mx-auto"
-                    draggable
-                    onDragStart={() => handleDragStart(product)}
-                  />
-                  <div className="text-center my-2  font-semibold">
-                    {product.name}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </div>
-        </ul>
-      </div>
-      <div className="m-4 p-4 bg-white shadow-xl rounded-lg text-center">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="p-4 bg-white shadow-xl rounded-lg text-center">
         <h1 className="text-2xl font-bold mb-4">Potager Virtuel</h1>
         <p className="mb-4">Planifiez et visualisez votre potager virtuel.</p>
         <div className="flex justify-center mb-4">
@@ -203,6 +173,28 @@ function PotagerVirtuel() {
           </label>
         </div>
         <div className="grid gap-1">{renderGrid()}</div>
+      </div>
+      <PotagerSearchBar products={products} addToGarden={handleAddToGarden} />
+      <div className="mt-6 w-full">
+        <h2 className="text-center text-xl font-bold mb-4">Mon Jardin</h2>
+        <ul className="flex flex-wrap justify-center">
+          {productsToDisplay.map((product) => (
+            <li key={`garden-${product.id}`} className="w-1/4 p-2">
+              <div className="border p-4 rounded bg-white shadow">
+                <img
+                  src={`${import.meta.env.VITE_API_URL}${product.picture}`}
+                  alt={product.name}
+                  className="w-full h-32 object-cover"
+                  draggable
+                  onDragStart={() => handleDragStart(product)}
+                />
+                <div className="text-center mt-2 font-semibold">
+                  {product.name}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
