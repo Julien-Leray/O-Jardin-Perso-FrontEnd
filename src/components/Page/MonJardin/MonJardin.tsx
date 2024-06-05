@@ -12,7 +12,6 @@ import Alerte from './Meteo/Alerte';
 import ErrorNotif from '../../ErrorNotif/ErrorNotif';
 import GestionAlertes from './GestionAlertes/GestionAlertes';
 
-
 interface MonJardinProps {
   logged: boolean;
   allFavProducts: Product[];
@@ -33,20 +32,18 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
   const { loading, error } = useAppSelector((state) => state.myGarden);
 
   const rain = weatherForecast.some((forecast) => forecast.rain);
-  const hot = weatherForecast.some((forecast) => forecast.temp > 30);
-  const thunderstorm = weatherForecast.some((forecast) => forecast.thunderstorm);
-
+  const hot = weatherForecast.some((forecast) => forecast.temp > 10);
+  const thunderstorm = weatherForecast.some(
+    (forecast) => forecast.thunderstorm
+  );
 
   if (loading) return <Loader />;
   if (error) return <ErrorNotif error={error} />;
-  // if (!logged) {
-  //   navigate('/');
-  // }
 
   return (
     <div className={`${loading ? 'opacity-20' : ''}`}>
       <div className="w-full p-4">
-        <div className="flex flex-row justify-around py-4">
+        <div className="flex flex-row justify-around py-4 gap-4 ">
           <button
             type="button"
             className={`w-full md:w-auto text-center hover:font-[800] px-16 py-3 rounded-full border border-2 border-[#16A1AF]  focus:outline-none focus:ring-2 focus:ring-[#16A1AF] focus:ring-offset-2 ${
@@ -59,30 +56,28 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
             Mon tableau de bord
           </button>
 
-
           <button
             type="button"
-            className={`w-full md:w-auto text-center hover:font-[800] px-16 py-3 rounded-full border border-2 border-[#16A1AF]  focus:outline-none focus:ring-2 focus:ring-[#16A1AF] focus:ring-offset-2 ${
+            className={`w-full md:w-auto text-center hover:font-[800] px-16 py-3 rounded-full border border-2 border-[#7AC808]  focus:outline-none focus:ring-2 focus:ring-[#7AC808] focus:ring-offset-2 ${
               isPotagerVirtuel
-                ? 'bg-[#16A1AF] text-white'
-                : 'bg-white text-[#16A1AF]'
+                ? 'bg-[#7AC808] text-white'
+                : 'bg-white text-[#7AC808]'
             }`}
             onClick={() => setIsPotagerVirtuel(true)}
           >
             Mon Jardin virtuel
           </button>
         </div>
-        <h1 className="text-center">Bienvenue {userData.firstname} !</h1>
 
         {!isPotagerVirtuel && (
           <>
+            <h1 className="text-center">Bienvenue {userData.firstname} !</h1>
             <div className="flex flex-col md:flex-row md:justify-between rounded-lg gap-6 -m-4 my-4 py-4 px-4">
-              <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-1/4 bg-[#16A1AF]">
+              <div className="flex flex-col rounded-lg shadow-lg border border-gray-200 p-4 md:w-1/4 bg-[#16A1AF]">
                 <div className="flex flex-row justify-between">
                   <h2 className="font-bold text-white text-center">
                     Mes alertes
                   </h2>
-                  <Alerte rain={rain} hot={hot} thunderstorm={thunderstorm} />
                   <button
                     className="rounded-full text-white"
                     type="button"
@@ -91,6 +86,8 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
                     <Tool />
                   </button>
                 </div>
+
+                <Alerte rain={rain} hot={hot} thunderstorm={thunderstorm} />
                 {isSettingsOpen && <GestionAlertes />}
               </div>
               <MaMeteo userData={userData} />

@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
 import Home from './Home/Home';
 import Fruits from './Products/Fruits/ListeFruits';
@@ -20,10 +20,11 @@ import Contact from './Contact/Contact';
 import { Product } from '../../@types/types';
 import Modification from './ModificationUser/Modification';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import SearchBar from '../SearchBar/SearchBar';
 
 function Page() {
   const logged = useAppSelector((state) => state.user.logged);
-
+  const location = useLocation();
 
   // const emailFormState = useAppSelector(
   //   (state) => state.user.credentials.email
@@ -31,7 +32,6 @@ function Page() {
   // const passFromState = useAppSelector(
   //   (state) => state.user.credentials.password
   // );
-
 
   const { tutorials } = useAppSelector((state) => state.tutoriels);
   const allProducts = useAppSelector((state) => state.products.allProducts);
@@ -53,6 +53,12 @@ function Page() {
 
   return (
     <div>
+      {location.pathname !== '/gestion_profil' &&
+        location.pathname !== '/connexion' &&
+        location.pathname !== '/contact' &&
+        location.pathname !== '/confidentialite' &&
+        location.pathname !== '/mentions_legales' &&
+        location.pathname !== '/inscription' && <SearchBar />}
       <Routes>
         <Route path="*" element={<PageNotFound />} />
 
