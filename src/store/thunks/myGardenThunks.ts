@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { User } from 'react-feather';
 import axiosInstance from '../../axios/axios';
 
 export const fetchUserData = createAsyncThunk(
@@ -10,8 +9,12 @@ export const fetchUserData = createAsyncThunk(
 
       const userData = response.data[0].result.user;
       const allFavProducts = response.data[0].result.products;
+      userData.forecastAlert = response.data[0].result.user.forecast_alert;
+      userData.wateringAlert = response.data[0].result.user.watering_alert;
 
-      return { userData, allFavProducts };
+      const { forecast_alert, watering_alert, ...userDataWithout_ } = userData
+
+      return { userDataWithout_, allFavProducts };
     } catch (error) {
       return thunkAPI.rejectWithValue('Erreur de connexion');
     }
