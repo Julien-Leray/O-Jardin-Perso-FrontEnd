@@ -21,16 +21,16 @@ export const fetchUserData = createAsyncThunk(
 export const updateAlert = createAsyncThunk(
   'user/UPDATE_ALERT',
   async (
-    userData: { forecast_alert: boolean; watering_alert: boolean },
+    userData: { forecastAlert: boolean; wateringAlert: boolean },
     thunkAPI
   ) => {
     try {
       const response = await axiosInstance.patch('/me/alerts', {
-        forecast_alert: userData.forecast_alert,
-        watering_alert: userData.watering_alert,
+        forecast_alert: userData.forecastAlert,
+        watering_alert: userData.wateringAlert,
       });
-      userData.forecast_alert = response.data.forecast_alert;
-      userData.watering_alert = response.data.watering_alert;
+      userData.forecastAlert = response.data.forecast_alert;
+      userData.wateringAlert = response.data.watering_alert;
       return { userData };
     } catch (error) {
       return thunkAPI.rejectWithValue('Erreur de mise à jour des alertes');
