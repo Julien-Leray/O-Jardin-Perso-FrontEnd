@@ -8,9 +8,11 @@ const fetchMeteo = createAsyncThunk(
   async ({ zipCode, cityName }: { zipCode?: string; cityName?: string }) => {
     let url = '';
     if (zipCode) {
-      url = `http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},fr&units=metric&appid=218f32cd39f9bdde590c689d89e8d6e4`;
+
+      url = `http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},fr&units=metric&appid=5cc0f02f371aa6e0a0747b52eddbee71`;
     } else if (cityName) {
-      url = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=218f32cd39f9bdde590c689d89e8d6e4`;
+      url = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=5cc0f02f371aa6e0a0747b52eddbee71`;
+
     } else {
       throw new Error(
         'Veuillez fournir un code postal ou un nom de ville pour obtenir les prévisions météorologiques.'

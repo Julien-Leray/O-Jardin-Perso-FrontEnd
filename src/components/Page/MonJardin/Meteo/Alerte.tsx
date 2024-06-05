@@ -1,28 +1,29 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CloudDrizzle, CloudLightning, Sun } from 'react-feather';
 
 interface AlerteProps {
+  isForecastAlertActive: boolean;
   rain: boolean;
   hot: boolean;
   thunderstorm: boolean;
 }
 
-function Alerte({ rain, hot, thunderstorm }: AlerteProps) {
+function Alerte({ isForecastAlertActive, rain, hot, thunderstorm }: AlerteProps) {
   return (
     <div>
-      {rain && (
+      {isForecastAlertActive && rain && (
         <div className="alert alert-warning text-center my-6">
           <CloudDrizzle className="m-auto" />
-          Pluies attendue aujourd'hui
+          Pluies attendues aujourd'hui
         </div>
       )}
-      {hot && (
+      {isForecastAlertActive && hot && (
         <div className="alert alert-warning text-center my-6">
           <Sun className="m-auto" />
           Fortes chaleurs attendues aujourd'hui
         </div>
       )}
-      {thunderstorm && (
+      {isForecastAlertActive && thunderstorm && (
         <div className="alert alert-warning text-center my-6">
           <CloudLightning className="m-auto" />
           Orages attendus aujourd'hui
