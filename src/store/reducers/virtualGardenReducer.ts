@@ -10,6 +10,7 @@ import {
 interface PotagerVirtuelState {
   products: Product[];
   garden: Product[];
+  favoriteProducts: Product[];
   virtualGarden: ProductInVirtualGarden[];
   matchingProducts: Product[];
   loading: boolean;
@@ -19,6 +20,7 @@ interface PotagerVirtuelState {
 const initialState: PotagerVirtuelState = {
   products: [],
   garden: [],
+  favoriteProducts: [],
   virtualGarden: [],
   matchingProducts: [],
   loading: false,
@@ -43,12 +45,17 @@ const potagerVirtuelSlice = createSlice({
       }
     },
     addToVirtualGarden(state, action: PayloadAction<ProductInVirtualGarden>) {
+      if (!Array.isArray(state.virtualGarden)) {
+        state.virtualGarden = [];
+      }
       state.virtualGarden.push(action.payload);
     },
     removeFromVirtualGarden(state, action: PayloadAction<number>) {
-      state.virtualGarden = state.virtualGarden.filter(
-        (vg) => vg.product_id !== action.payload
-      );
+      if (Array.isArray(state.virtualGarden)) {
+        state.virtualGarden = state.virtualGarden.filter(
+          (vg) => vg.product_id !== action.payload
+        );
+      }
     },
   },
   extraReducers: (builder) => {
@@ -58,7 +65,9 @@ const potagerVirtuelSlice = createSlice({
       })
       .addCase(fetchAllProductsInVirtualGarden.fulfilled, (state, action) => {
         state.loading = false;
-        state.virtualGarden = action.payload;
+        state.virtualGarden = Array.isArray(action.payload)
+          ? action.payload
+          : [];
       })
       .addCase(fetchAllProductsInVirtualGarden.rejected, (state, action) => {
         state.loading = false;
