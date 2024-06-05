@@ -16,19 +16,6 @@ const fetchMeteo = createAsyncThunk(
         'Veuillez fournir un code postal ou un nom de ville pour obtenir les prévisions météorologiques.'
       );
     }
-const fetchMeteo = createAsyncThunk(
-  'FETCH_METEO',
-  async ({ zipCode, cityName }: { zipCode?: string; cityName?: string }) => {
-    let url = '';
-    if (zipCode) {
-      url = `http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},fr&units=metric&appid=218f32cd39f9bdde590c689d89e8d6e4`;
-    } else if (cityName) {
-      url = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=218f32cd39f9bdde590c689d89e8d6e4`;
-    } else {
-      throw new Error(
-        'Veuillez fournir un code postal ou un nom de ville pour obtenir les prévisions météorologiques.'
-      );
-    }
 
     const response = await axios.get(url);
 
@@ -45,7 +32,7 @@ const fetchMeteo = createAsyncThunk(
         if (
           !weathercurrent ||
           forecastDate.diff(currentMoment) <
-            dayjs(weathercurrent.dt_txt).diff(currentMoment)
+          dayjs(weathercurrent.dt_txt).diff(currentMoment)
         ) {
           return weatherForecast;
         }
