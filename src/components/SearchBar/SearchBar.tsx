@@ -79,7 +79,7 @@ function SearchBar() {
         </div>
         <button
           type="submit"
-          className="py-4 px-6 -translate-x-10 text-sm font-medium text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
+          className="py-4 px-6 -translate-x-10 text-sm  text-white bg-[#F5780A] rounded-full hover:bg-black focus:ring-1 focus:ring-[#F6D50E]"
         >
           Rechercher
         </button>
