@@ -20,9 +20,12 @@ function PotagerVirtuel() {
   const { horizontal, vertical } = useAppSelector((state) => state.potager);
   const products = useAppSelector((state) => state.virtualGarden.products);
   const garden = useAppSelector((state) => state.virtualGarden.garden);
+  const favProducts = useAppSelector((state) => state.myGarden.favProducts);
+  let productsToDisplay = garden.concat(favProducts);
   const matchingProducts = useAppSelector(
     (state) => state.virtualGarden.matchingProducts
   );
+
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -47,15 +50,21 @@ function PotagerVirtuel() {
           quantity: 1,
         })
       );
+      productsToDisplay = productsToDisplay.filter(
+        (p) => p.id !== draggedProduct.id
+      );
       await dispatch(fetchAllProductsInVirtualGarden());
       await dispatch(fetchMatchingProducts());
+
       setDraggedProduct(null);
-    } else {
-      console.log('No product is being dragged.');
     }
   };
 
   const handleAddToGarden = (product: Product) => {
+    const productInGarden = productsToDisplay.find((p) => p.id === product.id);
+    if (productInGarden) {
+      return;
+    }
     dispatch(addToGarden({ ...product, position: '' }));
   };
 
@@ -109,7 +118,7 @@ function PotagerVirtuel() {
                 <button
                   type="button"
                   onClick={() => handleRemoveFromGarden(product.id)}
-                  className="absolute text-white top-1 right-1 bg-[#16A1AF] text-white rounded-full "
+                  className="absolute text-white top-1 right-1 bg-[#16A1AF] text-white rounded-full"
                 >
                   <X size="28" className="rounded-full p-1" />
                 </button>
@@ -128,19 +137,19 @@ function PotagerVirtuel() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center  bg-[#7AC808] bg-opacity-30 p-6 my-4 rounded-lg ">
+    <div className="flex flex-col items-center bg-[#7AC808] bg-opacity-30 p-6 my-4 rounded-lg ">
       <h2 className="text-center text-xl font-bold">Mon potager virtuel</h2>
 
       <PotagerSearchBar products={products} addToGarden={handleAddToGarden} />
       <div className="w-full rounded-lg ">
-        <ul className="flex flex-col w-full justify-center rounded-lg  py-4">
-          <div className="flex flex-row rounded-lg  gap-4 ">
-            {garden.map((product: Product) => (
+        <ul className="flex flex-col w-full rounded-lg  py-4">
+          <div className="flex flex-wrap justify-center rounded-lg gap-4">
+            {productsToDisplay.map((product) => (
               <li
-                key={product.id}
-                className="bg-white rounded-lg mx-auto md:mx-0 w-5/6 md:w-1/5 p-2 "
+                key={`garden-${product.id}`}
+                className="bg-white rounded-lg mx-auto md:mx-0 w-1/3 md:w-1/6"
               >
-                <div className="rounded-lg overflow-hidden shadow-lg border border-gray-200 ">
+                <div className="rounded-lg overflow-hidden shadow-lg ">
                   <img
                     src={`${import.meta.env.VITE_API_URL}${product.picture}`}
                     alt={product.name}
@@ -148,7 +157,7 @@ function PotagerVirtuel() {
                     draggable
                     onDragStart={() => handleDragStart(product)}
                   />
-                  <div className="text-center my-2 font-semibold">
+                  <div className="text-center my-2  font-semibold">
                     {product.name}
                   </div>
                 </div>
@@ -157,8 +166,9 @@ function PotagerVirtuel() {
           </div>
         </ul>
       </div>
-      <div className="flex flex-col items-center p-4 w-full bg-white shadow-xl rounded-lg text-center">
-        <p className="mb-4">Planifiez et visualisez votre potager virtuel !</p>
+      <div className="m-4 p-4 bg-white shadow-xl rounded-lg text-center">
+        <h1 className="text-2xl font-bold mb-4">Potager Virtuel</h1>
+        <p className="mb-4">Planifiez et visualisez votre potager virtuel.</p>
         <div className="flex justify-center mb-4">
           <label className="mr-4">
             Horizontal:
