@@ -93,7 +93,7 @@ function PotagerVirtuel() {
             key={`${row}-${col}`}
             onDrop={() => handleDrop(position)}
             onDragOver={handleDragOver}
-            className="border border-gray-300 w-24 h-24 flex items-center justify-center bg-green-100"
+            className="rounded-lg w-24 h-24 flex items-center justify-center bg-[#7AC808] bg-opacity-30 mx-0.5"
           >
             {product && (
               <div
@@ -104,7 +104,7 @@ function PotagerVirtuel() {
                 <img
                   src={`${import.meta.env.VITE_API_URL}${product.picture}`}
                   alt={product.name}
-                  className="w-24 h-24 object-cover mx-auto p-0.5"
+                  className="w-24 h-24 object-cover mx-auto"
                 />
                 <button
                   type="button"
@@ -128,15 +128,19 @@ function PotagerVirtuel() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200 p-6 rounded-lg ">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#7AC808] bg-opacity-30 p-6 rounded-lg ">
+      <h2 className="text-center text-xl font-bold">Mon potager virtuel</h2>
+
       <PotagerSearchBar products={products} addToGarden={handleAddToGarden} />
-      <div className="w-full p-2">
-        <ul className="flex flex-col flex-wrap justify-center bg-white rounded-lg p-4">
-          <h2 className="text-center text-xl font-bold">Mon Jardin</h2>
-          <div className="flex flex-row bg-white w-1/5 p-2">
+      <div className="w-full rounded-lg ">
+        <ul className="flex flex-col w-full justify-center rounded-lg  py-4">
+          <div className="flex flex-row rounded-lg  gap-4 ">
             {garden.map((product: Product) => (
-              <li key={product.id} className="bg-white w-1/5 p-2">
-                <div className="rounded-lg overflow-hidden shadow-lg border border-gray-200">
+              <li
+                key={product.id}
+                className="bg-white rounded-lg mx-auto md:mx-0 w-5/6 md:w-1/5 p-2 "
+              >
+                <div className="rounded-lg overflow-hidden shadow-lg border border-gray-200 ">
                   <img
                     src={`${import.meta.env.VITE_API_URL}${product.picture}`}
                     alt={product.name}
@@ -153,9 +157,8 @@ function PotagerVirtuel() {
           </div>
         </ul>
       </div>
-      <div className="p-4 w-full bg-white shadow-xl rounded-lg text-center">
-        <h2 className="text-xl font-bold mb-4">Potager Virtuel</h2>
-        <p className="mb-4">Planifiez et visualisez votre potager virtuel.</p>
+      <div className="flex flex-col items-center p-4 w-full bg-white shadow-xl rounded-lg text-center">
+        <p className="mb-4">Planifiez et visualisez votre potager virtuel !</p>
         <div className="flex justify-center mb-4">
           <label className="mr-4">
             Horizontal:
