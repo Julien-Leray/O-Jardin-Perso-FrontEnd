@@ -11,15 +11,8 @@ interface UpdateProductPositionPayload {
 export const fetchAllProductsInVirtualGarden = createAsyncThunk(
   'me/virtual-garden/fetchVirtualGarden',
   async () => {
-    const token = localStorage.getItem('token');
     const response = await axiosInstance.get<ProductInVirtualGarden[]>(
-      `/me/virtual-garden`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+      `/me/virtual-garden`,);
 
     return response.data;
   }
@@ -29,8 +22,6 @@ export const updateProductPosition = createAsyncThunk(
   'potagerVirtuel/updateProductPosition',
   async (payload: UpdateProductPositionPayload) => {
     const { position, product_id } = payload;
-    const token = localStorage.getItem('token');
-
     const dataToSend = {
       position,
       product_id,
@@ -40,11 +31,7 @@ export const updateProductPosition = createAsyncThunk(
     const response = await axiosInstance.post(
       `/me/virtual-garden`,
       dataToSend,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    
     );
 
     return response.data;

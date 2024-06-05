@@ -28,7 +28,7 @@ const fetchMeteo = createAsyncThunk('FETCH_METEO', async ({ zipCode, cityName }:
       if (
         !weathercurrent ||
         forecastDate.diff(currentMoment) <
-          dayjs(weathercurrent.dt_txt).diff(currentMoment)
+        dayjs(weathercurrent.dt_txt).diff(currentMoment)
       ) {
         return weatherForecast;
       }
