@@ -8,8 +8,10 @@ import { Product } from '../../../@types/types';
 import { fetchUserData } from '../../../store/thunks/myGardenThunks';
 import PotagerVirtuel from './PotagerVirtuel/PotagerVirtuel';
 import Loader from '../../Loader/Loader';
+import Alerte from './Meteo/Alerte';
 import ErrorNotif from '../../ErrorNotif/ErrorNotif';
 import GestionAlertes from './GestionAlertes/GestionAlertes';
+
 
 interface MonJardinProps {
   logged: boolean;
@@ -24,11 +26,16 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
 
   useEffect(() => {
     dispatch(fetchUserData());
-  }, []);
+  }, [dispatch]);
 
   const { userData } = useAppSelector((state) => state.myGarden);
-  const loading = useAppSelector((state) => state.myGarden.loading);
-  const error = useAppSelector((state) => state.myGarden.error);
+  const { weatherForecast } = useAppSelector((state) => state.meteo);
+  const { loading, error } = useAppSelector((state) => state.myGarden);
+
+  const rain = weatherForecast.some((forecast) => forecast.rain);
+  const hot = weatherForecast.some((forecast) => forecast.temp > 30);
+  const thunderstorm = weatherForecast.some((forecast) => forecast.thunderstorm);
+
 
   if (loading) return <Loader />;
   if (error) return <ErrorNotif error={error} />;
@@ -52,6 +59,7 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
             Mon tableau de bord
           </button>
 
+
           <button
             type="button"
             className={`w-full md:w-auto text-center hover:font-[800] px-16 py-3 rounded-full border border-2 border-[#16A1AF]  focus:outline-none focus:ring-2 focus:ring-[#16A1AF] focus:ring-offset-2 ${
@@ -74,6 +82,7 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
                   <h2 className="font-bold text-white text-center">
                     Mes alertes
                   </h2>
+                  <Alerte rain={rain} hot={hot} thunderstorm={thunderstorm} />
                   <button
                     className="rounded-full text-white"
                     type="button"
