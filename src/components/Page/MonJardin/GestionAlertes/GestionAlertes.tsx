@@ -3,8 +3,8 @@ import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { updateAlert } from '../../../../store/thunks/myGardenThunks';
 
 interface UserAlerts {
-  forecast_alert: boolean;
-  watering_alert: boolean;
+  forecastAlert: boolean;
+  wateringAlert: boolean;
 }
 
 function GestionAlertes() {
@@ -12,30 +12,30 @@ function GestionAlertes() {
   const { userData } = useAppSelector((state) => state.myGarden);
 
   const [UserData, setUserData] = useState<UserAlerts>({
-    forecast_alert: userData.forecast_alert,
-    watering_alert: userData.watering_alert,
+    forecastAlert: userData.forecastAlert,
+    wateringAlert: userData.wateringAlert,
   });
 
   let forecast_alert;
   let watering_alert;
-  if (userData.forecast_alert === true) {
+  if (userData.forecastAlert === true) {
     forecast_alert = 'activée';
   } else {
     forecast_alert = 'désactivée';
   }
-  if (userData.watering_alert === true) {
+  if (userData.wateringAlert === true) {
     watering_alert = 'activée';
   } else {
     watering_alert = 'désactivée';
   }
 
   const changeForecastAlert = async () => {
-    UserData.forecast_alert = !UserData.forecast_alert;
+    UserData.forecastAlert = !UserData.forecastAlert;
     await dispatch(updateAlert(UserData));
   };
 
   const changeWateringAlert = async () => {
-    UserData.watering_alert = !UserData.watering_alert;
+    UserData.wateringAlert = !UserData.wateringAlert;
     await dispatch(updateAlert(UserData));
   };
 
