@@ -17,7 +17,8 @@ import PotagerSearchBar from '../../../SearchBar/PotagerSearchBar';
 
 function PotagerVirtuel() {
   const dispatch = useAppDispatch();
-  const { horizontal, vertical } = useAppSelector((state) => state.potager);
+  const potagerState = useAppSelector((state) => state.potager);
+  const { horizontal, vertical } = potagerState;
   const products = useAppSelector((state) => state.virtualGarden.products);
   const garden = useAppSelector((state) => state.virtualGarden.garden);
   const favProducts = useAppSelector((state) => state.myGarden.favProducts);
@@ -29,6 +30,8 @@ function PotagerVirtuel() {
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
+    dispatch(setHorizontal(8));
+    dispatch(setVertical(5));
     dispatch(fetchAllProductsInVirtualGarden()).then(() => {
       dispatch(fetchMatchingProducts());
     });
@@ -78,6 +81,16 @@ function PotagerVirtuel() {
     e.preventDefault();
   };
 
+  const handleHorizontalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.max(0, Math.min(15, Number(e.target.value)));
+    dispatch(setHorizontal(value));
+  };
+
+  const handleVerticalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.max(0, Math.min(20, Number(e.target.value)));
+    dispatch(setVertical(value));
+  };
+
   const renderGrid = () => {
     const rows = [];
     for (let row = 0; row < vertical; row += 1) {
@@ -85,7 +98,7 @@ function PotagerVirtuel() {
       for (let col = 0; col < horizontal; col += 1) {
         const position = `{${row},${col}}`;
         const product = matchingProducts.find((p) => {
-          const regex = /\{(\d+), (\d+)\}/;
+          const regex = /\{(\d+),(\d+)\}/;
           const match = p.position && p.position.match(regex);
           if (match) {
             const positionObj = {
@@ -175,7 +188,7 @@ function PotagerVirtuel() {
             <input
               type="number"
               value={horizontal}
-              onChange={(e) => dispatch(setHorizontal(Number(e.target.value)))}
+              onChange={handleHorizontalChange}
               className="ml-2 border rounded px-2 py-1 w-16 text-center"
             />
           </label>
@@ -184,7 +197,7 @@ function PotagerVirtuel() {
             <input
               type="number"
               value={vertical}
-              onChange={(e) => dispatch(setVertical(Number(e.target.value)))}
+              onChange={handleVerticalChange}
               className="ml-2 border rounded px-2 py-1 w-16 text-center"
             />
           </label>
