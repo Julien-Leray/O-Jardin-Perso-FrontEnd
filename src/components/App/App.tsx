@@ -37,7 +37,7 @@ function App() {
     dispatch(fetchUserData());
     dispatch(fetchAllProducts());
     dispatch(fetchAllTutorials());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
