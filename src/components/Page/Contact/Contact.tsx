@@ -1,16 +1,43 @@
 import React, { useState } from 'react';
 import { User, XCircle } from 'react-feather';
 
+interface Errors {
+  email?: string;
+}
+
 function Contact() {
   const [successMessage, setSuccessMessage] = useState(false);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState<Errors>({});
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     setSuccessMessage(true);
     setEmail('');
     setMessage('');
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+    setErrors({}); 
+  };
+
+  const validateForm = (): Errors => {
+    const newErrors: Errors = {};
+    if (!email) {
+      newErrors.email = 'Email est requis';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Email invalide';
+    }
+    return newErrors;
   };
 
   return (
@@ -34,11 +61,16 @@ function Contact() {
             required
             name="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleChange}
             placeholder="Email"
-            className="bg-white text-gray-900 border-1 text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border border-black"
+            className={`bg-white text-gray-900 border-1 text-sm rounded-full focus:ring-[#F6D50E] w-full ps-12 p-4 border ${
+              errors.email && 'border-red-500'
+            }`}
           />
         </div>
+        {errors.email && (
+          <p className="text-red-500 text-xs">{errors.email}</p>
+        )}
 
         <label
           htmlFor="contact"

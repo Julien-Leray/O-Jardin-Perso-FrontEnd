@@ -12,19 +12,17 @@ function MaMeteo({ userData }: MeteoProps) {
   const meteo = useAppSelector((state) => state.meteo);
   const { zip_code, city } = userData;
 
-  const location: { zipCode?: string; cityName?: string } = {};
-  if (zip_code) {
-    location.zipCode = zip_code;
-  } else if (city) {
-    location.cityName = city;
-  }
-
   useEffect(() => {
-    if (location.zipCode || location.cityName) {
+    if (zip_code || city) {
+      const location: { zipCode?: string; cityName?: string } = {};
+      if (zip_code) {
+        location.zipCode = zip_code;
+      } else if (city) {
+        location.cityName = city;
+      }
       dispatch(fetchMeteo(location));
     }
-  }, [dispatch, location]);
-
+  }, [dispatch, zip_code, city]);
 
   return (
     <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-3/4 bg-gray-200">
