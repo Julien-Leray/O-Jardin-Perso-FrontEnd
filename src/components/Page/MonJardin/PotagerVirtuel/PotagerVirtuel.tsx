@@ -32,6 +32,10 @@ function PotagerVirtuel() {
     dispatch(fetchAllProductsInVirtualGarden()).then(() => {
       dispatch(fetchMatchingProducts());
     });
+
+    // Set initial grid size
+    dispatch(setHorizontal(8));
+    dispatch(setVertical(5));
   }, [dispatch]);
 
   const handleDragStart = (product: Product) => {
@@ -136,6 +140,16 @@ function PotagerVirtuel() {
     return rows;
   };
 
+  const handleHorizontalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.max(0, Math.min(15, Number(e.target.value)));
+    dispatch(setHorizontal(value));
+  };
+
+  const handleVerticalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.max(0, Math.min(20, Number(e.target.value)));
+    dispatch(setVertical(value));
+  };
+
   return (
     <div className="flex flex-col items-center bg-[#7AC808] bg-opacity-30 p-6 my-4 rounded-lg ">
       <h2 className="text-center text-xl font-bold">Mon potager virtuel</h2>
@@ -175,8 +189,10 @@ function PotagerVirtuel() {
             <input
               type="number"
               value={horizontal}
-              onChange={(e) => dispatch(setHorizontal(Number(e.target.value)))}
+              onChange={handleHorizontalChange}
               className="ml-2 border rounded px-2 py-1 w-16 text-center"
+              min="0"
+              max="15"
             />
           </label>
           <label>
@@ -184,8 +200,10 @@ function PotagerVirtuel() {
             <input
               type="number"
               value={vertical}
-              onChange={(e) => dispatch(setVertical(Number(e.target.value)))}
+              onChange={handleVerticalChange}
               className="ml-2 border rounded px-2 py-1 w-16 text-center"
+              min="0"
+              max="20"
             />
           </label>
         </div>
