@@ -1,65 +1,105 @@
-import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { updateAlert } from '../../../../store/thunks/myGardenThunks';
-
-interface UserAlerts {
-  forecast_alert: boolean;
-  watering_alert: boolean;
-}
 
 function GestionAlertes() {
   const dispatch = useAppDispatch();
   const { userData } = useAppSelector((state) => state.myGarden);
 
-  const [UserData, setUserData] = useState<UserAlerts>({
-    forecast_alert: userData.forecast_alert,
-    watering_alert: userData.watering_alert,
-  });
-
-  let forecast_alert;
-  let watering_alert;
-  if (userData.forecast_alert === true) {
-    forecast_alert = 'Alerte activée';
-  } else {
-    forecast_alert = 'Alerte désactivée';
-  }
-  if (userData.watering_alert === true) {
-    watering_alert = 'Alerte activée';
-  } else {
-    watering_alert = 'Alerte désactivée';
-  }
-
   const changeForecastAlert = async () => {
-    UserData.forecast_alert = !UserData.forecast_alert;
-    await dispatch(updateAlert(UserData));
+    const newForecastAlert = !userData.forecastAlert;
+    await dispatch(
+      updateAlert({ ...userData, forecastAlert: newForecastAlert })
+    );
   };
 
   const changeWateringAlert = async () => {
-    UserData.watering_alert = !UserData.watering_alert;
-    await dispatch(updateAlert(UserData));
+    const newWateringAlert = !userData.wateringAlert;
+    await dispatch(
+      updateAlert({ ...userData, wateringAlert: newWateringAlert })
+    );
   };
 
   return (
     <div className="p-4">
-      <div className="flex justify-between text-white">
-        Météo :
+      {/* <div className="flex flex-col items-center text-white mb-4">
         <button
           type="button"
           onClick={() => changeForecastAlert()}
-          className="bg-white text-xs text-black p-1 rounded-full"
+          className="flex flex-row items-center justify-center bg-white text-xs text-black py-2 px-4 rounded-full"
         >
-          {forecast_alert}
+          <input
+            checked={userData.forecastAlert}
+            onChange={changeForecastAlert}
+            id="forecast-alert-checkbox"
+            type="checkbox"
+            className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded focus:ring-[#16A1AF] focus:ring-2"
+          />
+          <div>
+            Alerte météo {userData.forecastAlert ? 'activée' : 'désactivée'}
+          </div>
         </button>
-      </div>
-      <br />
-      <div className="flex justify-between text-white ">
-        Arrosage :
+      </div> */}
+
+      {/* <button
+        type="button"
+        onClick={() => changeWateringAlert()}
+        className="flex flex-row items-center justify-center bg-white text-xs text-black py-2 px-4 rounded-full"
+      >
+        <input
+          checked={userData.wateringAlert}
+          onChange={changeWateringAlert}
+          id="watering-alert-checkbox"
+          type="checkbox"
+          className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded focus:ring-[#16A1AF] focus:ring-2"
+        />
+        <div>
+          Alerte arrosage {userData.wateringAlert ? 'activée' : 'désactivée'}
+        </div>
+      </button> */}
+      <div className="w-full flex flex-col text-white mt-4">
         <button
           type="button"
-          onClick={() => changeWateringAlert()}
-          className="bg-white text-xs  text-black p-1 rounded-full"
+          className="flex flex-col items-center bg-white text-xs text-black py-1 px-4 rounded-lg"
+          onClick={() => {
+            changeForecastAlert();
+          }}
         >
-          {watering_alert}
+          Alerte météo {userData.forecastAlert ? 'activée' : 'désactivée'}
+          <div
+            aria-hidden="true"
+            className={`md:w-16 md:h-8 w-14 h-7 flex items-center rounded-full p-1 m-1 cursor-pointer ${
+              !userData.forecastAlert ? 'bg-gray-200' : 'bg-[#16A1AF]'
+            }`}
+          >
+            <div
+              className={`md:w-6 bg-white md:h-6 h-5 w-5 rounded-full shadow-md transform ${
+                userData.forecastAlert ? 'translate-x-7' : ''
+              }`}
+            />
+          </div>
+        </button>
+      </div>
+      <div className="w-full flex flex-col text-white mt-4">
+        <button
+          type="button"
+          className="flex flex-col items-center bg-white text-xs text-black py-1 px-4 rounded-lg"
+          onClick={() => {
+            changeWateringAlert();
+          }}
+        >
+          Alerte arrosage {userData.wateringAlert ? 'activée' : 'désactivée'}
+          <div
+            aria-hidden="true"
+            className={`md:w-16 md:h-8 w-14 h-7 flex items-center rounded-full p-1 m-1 cursor-pointer ${
+              !userData.wateringAlert ? 'bg-gray-200' : 'bg-[#16A1AF]'
+            }`}
+          >
+            <div
+              className={`md:w-6 bg-white md:h-6 h-5 w-5 rounded-full shadow-md transform ${
+                userData.wateringAlert ? 'translate-x-7' : ''
+              }`}
+            />
+          </div>
         </button>
       </div>
     </div>

@@ -22,6 +22,13 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
   const navigate = useNavigate();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isPotagerVirtuel, setIsPotagerVirtuel] = useState(false);
+  const [alertes, setAlertes] = useState({
+    rain: false,
+    hot: false,
+    thunderstorm: false,
+    isForecastAlertActive: false,
+    isWateringAlertActive: false,
+  });
 
   useEffect(() => {
     dispatch(fetchUserData());
@@ -31,11 +38,16 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
   const { weatherForecast } = useAppSelector((state) => state.meteo);
   const { loading, error } = useAppSelector((state) => state.myGarden);
 
-  const rain = weatherForecast.some((forecast) => forecast.rain);
-  const hot = weatherForecast.some((forecast) => forecast.temp > 30);
-  const thunderstorm = weatherForecast.some(
-    (forecast) => forecast.thunderstorm
-  );
+  useEffect(() => {
+    setAlertes({
+      rain: weatherForecast.some((forecast) => forecast.rain),
+      hot: weatherForecast.some((forecast) => forecast.temp > 30),
+      thunderstorm: weatherForecast.some((forecast) => forecast.thunderstorm),
+      isForecastAlertActive: userData.forecastAlert,
+      isWateringAlertActive: userData.wateringAlert,
+    });
+  }, [weatherForecast, userData.forecastAlert, userData.wateringAlert]);
+
 
   if (loading) return <Loader />;
   if (error) return <ErrorNotif error={error} />;
@@ -87,7 +99,7 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
                   </button>
                 </div>
 
-                <Alerte rain={rain} hot={hot} thunderstorm={thunderstorm} />
+                {alertes.isForecastAlertActive && <Alerte {...alertes} />}
                 {isSettingsOpen && <GestionAlertes />}
               </div>
               <MaMeteo userData={userData} />
@@ -102,4 +114,4 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
   );
 }
 
-export default MonJardin;
+export default MonJardin

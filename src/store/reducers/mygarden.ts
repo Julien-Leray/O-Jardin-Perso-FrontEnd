@@ -28,7 +28,7 @@ const myGardenReducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchUserData.fulfilled, (state, action) => {
       state.favProducts = action.payload.allFavProducts;
-      state.userData = action.payload.userData;
+      state.userData = action.payload.userDataWithout_;
       state.loading = false;
       state.error = null;
     })
