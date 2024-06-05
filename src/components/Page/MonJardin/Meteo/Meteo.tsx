@@ -25,7 +25,7 @@ function MaMeteo({ userData }: MeteoProps) {
   }, [dispatch, location]);
 
   return (
-    <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-3/4 bg-gray-200">
+    <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-3/4 bg-gray-200 ">
       {meteo && meteo.name ? (
         <div>
           <h2 className="font-bold text-center">Météo à {meteo.name}</h2>

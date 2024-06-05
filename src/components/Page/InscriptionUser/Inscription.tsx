@@ -123,7 +123,7 @@ function Inscription() {
         <form className="p-8 md:p-8" autoComplete="off" onSubmit={handleSubmit}>
           <label
             htmlFor="firstname"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-gray-900  "
           >
             Votre prénom et nom :
           </label>
@@ -154,7 +154,7 @@ function Inscription() {
 
           <label
             htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-gray-900  "
           >
             Votre email :
           </label>
@@ -175,7 +175,7 @@ function Inscription() {
 
           <label
             htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-gray-900  "
           >
             Votre mot de passe :
           </label>
@@ -197,7 +197,7 @@ function Inscription() {
 
           <label
             htmlFor="confirmPassword"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-gray-900  "
           >
             Confirmer votre mot de passe :
           </label>
@@ -226,7 +226,7 @@ function Inscription() {
 
           <label
             htmlFor="address1"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-gray-900  "
           >
             Votre adresse :
           </label>
