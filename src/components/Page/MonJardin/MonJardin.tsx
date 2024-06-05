@@ -39,9 +39,6 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
 
   if (loading) return <Loader />;
   if (error) return <ErrorNotif error={error} />;
-  // if (!logged) {
-  //   navigate('/');
-  // }
 
   return (
     <div className={`${loading ? 'opacity-20' : ''}`}>
@@ -76,12 +73,11 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
           <>
             <h1 className="text-center">Bienvenue {userData.firstname} !</h1>
             <div className="flex flex-col md:flex-row md:justify-between rounded-lg gap-6 -m-4 my-4 py-4 px-4">
-              <div className="rounded-lg shadow-lg border border-gray-200 p-4 md:w-1/4 bg-[#16A1AF]">
+              <div className="flex flex-col rounded-lg shadow-lg border border-gray-200 p-4 md:w-1/4 bg-[#16A1AF]">
                 <div className="flex flex-row justify-between">
                   <h2 className="font-bold text-white text-center">
                     Mes alertes
                   </h2>
-                  <Alerte rain={rain} hot={hot} thunderstorm={thunderstorm} />
                   <button
                     className="rounded-full text-white"
                     type="button"
@@ -90,6 +86,8 @@ function MonJardin({ logged, allFavProducts }: MonJardinProps) {
                     <Tool />
                   </button>
                 </div>
+
+                <Alerte rain={rain} hot={hot} thunderstorm={thunderstorm} />
                 {isSettingsOpen && <GestionAlertes />}
               </div>
               <MaMeteo userData={userData} />

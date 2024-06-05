@@ -79,8 +79,8 @@ function Contact() {
       )}
       <h2 className="text-xl text-center p-2 font-bold">FAQ</h2>
       <div className="md:mx-20 mx-2 text-sm md:text-m">
-        <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-2 m-4">
-          <p className="text-center italic font-semibold">
+        <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-6 m-4">
+          <p className="text-center italic font-semibold pb-2">
             Comment faire pour ajouter un produit en favoris ?
           </p>
           <p className="py-1 text-justify">
@@ -91,8 +91,8 @@ function Contact() {
           </p>
         </div>
 
-        <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-2 m-4">
-          <p className="text-center italic font-semibold">
+        <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-6 m-4">
+          <p className="text-center italic font-semibold pb-2">
             Est-il possible d'enregistrer des favoris sans être inscrit ?
           </p>
           <p className="py-1 text-justify">
@@ -101,8 +101,8 @@ function Contact() {
           </p>
         </div>
 
-        <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-2 m-4">
-          <p className="text-center italic font-semibold">
+        <div className="flex flex-col rounded-lg overflow-hidden shadow-lg border border-gray-200 p-6 m-4">
+          <p className="text-center italic font-semibold pb-2">
             Comment faire pour ajouter un produit que l'on ne trouve pas?
           </p>
           <p className="py-1 text-justify">

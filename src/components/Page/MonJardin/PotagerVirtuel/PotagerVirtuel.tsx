@@ -128,7 +128,7 @@ function PotagerVirtuel() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#7AC808] bg-opacity-30 p-6 rounded-lg ">
+    <div className="flex flex-col items-center justify-center  bg-[#7AC808] bg-opacity-30 p-6 my-4 rounded-lg ">
       <h2 className="text-center text-xl font-bold">Mon potager virtuel</h2>
 
       <PotagerSearchBar products={products} addToGarden={handleAddToGarden} />
