@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 import Footer from '../Footer/Footer';
@@ -12,12 +11,10 @@ import { addTokenToAxiosInstance } from '../../axios/axios';
 import fetchAllProducts from '../../store/thunks/productThunks';
 import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
 import Loader from '../Loader/Loader';
-import SearchBar from '../SearchBar/SearchBar';
 import { fetchUserData } from '../../store/thunks/myGardenThunks';
 
 function App() {
   const dispatch = useAppDispatch();
-  const location = useLocation();
 
   const loadingProducts = useAppSelector((state) => state.products.loading);
   const loadingTutos = useAppSelector((state) => state.tutoriels.loading);
@@ -53,11 +50,6 @@ function App() {
       >
         <Header />
         <div className="w-full md:w-5/6 md:mx-auto flex-1">
-          {location.pathname !== '/*' &&
-            location.pathname !== '/gestion_profil' &&
-            location.pathname !== '/contact' &&
-            location.pathname !== '/gestion_profil' &&
-            location.pathname !== '/inscription' && <SearchBar />}
           <Page />
         </div>
         <Footer />
@@ -65,8 +57,4 @@ function App() {
     </>
   );
 }
-
 export default App;
-function actionGetDataUser(): any {
-  throw new Error('Function not implemented.');
-}

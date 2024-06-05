@@ -1,6 +1,6 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { Product, User } from '../../@types/types';
-import {fetchUserData, updateAlert} from '../thunks/myGardenThunks';
+import { fetchUserData, updateAlert } from '../thunks/myGardenThunks';
 
 interface MyGardenState {
   loading: boolean;
@@ -41,8 +41,8 @@ const myGardenReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     .addCase(updateAlert.fulfilled, (state, action) => {
-      state.userData.forecast_alert = action.payload.userData.forecast_alert;
-      state.userData.watering_alert = action.payload.userData.watering_alert;
+      state.userData.forecastAlert = action.payload.userData.forecastAlert;
+      state.userData.wateringAlert = action.payload.userData.wateringAlert;
       state.loading = false;
       state.error = null;
     });

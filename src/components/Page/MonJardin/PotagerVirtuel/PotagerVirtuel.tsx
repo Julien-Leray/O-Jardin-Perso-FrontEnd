@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { X } from 'react-feather';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux';
 import { setHorizontal, setVertical } from '../../../../store/reducers/potager';
 import {
@@ -19,10 +20,9 @@ function PotagerVirtuel() {
   const { horizontal, vertical } = useAppSelector((state) => state.potager);
   const products = useAppSelector((state) => state.virtualGarden.products);
   const garden = useAppSelector((state) => state.virtualGarden.garden);
-  const favProducts = useAppSelector((state) => state.myGarden.favProducts);
-  let productsToDisplay = garden.concat(favProducts);
-  const matchingProducts = useAppSelector((state) => state.virtualGarden.matchingProducts);
-
+  const matchingProducts = useAppSelector(
+    (state) => state.virtualGarden.matchingProducts
+  );
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -47,19 +47,15 @@ function PotagerVirtuel() {
           quantity: 1,
         })
       );
-      productsToDisplay = productsToDisplay.filter((p) => p.id !== draggedProduct.id);
       await dispatch(fetchAllProductsInVirtualGarden());
       await dispatch(fetchMatchingProducts());
-
       setDraggedProduct(null);
+    } else {
+      console.log('No product is being dragged.');
     }
   };
 
   const handleAddToGarden = (product: Product) => {
-    const productInGarden = productsToDisplay.find((p) => p.id === product.id);
-    if (productInGarden) {
-      return;
-    }
     dispatch(addToGarden({ ...product, position: '' }));
   };
 
@@ -97,25 +93,25 @@ function PotagerVirtuel() {
             key={`${row}-${col}`}
             onDrop={() => handleDrop(position)}
             onDragOver={handleDragOver}
-            className="border border-gray-300 w-24 h-24 flex items-center justify-center bg-green-100"
+            className="rounded-lg w-24 h-24 flex items-center justify-center bg-[#7AC808] bg-opacity-30 mx-0.5"
           >
             {product && (
               <div
-                className="relative flex flex-col items-center"
+                className="relative flex flex-col items-center rounded-lg overflow-hidden shadow-lg"
                 draggable
                 onDragStart={() => handleDragStart(product)}
               >
                 <img
                   src={`${import.meta.env.VITE_API_URL}${product.picture}`}
                   alt={product.name}
-                  className="w-16 h-16"
+                  className="w-24 h-24 object-cover mx-auto"
                 />
                 <button
                   type="button"
                   onClick={() => handleRemoveFromGarden(product.id)}
-                  className="absolute top-0 right-0 bg-blue-500 text-white p-1 rounded-full"
+                  className="absolute text-white top-1 right-1 bg-[#16A1AF] text-white rounded-full "
                 >
-                  &times;
+                  <X size="28" className="rounded-full p-1" />
                 </button>
               </div>
             )}
@@ -132,10 +128,37 @@ function PotagerVirtuel() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="p-4 bg-white shadow-xl rounded-lg text-center">
-        <h1 className="text-2xl font-bold mb-4">Potager Virtuel</h1>
-        <p className="mb-4">Planifiez et visualisez votre potager virtuel.</p>
+    <div className="flex flex-col items-center justify-center  bg-[#7AC808] bg-opacity-30 p-6 my-4 rounded-lg ">
+      <h2 className="text-center text-xl font-bold">Mon potager virtuel</h2>
+
+      <PotagerSearchBar products={products} addToGarden={handleAddToGarden} />
+      <div className="w-full rounded-lg ">
+        <ul className="flex flex-col w-full justify-center rounded-lg  py-4">
+          <div className="flex flex-row rounded-lg  gap-4 ">
+            {garden.map((product: Product) => (
+              <li
+                key={product.id}
+                className="bg-white rounded-lg mx-auto md:mx-0 w-5/6 md:w-1/5 p-2 "
+              >
+                <div className="rounded-lg overflow-hidden shadow-lg border border-gray-200 ">
+                  <img
+                    src={`${import.meta.env.VITE_API_URL}${product.picture}`}
+                    alt={product.name}
+                    className="w-full h-32 object-cover mx-auto"
+                    draggable
+                    onDragStart={() => handleDragStart(product)}
+                  />
+                  <div className="text-center my-2 font-semibold">
+                    {product.name}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </div>
+        </ul>
+      </div>
+      <div className="flex flex-col items-center p-4 w-full bg-white shadow-xl rounded-lg text-center">
+        <p className="mb-4">Planifiez et visualisez votre potager virtuel !</p>
         <div className="flex justify-center mb-4">
           <label className="mr-4">
             Horizontal:
@@ -157,28 +180,6 @@ function PotagerVirtuel() {
           </label>
         </div>
         <div className="grid gap-1">{renderGrid()}</div>
-      </div>
-      <PotagerSearchBar products={products} addToGarden={handleAddToGarden} />
-      <div className="mt-6 w-full">
-        <h2 className="text-center text-xl font-bold mb-4">Mon Jardin</h2>
-        <ul className="flex flex-wrap justify-center">
-          {productsToDisplay.map((product) => (
-            <li key={`garden-${product.id}`} className="w-1/4 p-2">
-              <div className="border p-4 rounded bg-white shadow">
-                <img
-                  src={`${import.meta.env.VITE_API_URL}${product.picture}`}
-                  alt={product.name}
-                  className="w-full h-32 object-cover"
-                  draggable
-                  onDragStart={() => handleDragStart(product)}
-                />
-                <div className="text-center mt-2 font-semibold">
-                  {product.name}
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

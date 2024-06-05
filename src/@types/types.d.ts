@@ -70,12 +70,12 @@ export interface User {
   created_at: string;
   email: string;
   firstname: string;
-  forecast_alert: boolean;
+  forecastAlert: boolean;
   id: number;
   is_admin: boolean;
   lastname: string;
   updated_at: null;
-  watering_alert: boolean;
+  wateringAlert: boolean;
   zip_code: string;
   password: string;
 }
