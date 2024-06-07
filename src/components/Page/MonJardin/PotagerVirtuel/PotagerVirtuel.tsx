@@ -33,17 +33,21 @@ function PotagerVirtuel() {
       dispatch(fetchMatchingProducts());
     });
 
-    // Set initial grid size
     dispatch(setHorizontal(8));
     dispatch(setVertical(5));
   }, [dispatch]);
 
   const handleDragStart = (product: Product) => {
+    console.log('drag start', product);
     setDraggedProduct(product);
   };
 
   const handleDrop = async (position: string) => {
     if (draggedProduct) {
+      console.log('type', typeof draggedProduct.position)
+      if (typeof draggedProduct.position === 'string' && draggedProduct.position !== '') {
+        handleRemoveFromGarden(draggedProduct.id, draggedProduct.position)
+        };
       await dispatch(
         updateProductPosition({ product_id: draggedProduct.id, position })
       );
