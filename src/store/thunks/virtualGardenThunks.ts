@@ -31,7 +31,7 @@ export const updateProductPosition = createAsyncThunk(
     const response = await axiosInstance.post(
       `/me/virtual-garden`,
       dataToSend,
-    
+
     );
 
     return response.data;
@@ -74,7 +74,7 @@ export const fetchMatchingProducts = createAsyncThunk(
 
 export const removeProductFromVirtualGarden = createAsyncThunk(
   'potagerVirtuel/removeProductFromVirtualGarden',
-  async (id: number, thunkAPI) => {
+  async ({ product_id, position }: { product_id: number, position: string }, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const userId = state.myGarden.userData.id;
 
@@ -82,7 +82,8 @@ export const removeProductFromVirtualGarden = createAsyncThunk(
       `/me/virtual-garden/${userId}`,
       {
         data: {
-          product_id: id,
+          product_id: product_id,
+          position: position,
         },
       }
     );

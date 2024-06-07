@@ -72,8 +72,8 @@ function PotagerVirtuel() {
     dispatch(addToGarden({ ...product, position: '' }));
   };
 
-  const handleRemoveFromGarden = async (product_id: number) => {
-    await dispatch(removeProductFromVirtualGarden(product_id));
+  const handleRemoveFromGarden = async (product_id: number, position: string) => {
+    await dispatch(removeProductFromVirtualGarden({product_id, position}));
     await dispatch(fetchAllProductsInVirtualGarden());
     await dispatch(fetchMatchingProducts());
   };
@@ -121,7 +121,7 @@ function PotagerVirtuel() {
                 />
                 <button
                   type="button"
-                  onClick={() => handleRemoveFromGarden(product.id)}
+                  onClick={() => handleRemoveFromGarden(product.id, position)}
                   className="absolute text-white top-1 right-1 bg-[#16A1AF] text-white rounded-full"
                 >
                   <X size="28" className="rounded-full p-1" />
