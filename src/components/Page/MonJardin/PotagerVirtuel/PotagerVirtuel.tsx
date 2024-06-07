@@ -33,17 +33,21 @@ function PotagerVirtuel() {
       dispatch(fetchMatchingProducts());
     });
 
-    // Set initial grid size
     dispatch(setHorizontal(8));
     dispatch(setVertical(5));
   }, [dispatch]);
 
   const handleDragStart = (product: Product) => {
+    console.log('drag start', product);
     setDraggedProduct(product);
   };
 
   const handleDrop = async (position: string) => {
     if (draggedProduct) {
+      console.log('type', typeof draggedProduct.position)
+      if (typeof draggedProduct.position === 'string' && draggedProduct.position !== '') {
+        handleRemoveFromGarden(draggedProduct.id, draggedProduct.position)
+        };
       await dispatch(
         updateProductPosition({ product_id: draggedProduct.id, position })
       );
@@ -72,8 +76,8 @@ function PotagerVirtuel() {
     dispatch(addToGarden({ ...product, position: '' }));
   };
 
-  const handleRemoveFromGarden = async (product_id: number) => {
-    await dispatch(removeProductFromVirtualGarden(product_id));
+  const handleRemoveFromGarden = async (product_id: number, position: string) => {
+    await dispatch(removeProductFromVirtualGarden({product_id, position}));
     await dispatch(fetchAllProductsInVirtualGarden());
     await dispatch(fetchMatchingProducts());
   };
@@ -121,7 +125,7 @@ function PotagerVirtuel() {
                 />
                 <button
                   type="button"
-                  onClick={() => handleRemoveFromGarden(product.id)}
+                  onClick={() => handleRemoveFromGarden(product.id, position)}
                   className="absolute text-white top-1 right-1 bg-[#16A1AF] text-white rounded-full"
                 >
                   <X size="28" className="rounded-full p-1" />
