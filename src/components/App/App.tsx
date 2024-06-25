@@ -12,6 +12,7 @@ import fetchAllProducts from '../../store/thunks/productThunks';
 import fetchAllTutorials from '../../store/thunks/tutorielsThunk';
 import Loader from '../Loader/Loader';
 import { fetchUserData } from '../../store/thunks/myGardenThunks';
+import { getTokenfromCookies } from '../../cookies/cookies';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -20,14 +21,14 @@ function App() {
   const loadingTutos = useAppSelector((state) => state.tutoriels.loading);
 
   useEffect(() => {
-    const { token } = getTokenFromLocalStorage();
-
+    const token  = getTokenfromCookies();
+    // console.log("cook",token)
     if (token) {
       dispatch(actionLogIn({ token }));
       addTokenToAxiosInstance(token);
       dispatch(fetchUserData());
     } else {
-      // console.log('empty localstorage');
+      console.log('empty localstorage');
     }
   }, []);
 

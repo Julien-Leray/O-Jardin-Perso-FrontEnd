@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { addTokenToCookies } from '../../cookies/cookies';
 
 import type { RootState } from '../store';
 import axiosInstance, { addTokenToAxiosInstance } from '../../axios/axios';
 import { addTokenToLocalStorage } from '../../localStorage/localstorage';
-import { trace } from 'joi';
 
 const actionCheckLogin = createAsyncThunk(
   'user/CHECK_LOGIN',
@@ -15,7 +15,7 @@ const actionCheckLogin = createAsyncThunk(
     });
     const { token } = response.data;
     addTokenToAxiosInstance(token);
-    addTokenToLocalStorage(token);
+    addTokenToCookies(token);
     return { token };
   }
 );
@@ -38,7 +38,7 @@ const actionNewUser = createAsyncThunk(
 const actionVerifyEmailExist = createAsyncThunk(
   'user/VERIFY_EMAIL_EXIST',
   async (email: string) => {
-    const response = await axiosInstance.post('/registration/email',  { email });
+    const response = await axiosInstance.post('/registration/email', { email });
 
     return response.data.exists as boolean;
   }
