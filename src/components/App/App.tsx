@@ -27,8 +27,6 @@ function App() {
       dispatch(actionLogIn({ token }));
       addTokenToAxiosInstance(token);
       dispatch(fetchUserData());
-    } else {
-      console.log('empty localstorage');
     }
   }, []);
 

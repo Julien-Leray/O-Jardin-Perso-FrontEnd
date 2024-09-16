@@ -26,13 +26,6 @@ function Page() {
   const logged = useAppSelector((state) => state.user.logged);
   const location = useLocation();
 
-  // const emailFormState = useAppSelector(
-  //   (state) => state.user.credentials.email
-  // );
-  // const passFromState = useAppSelector(
-  //   (state) => state.user.credentials.password
-  // );
-
   const { tutorials } = useAppSelector((state) => state.tutoriels);
   const allProducts = useAppSelector((state) => state.products.allProducts);
   const allFavProducts = useAppSelector((state) => state.myGarden.favProducts);
