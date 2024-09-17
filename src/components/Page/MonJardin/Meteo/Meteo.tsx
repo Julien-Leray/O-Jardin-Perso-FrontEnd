@@ -36,7 +36,7 @@ function MaMeteo({ userData }: MeteoProps) {
                 <p>{dailyWeather.date}</p>
                 <p>{dailyWeather.temp}°C</p>
                 <img
-                  src={`http://openweathermap.org/img/w/${dailyWeather.icon}.png`}
+                  src={`https://openweathermap.org/img/w/${dailyWeather.icon}.png`}
                   alt="weather icon"
                 />
               </div>
