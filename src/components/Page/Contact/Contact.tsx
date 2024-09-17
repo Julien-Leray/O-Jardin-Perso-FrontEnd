@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { User, XCircle } from 'react-feather';
+import axiosInstance from '../../../axios/axios';
 
 interface Errors {
   email?: string;
@@ -11,19 +12,35 @@ function Contact() {
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<Errors>({});
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+  
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-
-    setSuccessMessage(true);
-    setEmail('');
-    setMessage('');
+  
+    try {
+      const response = await axiosInstance.post('/contact', {
+        email,
+        message,
+      });
+      console.log("réponse", response);
+  
+      if (response.status === 200) {
+        setSuccessMessage(true);
+        setEmail('');
+        setMessage('');
+      } else {
+        setErrors({ email: 'Erreur lors de l\'envoi du formulaire' });
+        console.error('Erreur lors de l\'envoi du formulaire');
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi du formulaire', error);
+    }
   };
+  
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
