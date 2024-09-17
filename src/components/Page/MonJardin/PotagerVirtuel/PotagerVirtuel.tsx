@@ -38,13 +38,11 @@ function PotagerVirtuel() {
   }, [dispatch]);
 
   const handleDragStart = (product: Product) => {
-    console.log('drag start', product);
     setDraggedProduct(product);
   };
 
   const handleDrop = async (position: string) => {
     if (draggedProduct) {
-      console.log('type', typeof draggedProduct.position)
       if (typeof draggedProduct.position === 'string' && draggedProduct.position !== '') {
         handleRemoveFromGarden(draggedProduct.id, draggedProduct.position)
         };

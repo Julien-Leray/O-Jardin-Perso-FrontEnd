@@ -9,9 +9,9 @@ const fetchMeteo = createAsyncThunk(
     let url = '';
     if (zipCode) {
 
-      url = `http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},fr&units=metric&appid=5cc0f02f371aa6e0a0747b52eddbee71`;
+      url = `https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},fr&units=metric&appid=5cc0f02f371aa6e0a0747b52eddbee71`;
     } else if (cityName) {
-      url = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=5cc0f02f371aa6e0a0747b52eddbee71`;
+      url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=5cc0f02f371aa6e0a0747b52eddbee71`;
 
     } else {
       throw new Error(

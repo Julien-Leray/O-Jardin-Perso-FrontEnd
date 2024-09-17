@@ -13,6 +13,6 @@ export function addTokenToCookies(
 
 export function getTokenfromCookies() {
   const token = document.cookie.substring(6);
-  console.log(token)
+  
   return  token ;
 }
