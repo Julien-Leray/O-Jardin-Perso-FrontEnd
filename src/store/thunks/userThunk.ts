@@ -9,7 +9,7 @@ const actionCheckLogin = createAsyncThunk(
   'user/CHECK_LOGIN',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const response = await axiosInstance.post('/login', {
+    const response = await axiosInstance.post('/api/login', {
       email: state.user.credentials.email,
       password: state.user.credentials.password,
     });
@@ -30,7 +30,7 @@ const actionNewUser = createAsyncThunk(
     zip_code?: string;
     city?: string;
   }) => {
-    const response = await axiosInstance.post('/registration', newUser);
+    const response = await axiosInstance.post('/api/registration', newUser);
     return response.data;
   }
 );
@@ -38,7 +38,7 @@ const actionNewUser = createAsyncThunk(
 const actionVerifyEmailExist = createAsyncThunk(
   'user/VERIFY_EMAIL_EXIST',
   async (email: string) => {
-    const response = await axiosInstance.post('/registration/email', { email });
+    const response = await axiosInstance.post('/api/registration/email', { email });
 
     return response.data.exists as boolean;
   }
@@ -55,7 +55,7 @@ const actionUpdateUser = createAsyncThunk(
     zip_code?: string;
     city?: string;
   }) => {
-    const response = await axiosInstance.patch('/me/profile', userToUpdate);
+    const response = await axiosInstance.patch('/api/me/profile', userToUpdate);
     return response.data;
   }
 );
