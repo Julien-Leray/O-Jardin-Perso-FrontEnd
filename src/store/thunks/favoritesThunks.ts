@@ -6,7 +6,7 @@ import axiosInstance from '../../axios/axios';
 export const fetchAddProductToFav = createAsyncThunk(
   'fetch/ADD_FAV',
   async (id: number, thunkAPI) => {
-    const response = await axiosInstance.post('/api/me/garden', {
+    const response = await axiosInstance.post('/me/garden', {
       product_id: id,
     });
 

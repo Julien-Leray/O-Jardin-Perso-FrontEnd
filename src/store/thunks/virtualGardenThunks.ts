@@ -12,7 +12,7 @@ export const fetchAllProductsInVirtualGarden = createAsyncThunk(
   'me/virtual-garden/fetchVirtualGarden',
   async () => {
     const response = await axiosInstance.get<ProductInVirtualGarden[]>(
-      `/api/me/virtual-garden`,);
+      `/me/virtual-garden`,);
 
     return response.data;
   }
@@ -29,7 +29,7 @@ export const updateProductPosition = createAsyncThunk(
     };
 
     const response = await axiosInstance.post(
-      `/api/me/virtual-garden`,
+      `/me/virtual-garden`,
       dataToSend,
 
     );
@@ -79,7 +79,7 @@ export const removeProductFromVirtualGarden = createAsyncThunk(
     const userId = state.myGarden.userData.id;
 
     const response = await axiosInstance.delete(
-      `/api/me/virtual-garden/${userId}`,
+      `/me/virtual-garden/${userId}`,
       {
         data: {
           product_id: product_id,
